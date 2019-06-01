@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Иван Бедный](https://up.htmlacademy.ru/javascript/17/user/238584).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Донецкий](https://htmlacademy.ru/profile/id497669).
 
 ---
 
