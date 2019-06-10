@@ -18,10 +18,10 @@ var NAMES = [
   'Руслан',
 ];
 
-var getPhotosDescriptor = function (photos) {
+var getPhotosDescriptor = function (numberOfPhotos) {
   var photosDescription = [];
 
-  for (var i = 0; i < photos; i++) {
+  for (var i = 0; i < numberOfPhotos; i++) {
     photosDescription[i] =
             {
               url: 'photos/' + (i + 1) + '.jpg',
