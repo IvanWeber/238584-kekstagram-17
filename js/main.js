@@ -17,3 +17,27 @@ var NAMES = [
   'Михаил',
   'Руслан',
 ];
+
+var getPhotosDescriptor = function (photos) {
+  var photosDescription = [];
+
+  for (var i = 0; i < photos; i++) {
+    photosDescription[i] =
+            {
+              url: 'photos/' + (i + 1) + '.jpg',
+              likes: getRandomInt(15, 201),
+              comments: [],
+            };
+    var jMax = getRandomInt(0, 2);
+    for (var j = 0; j <= jMax; j++) {
+      photosDescription[i].comments[j] = {
+        avatar: 'img/avatar-' + (i + 1) + '.svg',
+        message: COMMENT_PHRASES [getRandomInt(0, COMMENT_PHRASES.length - 1)],
+        name: NAMES [getRandomInt(0, NAMES.length - 1)],
+      };
+    }
+  }
+  return photosDescription;
+};
+
+console.log(getPhotosDescriptor(25));
