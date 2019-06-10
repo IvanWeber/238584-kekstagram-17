@@ -40,7 +40,7 @@ var getPhotosDescriptor = function (numberOfPictures) {
   return photosDescription;
 };
 
-var createUserPicture = function (numberOfPictures) {
+var createUsersPictures = function (numberOfPictures) {
   var photosDescription = getPhotosDescriptor(numberOfPictures);
   var template = document.querySelector('#picture');
   var picture = template.content.querySelector('.picture').cloneNode(true);
@@ -68,3 +68,25 @@ var createUserPicture = function (numberOfPictures) {
   }
   return pictureObjectsArray;
 };
+
+var insertUsersPictures = function (pictureObjectsArray) {
+
+  var documentFragmentVar = new DocumentFragment();
+
+  for (var i = 0; i < pictureObjectsArray.length; i++) {
+    var template = document.querySelector('#picture').cloneNode(true);
+    var reference = template.content.querySelector('.picture').cloneNode();
+    var paragraph = template.content.querySelector('.picture__info').cloneNode(true);
+    var spanComments = paragraph.querySelector('.picture__comments').cloneNode();
+    var spanLikes = paragraph.querySelector('.picture__likes').cloneNode();
+    spanComments.textContent = pictureObjectsArray[i].comments.length;
+    spanLikes.textContent = pictureObjectsArray[i].likes;
+    reference.appendChild(pictureObjectsArray[i].img);
+    reference.appendChild(paragraph);
+    documentFragmentVar.appendChild(reference);
+  }
+  var section = document.querySelector('.pictures');
+  section.appendChild(documentFragmentVar);
+};
+
+insertUsersPictures(createUsersPictures(25));
