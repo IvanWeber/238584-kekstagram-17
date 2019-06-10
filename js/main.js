@@ -18,10 +18,10 @@ var NAMES = [
   'Руслан',
 ];
 
-var getPhotosDescriptor = function (numberOfPhotos) {
+var getPhotosDescriptor = function (numberOfPictures) {
   var photosDescription = [];
 
-  for (var i = 0; i < numberOfPhotos; i++) {
+  for (var i = 0; i < numberOfPictures; i++) {
     photosDescription[i] =
             {
               url: 'photos/' + (i + 1) + '.jpg',
@@ -40,4 +40,31 @@ var getPhotosDescriptor = function (numberOfPhotos) {
   return photosDescription;
 };
 
-console.log(getPhotosDescriptor(25));
+var createUserPicture = function (numberOfPictures) {
+  var photosDescription = getPhotosDescriptor(numberOfPictures);
+  var template = document.querySelector('#picture');
+  var picture = template.content.querySelector('.picture').cloneNode(true);
+  var pictureObjectsArray = [];
+  for (var i = 0; i < photosDescription.length; i++) {
+    var templateContent = {
+      img: picture.querySelector('.picture__img').cloneNode(true),
+      likes: picture.querySelector('.picture__likes').cloneNode(true),
+      comments: [],
+    };
+    for (var j = 0; j < photosDescription[i].comments.length; j++) {
+      templateContent.comments[j] = picture.querySelector('.picture__likes').cloneNode(true);
+      templateContent.comments[j].textContent = photosDescription[i].comments[j].message;
+    }
+    templateContent.img.src = photosDescription[i].url;
+    templateContent.likes.textContent = photosDescription[i].likes;
+    pictureObjectsArray[i] = {
+      img: templateContent.img,
+      likes: templateContent.likes,
+      comments: [],
+    };
+    for (var j = 0; j < photosDescription[i].comments.length; j++) {
+      pictureObjectsArray[i].comments[j] = templateContent.comments[j];
+    }
+  }
+  return pictureObjectsArray;
+};
