@@ -65,7 +65,7 @@ var createUsersPictures = function (numberOfPictures) {
       likes: templateContent.likes,
       comments: [],
     };
-    for (var j = 0; j < photosDescription[i].comments.length; j++) {
+    for (j = 0; j < photosDescription[i].comments.length; j++) {
       pictureObjectsArray[i].comments[j] = templateContent.comments[j];
     }
   }
