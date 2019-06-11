@@ -1,10 +1,5 @@
 'use strict';
 
-var getRandomInt = function (min, max) {
-  var randomInt = Math.round(Math.random() * (max - min));
-  return randomInt;
-};
-
 var COMMENT_PHRASES = [
   'Всё отлично!',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
@@ -18,10 +13,15 @@ var NAMES = [
   'Руслан',
 ];
 
-var likesMinNumber = 15;
-var likesMaxNumber = 201;
+var LIKES_MIN_NUMBER = 15;
+var LIKES_MAX_NUMBER = 201;
 
-var getPhotosDescriptor = function (numberOfPictures) {
+var getRandomInt = function (min, max) {
+  var randomInt = Math.round(Math.random() * (max - min));
+  return randomInt;
+};
+
+var getPhotosDescriptor = function (numberOfPictures, likesMinNumber, likesMaxNumber) {
   var photosDescription = [];
 
   for (var i = 0; i < numberOfPictures; i++) {
@@ -43,8 +43,8 @@ var getPhotosDescriptor = function (numberOfPictures) {
   return photosDescription;
 };
 
-var createUsersPictures = function (numberOfPictures) {
-  var photosDescription = getPhotosDescriptor(numberOfPictures);
+var createUsersPictures = function (numberOfPictures, likesMinNumber, likesMaxNumber) {
+  var photosDescription = getPhotosDescriptor(numberOfPictures, likesMinNumber, likesMaxNumber);
   var template = document.querySelector('#picture');
   var picture = template.content.querySelector('.picture').cloneNode(true);
   var pictureObjectsArray = [];
@@ -96,4 +96,4 @@ var insertDocumentFragment = function (pictureDocumentFragment, parentClass) {
   section.appendChild(pictureDocumentFragment);
 };
 
-insertDocumentFragment(getPictureDocumentFragment(createUsersPictures(25)), 'pictures');
+insertDocumentFragment(getPictureDocumentFragment(createUsersPictures(25, LIKES_MIN_NUMBER, LIKES_MAX_NUMBER)), 'pictures');
