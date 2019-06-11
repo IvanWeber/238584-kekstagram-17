@@ -72,9 +72,9 @@ var createUsersPictures = function (numberOfPictures) {
   return pictureObjectsArray;
 };
 
-var insertUsersPictures = function (pictureObjectsArray) {
+var getPictureDocumentFragment = function (pictureObjectsArray) {
 
-  var documentFragmentVar = new DocumentFragment();
+  var pictureDocumentFragment = new DocumentFragment();
 
   for (var i = 0; i < pictureObjectsArray.length; i++) {
     var template = document.querySelector('#picture').cloneNode(true);
@@ -86,10 +86,14 @@ var insertUsersPictures = function (pictureObjectsArray) {
     spanLikes.textContent = pictureObjectsArray[i].likes;
     reference.appendChild(pictureObjectsArray[i].img);
     reference.appendChild(paragraph);
-    documentFragmentVar.appendChild(reference);
+    pictureDocumentFragment.appendChild(reference);
   }
-  var section = document.querySelector('.pictures');
-  section.appendChild(documentFragmentVar);
-};
+  return pictureDocumentFragment;
+}
 
-insertUsersPictures(createUsersPictures(25));
+var insertDocumentFragment = function (pictureDocumentFragment, parentClass) {
+  var section = document.querySelector('.' + parentClass);
+  section.appendChild(pictureDocumentFragment);
+}
+
+insertDocumentFragment(getPictureDocumentFragment(createUsersPictures(25)), 'pictures');
