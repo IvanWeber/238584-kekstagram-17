@@ -95,5 +95,5 @@ var insertDocumentFragment = function (pictureDocumentFragment, parentClass) {
   var section = document.querySelector('.' + parentClass);
   section.appendChild(pictureDocumentFragment);
 };
-console.log(getPictureDocumentFragment(createUsersPictures(25)), 'pictures');
+
 insertDocumentFragment(getPictureDocumentFragment(createUsersPictures(25)), 'pictures');
