@@ -28,8 +28,8 @@ var getPhotosDescriptor = function (numberOfPictures) {
               likes: getRandomInt(15, 201),
               comments: [],
             };
-    var jMax = getRandomInt(0, 2);
-    for (var j = 0; j <= jMax; j++) {
+    var maxNumberOfComments = getRandomInt(0, 2); // 0 - 1 комментарий, 1 - 2 комментария, 2 - 3 комментария
+    for (var j = 0; j <= maxNumberOfComments; j++) {
       photosDescription[i].comments[j] = {
         avatar: 'img/avatar-' + (i + 1) + '.svg',
         message: COMMENT_PHRASES [getRandomInt(0, COMMENT_PHRASES.length - 1)],
