@@ -18,6 +18,9 @@ var NAMES = [
   'Руслан',
 ];
 
+var likesMinNumber = 15;
+var likesMaxNumber = 201;
+
 var getPhotosDescriptor = function (numberOfPictures) {
   var photosDescription = [];
 
@@ -25,7 +28,7 @@ var getPhotosDescriptor = function (numberOfPictures) {
     photosDescription[i] =
             {
               url: 'photos/' + (i + 1) + '.jpg',
-              likes: getRandomInt(15, 201),
+              likes: getRandomInt(likesMinNumber, likesMaxNumber),
               comments: [],
             };
     var maxNumberOfComments = getRandomInt(0, 2); // 0 - 1 комментарий, 1 - 2 комментария, 2 - 3 комментария
