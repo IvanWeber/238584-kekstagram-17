@@ -89,11 +89,11 @@ var getPictureDocumentFragment = function (pictureObjectsArray) {
     pictureDocumentFragment.appendChild(reference);
   }
   return pictureDocumentFragment;
-}
+};
 
 var insertDocumentFragment = function (pictureDocumentFragment, parentClass) {
   var section = document.querySelector('.' + parentClass);
   section.appendChild(pictureDocumentFragment);
-}
+};
 
 insertDocumentFragment(getPictureDocumentFragment(createUsersPictures(25)), 'pictures');
