@@ -45,7 +45,6 @@ var getPictureObjects = function (numberOfPictures) {
   return pictureObjects;
 };
 
-
 var getUserPictureDomElement = function (pictureObject) {
   var template = document.querySelector('#picture');
   var picture = template.content.querySelector('.picture').cloneNode(true);
@@ -77,4 +76,30 @@ var insertUserPictureDomElements = function (pictureDomElements) {
   }
 };
 
+var openEditFormOnDownloadPic = function () {
+  var inputElement = document.querySelector('.img-upload__input');
+  var pictureInputChangeHandler = function () {
+    var editFormElement = document.querySelector('.img-upload__overlay');
+    editFormElement.classList.remove('hidden');
+    // console.log(inputElement.attributes );
+    // console.log(inputElement);
+  };
+  inputElement.addEventListener('change', pictureInputChangeHandler);
+};
+
+var closeEditFormOnClickCloseButton = function () {
+  var closeButton = document.querySelector('.img-upload__cancel');
+  var closeButtonClickHandler = function () {
+    var editFormElement = document.querySelector('.img-upload__overlay');
+    editFormElement.classList.add('hidden');
+    // var inputElement = document.querySelector('.img-upload__input');
+    // console.log(inputElement.attributes );
+    // console.log(inputElement);
+  };
+  closeButton.addEventListener('click', closeButtonClickHandler);
+};
+
 insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(NUMBER_OF_PICTURES)));
+
+openEditFormOnDownloadPic();
+closeEditFormOnClickCloseButton();
