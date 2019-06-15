@@ -16,6 +16,8 @@ var NAMES = [
 var LIKES_MIN_NUMBER = 15;
 var LIKES_MAX_NUMBER = 201;
 
+var NUMBER_OF_PICTURES = 25;
+
 var getRandomInt = function (min, max) {
   var randomInt = Math.round(Math.random() * (max - min));
   return randomInt;
@@ -75,4 +77,4 @@ var insertUserPictureDomElements = function (pictureDomElements) {
   }
 };
 
-insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(25)));
+insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(NUMBER_OF_PICTURES)));
