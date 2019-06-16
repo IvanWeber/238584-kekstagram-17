@@ -99,7 +99,90 @@ var closeEditFormOnClickCloseButton = function () {
   closeButton.addEventListener('click', closeButtonClickHandler);
 };
 
+var changeFilterIntensityOnMouseUp = function () {
+  var imgUploadPreview = document.querySelector('.img-upload__preview');
+  var sliderPin = document.querySelector('.effect-level__pin');
+  var filterValueInput = document.querySelector('.effect-level__value');
+  var sliderPinMouseUpHandler = function () {
+    if (imgUploadPreview.classList.contains('effect-chrome')) {
+      filterValueInput.value = 20;
+      imgUploadPreview.style.filter = 'grayscale(' + filterValueInput.value * 0.01 + ')';
+    }
+    if (imgUploadPreview.classList.contains('effect-sepia')) {
+      filterValueInput.value = 20;
+      imgUploadPreview.style.filter = 'sepia(' + filterValueInput.value * 0.01 + ')';
+    }
+    if (imgUploadPreview.classList.contains('effect-marvin')) {
+      filterValueInput.value = 20;
+      imgUploadPreview.style.filter = 'invert(' + filterValueInput.value + '%)';
+    }
+    if (imgUploadPreview.classList.contains('effect-phobos')) {
+      filterValueInput.value = 20;
+      imgUploadPreview.style.filter = 'blur(' + filterValueInput.value * 0.03 + 'px)';
+    }
+    if (imgUploadPreview.classList.contains('effect-heat')) {
+      filterValueInput.value = 20;
+      imgUploadPreview.style.filter = 'brightness(' + filterValueInput.value * 0.03 + ')';
+    }
+  };
+  sliderPin.addEventListener('mouseup', sliderPinMouseUpHandler);
+};
+
+var changeFilterOnChangeFilterRadioButton = function () {
+  var radioButtons = document.querySelector('.effects__list').cloneNode(true);
+  var radioButtonChangeHandler = function (evt) {
+    var imgUploadPreview = document.querySelector('.img-upload__preview');
+    imgUploadPreview.classList.remove('effect-none');
+    imgUploadPreview.classList.remove('effect-chrome');
+    imgUploadPreview.classList.remove('effect-sepia');
+    imgUploadPreview.classList.remove('effect-marvin');
+    imgUploadPreview.classList.remove('effect-phobos');
+    imgUploadPreview.classList.remove('effect-heat');
+    imgUploadPreview.classList.add(evt.currentTarget.id);
+
+    var slider = document.querySelector('.img-upload__effect-level');
+    var filterValueInput = document.querySelector('.effect-level__value');
+
+    if (evt.currentTarget.id === 'effect-none') {
+      slider.classList.add('hidden');
+      imgUploadPreview.style.filter = 'none';
+    }
+    if (evt.currentTarget.id === 'effect-chrome') {
+      slider.classList.remove('hidden');
+      filterValueInput.value = 100;
+      imgUploadPreview.style.filter = 'grayscale(' + filterValueInput.value * 0.01 + ')';
+    }
+    if (evt.currentTarget.id === 'effect-sepia') {
+      slider.classList.remove('hidden');
+      filterValueInput.value = 100;
+      imgUploadPreview.style.filter = 'sepia(' + filterValueInput.value * 0.01 + ')';
+    }
+    if (evt.currentTarget.id === 'effect-marvin') {
+      slider.classList.remove('hidden');
+      filterValueInput.value = 100;
+      imgUploadPreview.style.filter = 'invert(' + filterValueInput.value + '%)';
+    }
+    if (evt.currentTarget.id === 'effect-phobos') {
+      slider.classList.remove('hidden');
+      filterValueInput.value = 100;
+      imgUploadPreview.style.filter = 'blur(' + filterValueInput.value * 0.03 + 'px)';
+    }
+    if (evt.currentTarget.id === 'effect-heat') {
+      slider.classList.remove('hidden');
+      filterValueInput.value = 100;
+      imgUploadPreview.style.filter = 'brightness(' + filterValueInput.value * 0.03 + ')';
+    }
+  };
+  for (var i = 1; i <= radioButtons.childElementCount; i++) {
+    var radioButton = document.querySelector('.effects__item:nth-child(' + i + ')').querySelector('.effects__radio');
+    radioButton.addEventListener('change', radioButtonChangeHandler);
+  }
+};
+
 insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(NUMBER_OF_PICTURES)));
 
 openEditFormOnDownloadPic();
 closeEditFormOnClickCloseButton();
+
+changeFilterOnChangeFilterRadioButton();
+changeFilterIntensityOnMouseUp();
