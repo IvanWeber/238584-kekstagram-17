@@ -81,8 +81,6 @@ var openEditFormOnDownloadPic = function () {
   var pictureInputChangeHandler = function () {
     var editFormElement = document.querySelector('.img-upload__overlay');
     editFormElement.classList.remove('hidden');
-    // console.log(inputElement.attributes );
-    // console.log(inputElement);
   };
   inputElement.addEventListener('change', pictureInputChangeHandler);
 };
@@ -92,11 +90,22 @@ var closeEditFormOnClickCloseButton = function () {
   var closeButtonClickHandler = function () {
     var editFormElement = document.querySelector('.img-upload__overlay');
     editFormElement.classList.add('hidden');
-    // var inputElement = document.querySelector('.img-upload__input');
-    // console.log(inputElement.attributes );
-    // console.log(inputElement);
+    var uploadForm = document.querySelector('.img-upload__form');
+    uploadForm.reset();
   };
   closeButton.addEventListener('click', closeButtonClickHandler);
+};
+
+var closeEditFormOnKeydownEsc = function () {
+  var editForm = document.querySelector('.img-upload__overlay');
+  var editFormEscKeydownHandler = function (evt) {
+    if (evt.keyCode === 27) {
+      editForm.classList.add('hidden');
+      var uploadForm = document.querySelector('.img-upload__form');
+      uploadForm.reset();
+    }
+  };
+  document.addEventListener('keydown', editFormEscKeydownHandler);
 };
 
 var changeFilterIntensityOnMouseUp = function () {
@@ -183,6 +192,8 @@ insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(NUMBER_
 
 openEditFormOnDownloadPic();
 closeEditFormOnClickCloseButton();
+closeEditFormOnKeydownEsc();
 
 changeFilterOnChangeFilterRadioButton();
 changeFilterIntensityOnMouseUp();
+
