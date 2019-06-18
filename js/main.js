@@ -118,36 +118,39 @@ var insertUserPictureDomElements = function (pictureDomElements) {
   }
 };
 
-var openEditFormOnDownloadPic = function () {
-  var inputElement = document.querySelector('.img-upload__input');
-  var pictureInputChangeHandler = function () {
-    var editFormElement = document.querySelector('.img-upload__overlay');
-    editFormElement.classList.remove('hidden');
-  };
-  inputElement.addEventListener('change', pictureInputChangeHandler);
-};
-
-var closeEditFormOnClickCloseButton = function () {
-  var closeButton = document.querySelector('.img-upload__cancel');
-  var closeButtonClickHandler = function () {
-    var editFormElement = document.querySelector('.img-upload__overlay');
-    editFormElement.classList.add('hidden');
-    var uploadForm = document.querySelector('.img-upload__form');
-    uploadForm.reset();
-  };
-  closeButton.addEventListener('click', closeButtonClickHandler);
-};
-
-var closeEditFormOnKeydownEsc = function () {
+var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
+  // OnKeydownEsc
   var editForm = document.querySelector('.img-upload__overlay');
   var editFormEscKeydownHandler = function (evt) {
     if (evt.keyCode === 27) {
       editForm.classList.add('hidden');
       var uploadForm = document.querySelector('.img-upload__form');
       uploadForm.reset();
+      document.removeEventListener('keydown', editFormEscKeydownHandler);
     }
   };
   document.addEventListener('keydown', editFormEscKeydownHandler);
+
+  // OnClickCloseButton
+  var closeButton = document.querySelector('.img-upload__cancel');
+  var closeButtonClickHandler = function () {
+    var editFormElement = document.querySelector('.img-upload__overlay');
+    editFormElement.classList.add('hidden');
+    var uploadForm = document.querySelector('.img-upload__form');
+    uploadForm.reset();
+    document.removeEventListener('keydown', editFormEscKeydownHandler);
+  };
+  closeButton.addEventListener('click', closeButtonClickHandler);
+};
+
+var openEditFormOnDownloadPic = function () {
+  var inputElement = document.querySelector('.img-upload__input');
+  var pictureInputChangeHandler = function () {
+    var editFormElement = document.querySelector('.img-upload__overlay');
+    editFormElement.classList.remove('hidden');
+    closeEditFormOnKeydownEscAndOnClickCloseButton();
+  };
+  inputElement.addEventListener('change', pictureInputChangeHandler);
 };
 
 var changeFilterIntensityOnMouseUp = function () {
@@ -199,8 +202,6 @@ var changeFilterOnChangeFilterRadioButton = function () {
 insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(NUMBER_OF_PICTURES)));
 
 openEditFormOnDownloadPic();
-closeEditFormOnClickCloseButton();
-closeEditFormOnKeydownEsc();
 
 changeFilterOnChangeFilterRadioButton();
 changeFilterIntensityOnMouseUp();
