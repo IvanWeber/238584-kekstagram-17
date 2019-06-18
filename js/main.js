@@ -5,6 +5,8 @@ var COMMENT_PHRASES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
 ];
 
+var MAX_NUMBER_OF_COMMENTS = 3;
+
 var NAMES = [
   'Артём',
   'Сергей',
@@ -54,6 +56,10 @@ var EFFECT_FILTERS_UNITS = [
   ')'
 ];
 
+var FILTER_VALUE_INPUT_TEST = 20;
+
+var FILTER_VALUE_INPUT_MAX = 100;
+
 var getRandomInt = function (min, max) {
   var randomInt = Math.round(Math.random() * (max - min));
   return randomInt;
@@ -69,7 +75,7 @@ var getPictureObjects = function (numberOfPictures) {
               likes: getRandomInt(LIKES_MIN_NUMBER, LIKES_MAX_NUMBER),
               comments: [],
             };
-    var maxNumberOfComments = getRandomInt(0, 2); // 0 - 1 комментарий, 1 - 2 комментария, 2 - 3 комментария
+    var maxNumberOfComments = getRandomInt(0, MAX_NUMBER_OF_COMMENTS - 1); // 0 - 1 комментарий, 1 - 2 комментария, 2 - 3 комментария
     for (var j = 0; j <= maxNumberOfComments; j++) {
       pictureObjects[i].comments[j] = {
         avatar: 'img/avatar-' + (i + 1) + '.svg',
@@ -151,7 +157,7 @@ var changeFilterIntensityOnMouseUp = function () {
   var sliderPinMouseUpHandler = function () {
     for (var i = 1; i <= EFFECT_TYPES.length; i++) {
       if (imgUploadPreview.classList.contains(EFFECT_TYPES[i])) {
-        filterValueInput.value = 20;
+        filterValueInput.value = FILTER_VALUE_INPUT_TEST;
         imgUploadPreview.style.filter = EFFECT_FILTERS[i] + filterValueInput.value * EFFECT_FILTERS_CALIBRATION_NUMBER[i] + EFFECT_FILTERS_UNITS[i];
       }
     }
@@ -179,7 +185,7 @@ var changeFilterOnChangeFilterRadioButton = function () {
     for (i = 1; i <= EFFECT_TYPES.length; i++) {
       if (evt.currentTarget.id === EFFECT_TYPES[i]) {
         slider.classList.remove('hidden');
-        filterValueInput.value = 100;
+        filterValueInput.value = FILTER_VALUE_INPUT_MAX;
         imgUploadPreview.style.filter = EFFECT_FILTERS[i] + filterValueInput.value * EFFECT_FILTERS_CALIBRATION_NUMBER[i] + EFFECT_FILTERS_UNITS[i];
       }
     }
