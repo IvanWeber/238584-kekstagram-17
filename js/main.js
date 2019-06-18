@@ -122,7 +122,7 @@ var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
   var editForm = document.querySelector('.img-upload__overlay');
   var editFormEscKeydownHandler = function (evt) {
-    if (evt.key === 27) {
+    if (evt.keyCode === 27) {
       editForm.classList.add('hidden');
       var uploadForm = document.querySelector('.img-upload__form');
       uploadForm.reset();
