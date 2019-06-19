@@ -60,6 +60,8 @@ var FILTER_VALUE_INPUT_TEST = 20;
 
 var FILTER_VALUE_INPUT_MAX = 100;
 
+var ESC_KEY_CODE = 27;
+
 var getRandomInt = function (min, max) {
   var randomInt = Math.round(Math.random() * (max - min));
   return randomInt;
@@ -122,7 +124,7 @@ var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
   var editForm = document.querySelector('.img-upload__overlay');
   var editFormEscKeydownHandler = function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === ESC_KEY_CODE) {
       editForm.classList.add('hidden');
       var uploadForm = document.querySelector('.img-upload__form');
       uploadForm.reset();
