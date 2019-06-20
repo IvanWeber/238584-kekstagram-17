@@ -189,6 +189,19 @@ var changeFilterOnChangeFilterRadioButton = function () {
   }
 };
 
+var stopEventPropagationOnKeydownEscOnCommentary = function () {
+  var commentaryElement = document.querySelector('.text__description');
+  var commentaryElementKeydownEscHandler = function (evt) {
+    if (evt.which === 27) {
+      evt.stopPropagation();
+    }
+  };
+  commentaryElement.addEventListener('keydown', commentaryElementKeydownEscHandler);
+};
+
+
+stopEventPropagationOnKeydownEscOnCommentary();
+
 insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(NUMBER_OF_PICTURES)));
 
 openEditFormOnDownloadPic();
