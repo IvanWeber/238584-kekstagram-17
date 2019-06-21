@@ -199,6 +199,26 @@ var stopEventPropagationOnKeydownEscOnCommentary = function () {
   commentaryElement.addEventListener('keydown', commentaryElementKeydownEscHandler);
 };
 
+var CHECKS = [{
+  checker: (value) => value.length < 140,
+  message: 'Длина сообщения должна быть меньше 140 символов',
+}
+];
+
+var initiateCheckOnChangeElementOfForm = function (elementSelector) {
+  var textarea = document.querySelector(elementSelector);
+  var commentaryElementChangeHandler = function () {
+    textarea.setCustomValidity('');
+    for (var i = 0; i < CHECKS.length; i++) {
+      if (!CHECKS[i].checker(textarea.value)) {
+        textarea.setCustomValidity(CHECKS[i].message);
+      }
+    }
+  };
+  textarea.addEventListener('input', commentaryElementChangeHandler);
+};
+
+initiateCheckOnChangeElementOfForm('.text__description');
 
 stopEventPropagationOnKeydownEscOnCommentary();
 
