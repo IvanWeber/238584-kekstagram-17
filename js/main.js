@@ -171,6 +171,12 @@ var changeFilterIntensityOnMouseUp = function () {
 var changeFilterOnChangeFilterRadioButton = function () {
   var radioButtons = document.querySelector('.effects__list').cloneNode(true);
   var radioButtonChangeHandler = function (evt) {
+
+    var LevelPin = document.querySelector('.effect-level__pin');
+    var LevelDepth = document.querySelector('.effect-level__depth');
+    LevelPin.style.left = LEVEL_PIN_MAX_LEFT + 'px';
+    LevelDepth.style.width = LEVEL_PIN_MAX_LEFT + 'px';
+
     var imgUploadPreview = document.querySelector('.img-upload__preview');
     imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
     imgUploadPreview.classList.add(evt.currentTarget.id);
@@ -222,10 +228,12 @@ var initiateCheckOnChangeElementOfForm = function (elementSelector) {
   textarea.addEventListener('input', commentaryElementChangeHandler);
 };
 
-var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelector, levelDepthSelector) {
+var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelector, levelDepthSelector, elementToBeProcessedSelector, intensityInputSelector) {
   var LevelPin = document.querySelector(LevelPinSelector);
   var LevelOuterLine = document.querySelector(LevelOuterBarSelector);
   var LevelDepth = document.querySelector(levelDepthSelector);
+
+  var elementToBeProcessed = document.querySelector(elementToBeProcessedSelector);
 
   var movePin = function (event) {
     event.preventDefault();
@@ -249,7 +257,11 @@ var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelec
 
     LevelDepth.style.width = shiftX + 'px';
 
-    return shiftX;
+    var intensityInput = document.querySelector(intensityInputSelector);
+
+    intensityInput.value = getValueOfLevelPin(LevelPinSelector);
+
+    elementToBeProcessed.style.filter = buildEffectStyle(EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
   };
 
   var effectLevelLineMousedownHandler = function (evt) {
@@ -261,7 +273,6 @@ var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelec
 
     var onMouseUp = function (upEvt) {
       movePin(upEvt);
-      console.log(getValueOfLevelPin('.effect-level__pin'));
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
@@ -275,7 +286,8 @@ var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelec
 
 var getValueOfLevelPin = function (LevelPinSelector) {
   var LevelPin = document.querySelector(LevelPinSelector);
-  return LevelPin.style.left;
+  var valueOfLevelPin = LevelPin.style.left.substring(0, LevelPin.style.left.length - 2) * FILTER_VALUE_INPUT_MAX / LEVEL_PIN_MAX_LEFT;
+  return valueOfLevelPin;
 };
 
 initiateCheckOnChangeElementOfForm('.text__description');
@@ -289,4 +301,4 @@ openEditFormOnDownloadPic();
 changeFilterOnChangeFilterRadioButton();
 changeFilterIntensityOnMouseUp();
 
-initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth');
+initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth', '.img-upload__preview', '.effect-level__value');
