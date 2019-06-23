@@ -172,10 +172,10 @@ var changeFilterOnChangeFilterRadioButton = function () {
   var radioButtons = document.querySelector('.effects__list').cloneNode(true);
   var radioButtonChangeHandler = function (evt) {
 
-    var LevelPin = document.querySelector('.effect-level__pin');
-    var LevelDepth = document.querySelector('.effect-level__depth');
-    LevelPin.style.left = LEVEL_PIN_MAX_LEFT + 'px';
-    LevelDepth.style.width = LEVEL_PIN_MAX_LEFT + 'px';
+    var levelPin = document.querySelector('.effect-level__pin');
+    var levelDepth = document.querySelector('.effect-level__depth');
+    levelPin.style.left = LEVEL_PIN_MAX_LEFT + 'px';
+    levelDepth.style.width = LEVEL_PIN_MAX_LEFT + 'px';
 
     var imgUploadPreview = document.querySelector('.img-upload__preview');
     imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
@@ -286,8 +286,8 @@ var initiateLevelPinDrugAndDrop = function (levelPinSelector, levelOuterBarSelec
   levelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
 };
 
-var getValueOfLevelPin = function (LevelPinSelector) {
-  var levelPin = document.querySelector(LevelPinSelector);
+var getValueOfLevelPin = function (levelPinSelector) {
+  var levelPin = document.querySelector(levelPinSelector);
   var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * FILTER_VALUE_INPUT_MAX / LEVEL_PIN_MAX_LEFT;
   return valueOfLevelPin;
 };
