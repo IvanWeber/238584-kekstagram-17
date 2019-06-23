@@ -55,6 +55,10 @@ var FILTER_VALUE_INPUT_MAX = 100;
 
 var ESC_KEY_CODE = 27;
 
+var GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS = 20;
+
+var EFFECT_LEVEL_PIN_MAX_LEFT = 452;
+
 var getRandomInt = function (min, max) {
   var randomInt = Math.round(Math.random() * (max - min));
   return randomInt;
@@ -218,6 +222,40 @@ var initiateCheckOnChangeElementOfForm = function (elementSelector) {
   textarea.addEventListener('input', commentaryElementChangeHandler);
 };
 
+var initiateEffectLevelPinDrugAndDrop = function () {
+  var effectLevelPin = document.querySelector('.effect-level__pin');
+  var effectLevelOuterLine = document.querySelector('.img-upload__effect-level');
+  var effectLevelDepth = document.querySelector('.effect-level__depth');
+
+  var effectLevelLineMousedownHandler = function (evt) {
+    evt.preventDefault();
+
+    var rect = effectLevelOuterLine.getBoundingClientRect();
+
+    var shift = {
+      x: evt.clientX - rect.x
+    };
+
+    var shiftX = shift.x - GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
+
+    if (shiftX < 0) {
+      shiftX = 0;
+    }
+    if (shiftX > EFFECT_LEVEL_PIN_MAX_LEFT) {
+      shiftX = EFFECT_LEVEL_PIN_MAX_LEFT;
+    }
+
+    effectLevelPin.style.left = shiftX  + 'px';
+
+    effectLevelDepth.style.width = shiftX + 'px';
+
+    var dragged = false;
+  };
+  effectLevelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
+};
+
+initiateEffectLevelPinDrugAndDrop();
+
 initiateCheckOnChangeElementOfForm('.text__description');
 
 stopEventPropagationOnKeydownEscOnCommentary();
@@ -228,4 +266,3 @@ openEditFormOnDownloadPic();
 
 changeFilterOnChangeFilterRadioButton();
 changeFilterIntensityOnMouseUp();
-
