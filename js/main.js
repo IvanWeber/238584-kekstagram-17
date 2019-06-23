@@ -55,6 +55,10 @@ var FILTER_VALUE_INPUT_MAX = 100;
 
 var ESC_KEY_CODE = 27;
 
+var GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS = 20;
+
+var LEVEL_PIN_MAX_LEFT = 452;
+
 var getRandomInt = function (min, max) {
   var randomInt = Math.round(Math.random() * (max - min));
   return randomInt;
@@ -167,6 +171,12 @@ var changeFilterIntensityOnMouseUp = function () {
 var changeFilterOnChangeFilterRadioButton = function () {
   var radioButtons = document.querySelector('.effects__list').cloneNode(true);
   var radioButtonChangeHandler = function (evt) {
+
+    var levelPin = document.querySelector('.effect-level__pin');
+    var levelDepth = document.querySelector('.effect-level__depth');
+    levelPin.style.left = LEVEL_PIN_MAX_LEFT + 'px';
+    levelDepth.style.width = LEVEL_PIN_MAX_LEFT + 'px';
+
     var imgUploadPreview = document.querySelector('.img-upload__preview');
     imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
     imgUploadPreview.classList.add(evt.currentTarget.id);
@@ -200,7 +210,9 @@ var stopEventPropagationOnKeydownEscOnCommentary = function () {
 };
 
 var CHECKS = [{
-  checker: (value) => value.length < 140,
+  checker: function (value) {
+    return value.length < 140;
+  },
   message: 'Длина сообщения должна быть меньше 140 символов',
 }
 ];
@@ -218,6 +230,68 @@ var initiateCheckOnChangeElementOfForm = function (elementSelector) {
   textarea.addEventListener('input', commentaryElementChangeHandler);
 };
 
+var initiateLevelPinDrugAndDrop = function (levelPinSelector, levelOuterBarSelector, levelDepthSelector, elementToBeProcessedSelector, intensityInputSelector) {
+  var levelPin = document.querySelector(levelPinSelector);
+  var levelOuterLine = document.querySelector(levelOuterBarSelector);
+  var levelDepth = document.querySelector(levelDepthSelector);
+
+  var elementToBeProcessed = document.querySelector(elementToBeProcessedSelector);
+
+  var movePin = function (event) {
+    event.preventDefault();
+
+    var rect = levelOuterLine.getBoundingClientRect();
+
+    var shift = {
+      x: event.clientX - rect.x
+    };
+
+    var shiftX = shift.x - GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
+
+    if (shiftX < 0) {
+      shiftX = 0;
+    }
+    if (shiftX > LEVEL_PIN_MAX_LEFT) {
+      shiftX = LEVEL_PIN_MAX_LEFT;
+    }
+
+    levelPin.style.left = shiftX + 'px';
+
+    levelDepth.style.width = shiftX + 'px';
+
+    var intensityInput = document.querySelector(intensityInputSelector);
+
+    intensityInput.value = getValueOfLevelPin(levelPinSelector);
+
+    elementToBeProcessed.style.filter = buildEffectStyle(EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
+  };
+
+  var effectLevelLineMousedownHandler = function (evt) {
+    movePin(evt);
+
+    var onMouseMove = function (moveEvt) {
+      movePin(moveEvt);
+    };
+
+    var onMouseUp = function (upEvt) {
+      movePin(upEvt);
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+  levelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
+};
+
+var getValueOfLevelPin = function (levelPinSelector) {
+  var levelPin = document.querySelector(levelPinSelector);
+  var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * FILTER_VALUE_INPUT_MAX / LEVEL_PIN_MAX_LEFT;
+  return valueOfLevelPin;
+};
+
 initiateCheckOnChangeElementOfForm('.text__description');
 
 stopEventPropagationOnKeydownEscOnCommentary();
@@ -229,3 +303,4 @@ openEditFormOnDownloadPic();
 changeFilterOnChangeFilterRadioButton();
 changeFilterIntensityOnMouseUp();
 
+initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth', '.img-upload__preview', '.effect-level__value');
