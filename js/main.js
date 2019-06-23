@@ -210,7 +210,9 @@ var stopEventPropagationOnKeydownEscOnCommentary = function () {
 };
 
 var CHECKS = [{
-  checker: (value) => value.length < 140,
+  checker: function (value) {
+    return value.length < 140;
+  },
   message: 'Длина сообщения должна быть меньше 140 символов',
 }
 ];
@@ -228,17 +230,17 @@ var initiateCheckOnChangeElementOfForm = function (elementSelector) {
   textarea.addEventListener('input', commentaryElementChangeHandler);
 };
 
-var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelector, levelDepthSelector, elementToBeProcessedSelector, intensityInputSelector) {
-  var LevelPin = document.querySelector(LevelPinSelector);
-  var LevelOuterLine = document.querySelector(LevelOuterBarSelector);
-  var LevelDepth = document.querySelector(levelDepthSelector);
+var initiateLevelPinDrugAndDrop = function (levelPinSelector, levelOuterBarSelector, levelDepthSelector, elementToBeProcessedSelector, intensityInputSelector) {
+  var levelPin = document.querySelector(levelPinSelector);
+  var levelOuterLine = document.querySelector(levelOuterBarSelector);
+  var levelDepth = document.querySelector(levelDepthSelector);
 
   var elementToBeProcessed = document.querySelector(elementToBeProcessedSelector);
 
   var movePin = function (event) {
     event.preventDefault();
 
-    var rect = LevelOuterLine.getBoundingClientRect();
+    var rect = levelOuterLine.getBoundingClientRect();
 
     var shift = {
       x: event.clientX - rect.x
@@ -253,13 +255,13 @@ var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelec
       shiftX = LEVEL_PIN_MAX_LEFT;
     }
 
-    LevelPin.style.left = shiftX + 'px';
+    levelPin.style.left = shiftX + 'px';
 
-    LevelDepth.style.width = shiftX + 'px';
+    levelDepth.style.width = shiftX + 'px';
 
     var intensityInput = document.querySelector(intensityInputSelector);
 
-    intensityInput.value = getValueOfLevelPin(LevelPinSelector);
+    intensityInput.value = getValueOfLevelPin(levelPinSelector);
 
     elementToBeProcessed.style.filter = buildEffectStyle(EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
   };
@@ -281,12 +283,12 @@ var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelec
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   };
-  LevelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
+  levelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
 };
 
 var getValueOfLevelPin = function (LevelPinSelector) {
-  var LevelPin = document.querySelector(LevelPinSelector);
-  var valueOfLevelPin = LevelPin.style.left.substring(0, LevelPin.style.left.length - 2) * FILTER_VALUE_INPUT_MAX / LEVEL_PIN_MAX_LEFT;
+  var levelPin = document.querySelector(LevelPinSelector);
+  var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * FILTER_VALUE_INPUT_MAX / LEVEL_PIN_MAX_LEFT;
   return valueOfLevelPin;
 };
 
