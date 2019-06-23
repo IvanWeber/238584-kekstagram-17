@@ -57,7 +57,7 @@ var ESC_KEY_CODE = 27;
 
 var GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS = 20;
 
-var EFFECT_LEVEL_PIN_MAX_LEFT = 452;
+var LEVEL_PIN_MAX_LEFT = 452;
 
 var getRandomInt = function (min, max) {
   var randomInt = Math.round(Math.random() * (max - min));
@@ -222,18 +222,18 @@ var initiateCheckOnChangeElementOfForm = function (elementSelector) {
   textarea.addEventListener('input', commentaryElementChangeHandler);
 };
 
-var initiateEffectLevelPinDrugAndDrop = function () {
-  var effectLevelPin = document.querySelector('.effect-level__pin');
-  var effectLevelOuterLine = document.querySelector('.img-upload__effect-level');
-  var effectLevelDepth = document.querySelector('.effect-level__depth');
+var initiateLevelPinDrugAndDrop = function (LevelPinSelector, LevelOuterBarSelector, levelDepthSelector) {
+  var LevelPin = document.querySelector(LevelPinSelector);
+  var LevelOuterLine = document.querySelector(LevelOuterBarSelector);
+  var LevelDepth = document.querySelector(levelDepthSelector);
 
-  var effectLevelLineMousedownHandler = function (evt) {
-    evt.preventDefault();
+  var movePin = function (event) {
+    event.preventDefault();
 
-    var rect = effectLevelOuterLine.getBoundingClientRect();
+    var rect = LevelOuterLine.getBoundingClientRect();
 
     var shift = {
-      x: evt.clientX - rect.x
+      x: event.clientX - rect.x
     };
 
     var shiftX = shift.x - GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
@@ -241,20 +241,42 @@ var initiateEffectLevelPinDrugAndDrop = function () {
     if (shiftX < 0) {
       shiftX = 0;
     }
-    if (shiftX > EFFECT_LEVEL_PIN_MAX_LEFT) {
-      shiftX = EFFECT_LEVEL_PIN_MAX_LEFT;
+    if (shiftX > LEVEL_PIN_MAX_LEFT) {
+      shiftX = LEVEL_PIN_MAX_LEFT;
     }
 
-    effectLevelPin.style.left = shiftX  + 'px';
+    LevelPin.style.left = shiftX + 'px';
 
-    effectLevelDepth.style.width = shiftX + 'px';
+    LevelDepth.style.width = shiftX + 'px';
 
-    var dragged = false;
+    return shiftX;
   };
-  effectLevelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
+
+  var effectLevelLineMousedownHandler = function (evt) {
+    movePin(evt);
+
+    var onMouseMove = function (moveEvt) {
+      movePin(moveEvt);
+    };
+
+    var onMouseUp = function (upEvt) {
+      movePin(upEvt);
+      console.log(getValueOfLevelPin('.effect-level__pin'));
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+  LevelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
 };
 
-initiateEffectLevelPinDrugAndDrop();
+var getValueOfLevelPin = function (LevelPinSelector) {
+  var LevelPin = document.querySelector(LevelPinSelector);
+  return LevelPin.style.left;
+};
 
 initiateCheckOnChangeElementOfForm('.text__description');
 
@@ -266,3 +288,5 @@ openEditFormOnDownloadPic();
 
 changeFilterOnChangeFilterRadioButton();
 changeFilterIntensityOnMouseUp();
+
+initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth');
