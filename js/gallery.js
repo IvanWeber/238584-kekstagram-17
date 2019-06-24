@@ -1,28 +1,33 @@
 'use strict';
+
 (function () {
+
+  var onError = function (message) {
+    console.error(message);
+  };
+
+  var onSuccess = function (data) {
+    console.log(data);
+    insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(getPictureObjects(data))));
+  };
+
+  window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
+
   var getRandomInt = function (min, max) {
     var randomInt = Math.round(Math.random() * (max - min));
     return randomInt;
   };
 
-  var getPictureObjects = function (numberOfPictures) {
+  var getPictureObjects = function (data) {
     var pictureObjects = [];
 
-    for (var i = 0; i < numberOfPictures; i++) {
+    for (var i = 0; i < data.length; i++) {
       pictureObjects[i] =
-            {
-              url: 'photos/' + (i + 1) + '.jpg',
-              likes: getRandomInt(window.data.LIKES_MIN_NUMBER, window.data.LIKES_MAX_NUMBER),
-              comments: [],
-            };
-      var maxNumberOfComments = getRandomInt(0, window.data.MAX_NUMBER_OF_COMMENTS - 1); // 0 - 1 комментарий, 1 - 2 комментария, 2 - 3 комментария
-      for (var j = 0; j <= maxNumberOfComments; j++) {
-        pictureObjects[i].comments[j] = {
-          avatar: 'img/avatar-' + (i + 1) + '.svg',
-          message: window.data.COMMENT_PHRASES [getRandomInt(0, window.data.COMMENT_PHRASES.length - 1)],
-          name: window.data.NAMES [getRandomInt(0, window.data.NAMES.length - 1)],
-        };
-      }
+          {
+            url: data[i].url,
+            likes: data[i].likes,
+            comments: data[i].comments,
+          };
     }
     return pictureObjects;
   };
@@ -59,5 +64,5 @@
   };
 
 
-  insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(window.data.NUMBER_OF_PICTURES)));
+  // insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(window.data.NUMBER_OF_PICTURES)));
 })();
