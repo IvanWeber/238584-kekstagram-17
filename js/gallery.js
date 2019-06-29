@@ -8,6 +8,7 @@
 
   var onSuccess = function (data) {
     console.log(data);
+    console.log(getRandomNElementsFromArray(10, data));
     insertUserPictureDomElements(getUserPictureDomElements(data));
   };
 
@@ -18,6 +19,16 @@
     imgFiltersElement.classList.remove('img-filters--inactive');
   };
   showImgFilters();
+
+  var getRandomNElementsFromArray = function (numberOfElements, array) {
+    var randomNElementsFromArray = [];
+    for (var i = 0; i < numberOfElements; i++) {
+      var randIndex = getRandomInt(0, array.length);
+      randomNElementsFromArray[randomNElementsFromArray.length] = array[randIndex];
+      array.splice(randIndex, 1);
+    }
+    return randomNElementsFromArray;
+  };
 
   var getRandomInt = function (min, max) {
     var randomInt = Math.round(Math.random() * (max - min));
