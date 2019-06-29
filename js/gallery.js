@@ -9,6 +9,7 @@
   var onSuccess = function (data) {
     console.log(data);
     console.log(getRandomNElementsFromArray(10, data));
+    console.log(getSortedArrayByDescending(data));
     insertUserPictureDomElements(getUserPictureDomElements(data));
   };
 
@@ -29,6 +30,14 @@
       arrayClone.splice(randIndex, 1);
     }
     return randomNElementsFromArray;
+  };
+
+  var getSortedArrayByDescending = function (array) {
+    var arrayClone = array.slice();
+    arrayClone.sort(function (a, b) {
+      return b.comments.length - a.comments.length;
+    });
+    return arrayClone;
   };
 
   var getRandomInt = function (min, max) {
