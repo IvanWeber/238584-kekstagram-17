@@ -21,11 +21,12 @@
   showImgFilters();
 
   var getRandomNElementsFromArray = function (numberOfElements, array) {
+    var arrayClone = array.slice();
     var randomNElementsFromArray = [];
     for (var i = 0; i < numberOfElements; i++) {
-      var randIndex = getRandomInt(0, array.length);
-      randomNElementsFromArray[randomNElementsFromArray.length] = array[randIndex];
-      array.splice(randIndex, 1);
+      var randIndex = getRandomInt(0, arrayClone.length);
+      randomNElementsFromArray[randomNElementsFromArray.length] = arrayClone[randIndex];
+      arrayClone.splice(randIndex, 1);
     }
     return randomNElementsFromArray;
   };
