@@ -7,10 +7,7 @@
   };
 
   var onSuccess = function (data) {
-    console.log(data);
-    console.log(getRandomNElementsFromArray(10, data));
-    console.log(getSortedArrayByDescending(data));
-    insertUserPictureDomElements(getUserPictureDomElements(data));
+    setFilterButtonClickHandler(data);
   };
 
   window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
@@ -25,7 +22,7 @@
     var arrayClone = array.slice();
     var randomNElementsFromArray = [];
     for (var i = 0; i < numberOfElements; i++) {
-      var randIndex = getRandomInt(0, arrayClone.length);
+      var randIndex = getRandomInt(0, arrayClone.length - 1);
       randomNElementsFromArray[randomNElementsFromArray.length] = arrayClone[randIndex];
       arrayClone.splice(randIndex, 1);
     }
@@ -38,6 +35,39 @@
       return b.comments.length - a.comments.length;
     });
     return arrayClone;
+  };
+
+  var setFilterButtonClickHandler = function (data) {
+    var filterPopular = document.getElementById('filter-popular');
+    var filterNew = document.getElementById('filter-new');
+    var filterDiscussed = document.getElementById('filter-discussed');
+    var filterPopularClickHandler = function () {
+      deleteSpecificItemsOfParent('.pictures', '.picture');
+      filterPopular.classList.remove('img-filters__button--active');
+      filterNew.classList.remove('img-filters__button--active');
+      filterDiscussed.classList.remove('img-filters__button--active');
+      filterPopular.classList.add('img-filters__button--active');
+      insertUserPictureDomElements(getUserPictureDomElements(data));
+    };
+    var filterNewClickHandler = function () {
+      deleteSpecificItemsOfParent('.pictures', '.picture');
+      filterPopular.classList.remove('img-filters__button--active');
+      filterNew.classList.remove('img-filters__button--active');
+      filterDiscussed.classList.remove('img-filters__button--active');
+      filterNew.classList.add('img-filters__button--active');
+      insertUserPictureDomElements(getUserPictureDomElements(getRandomNElementsFromArray(10, data)));
+    };
+    var filterDiscussedClickHandler = function () {
+      deleteSpecificItemsOfParent('.pictures', '.picture');
+      filterPopular.classList.remove('img-filters__button--active');
+      filterNew.classList.remove('img-filters__button--active');
+      filterDiscussed.classList.remove('img-filters__button--active');
+      filterDiscussed.classList.add('img-filters__button--active');
+      insertUserPictureDomElements(getUserPictureDomElements(getSortedArrayByDescending(data)));
+    };
+    filterPopular.addEventListener('click', filterPopularClickHandler);
+    filterNew.addEventListener('click', filterNewClickHandler);
+    filterDiscussed.addEventListener('click', filterDiscussedClickHandler);
   };
 
   var getRandomInt = function (min, max) {
@@ -82,6 +112,21 @@
     documentFragmentVar.appendChild(pictureDomElement);
     var parent = document.querySelector('.pictures');
     parent.appendChild(documentFragmentVar);
+  };
+
+  var deleteParentContent = function (parentSelector) {
+    var parent = document.querySelector(parentSelector);
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+  };
+
+  var deleteSpecificItemsOfParent = function (parentSelector, deleteElementsSelector) {
+    var elementsToBeDeleted = document.querySelectorAll(deleteElementsSelector);
+    var parent = document.querySelector(parentSelector);
+    for (var i = 0; i < elementsToBeDeleted.length; i++) {
+      parent.removeChild(elementsToBeDeleted[i]);
+    }
   };
 
   var insertUserPictureDomElements = function (pictureDomElements) {
