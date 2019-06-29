@@ -13,6 +13,12 @@
 
   window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
 
+  var showImgFilters = function () {
+    var imgFiltersElement = document.querySelector('.img-filters');
+    imgFiltersElement.classList.remove('img-filters--inactive');
+  };
+  showImgFilters();
+
   var getRandomInt = function (min, max) {
     var randomInt = Math.round(Math.random() * (max - min));
     return randomInt;
