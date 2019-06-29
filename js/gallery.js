@@ -62,7 +62,4 @@
       insertUserPictureDomElement(pictureDomElements[i]);
     }
   };
-
-
-  // insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(window.data.NUMBER_OF_PICTURES)));
 })();
