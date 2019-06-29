@@ -3,7 +3,13 @@
 (function () {
 
   var onError = function (message) {
-    console.error(message);
+    var messageElement = document.querySelector('p');
+    var bodyElement = document.querySelector('body');
+    messageElement.textContent = message;
+    messageElement.style.color = 'red';
+    messageElement.style.fontSize = '32px';
+    messageElement.style.backgroundColor = 'white';
+    bodyElement.insertBefore(messageElement, bodyElement.firstChild);
   };
 
   var onSuccess = function (data) {
@@ -76,20 +82,6 @@
     return randomInt;
   };
 
-  var getPictureObjects = function (data) {
-    var pictureObjects = [];
-
-    for (var i = 0; i < data.length; i++) {
-      pictureObjects[i] =
-          {
-            url: data[i].url,
-            likes: data[i].likes,
-            comments: data[i].comments,
-          };
-    }
-    return pictureObjects;
-  };
-
   var getUserPictureDomElement = function (pictureObject) {
     var template = document.querySelector('#picture');
     var picture = template.content.querySelector('.picture').cloneNode(true);
@@ -113,13 +105,6 @@
     documentFragmentVar.appendChild(pictureDomElement);
     var parent = document.querySelector('.pictures');
     parent.appendChild(documentFragmentVar);
-  };
-
-  var deleteParentContent = function (parentSelector) {
-    var parent = document.querySelector(parentSelector);
-    while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
-    }
   };
 
   var deleteSpecificItemsOfParent = function (parentSelector, deleteElementsSelector) {
