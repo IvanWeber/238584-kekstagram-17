@@ -7,6 +7,7 @@
   };
 
   var onSuccess = function (data) {
+    insertUserPictureDomElements(getUserPictureDomElements(data));
     setFilterButtonClickHandler(data);
   };
 
