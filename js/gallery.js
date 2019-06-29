@@ -8,7 +8,7 @@
 
   var onSuccess = function (data) {
     console.log(data);
-    insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(getPictureObjects(data))));
+    insertUserPictureDomElements(getUserPictureDomElements(data));
   };
 
   window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
