@@ -44,57 +44,40 @@
     return arrayClone;
   };
 
+  var createFilterHandler = function (filterPopular, filterNew, filterDiscussed, data) {
+    var lastTimeout = null;
+    return function (evt) {
+      deleteSpecificItemsOfParent('.pictures', '.picture');
+      filterPopular.classList.remove('img-filters__button--active');
+      filterNew.classList.remove('img-filters__button--active');
+      filterDiscussed.classList.remove('img-filters__button--active');
+      evt.target.classList.add('img-filters__button--active');
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+      lastTimeout = setTimeout(function () {
+        var selectedPics = null;
+        if (evt.target.id === 'filter-popular') {
+          selectedPics = data;
+        } else if (evt.target.id === 'filter-new') {
+          selectedPics = getRandomNElementsFromArray(15, data);
+        } else if (evt.target.id === 'filter-discussed') {
+          selectedPics = getSortedArrayByDescending(data);
+        }
+        var selectedPicsDomElements = getUserPictureDomElements(selectedPics);
+        insertUserPictureDomElements(selectedPicsDomElements);
+      }, 1000);
+    };
+  };
+
   var setFilterButtonClickHandler = function (data) {
     var filterPopular = document.getElementById('filter-popular');
     var filterNew = document.getElementById('filter-new');
     var filterDiscussed = document.getElementById('filter-discussed');
-    var lastTimeoutPop = null;
-    var lastTimeoutNew = null;
-    var lastTimeoutDiscussed = null;
-    var filterPopularClickHandler = function () {
-      if (lastTimeoutPop) {
-
-        clearTimeout(lastTimeoutPop);
-      }
-      lastTimeoutPop = setTimeout(function () {
-        deleteSpecificItemsOfParent('.pictures', '.picture');
-        filterPopular.classList.remove('img-filters__button--active');
-        filterNew.classList.remove('img-filters__button--active');
-        filterDiscussed.classList.remove('img-filters__button--active');
-        filterPopular.classList.add('img-filters__button--active');
-        insertUserPictureDomElements(getUserPictureDomElements(data));
-      }, 1000);
-    };
-    var filterNewClickHandler = function () {
-      if (lastTimeoutNew) {
-
-        clearTimeout(lastTimeoutNew);
-      }
-      lastTimeoutNew = setTimeout(function () {
-        deleteSpecificItemsOfParent('.pictures', '.picture');
-        filterPopular.classList.remove('img-filters__button--active');
-        filterNew.classList.remove('img-filters__button--active');
-        filterDiscussed.classList.remove('img-filters__button--active');
-        filterNew.classList.add('img-filters__button--active');
-        insertUserPictureDomElements(getUserPictureDomElements(getRandomNElementsFromArray(10, data)));
-      }, 1000);
-    };
-    var filterDiscussedClickHandler = function () {
-      if (lastTimeoutDiscussed) {
-        clearTimeout(lastTimeoutDiscussed);
-      }
-      lastTimeoutDiscussed = setTimeout(function () {
-        deleteSpecificItemsOfParent('.pictures', '.picture');
-        filterPopular.classList.remove('img-filters__button--active');
-        filterNew.classList.remove('img-filters__button--active');
-        filterDiscussed.classList.remove('img-filters__button--active');
-        filterDiscussed.classList.add('img-filters__button--active');
-        insertUserPictureDomElements(getUserPictureDomElements(getSortedArrayByDescending(data)));
-      }, 1000);
-    };
-    filterPopular.addEventListener('click', filterPopularClickHandler);
-    filterNew.addEventListener('click', filterNewClickHandler);
-    filterDiscussed.addEventListener('click', filterDiscussedClickHandler);
+    var filterHandler = createFilterHandler(filterPopular, filterNew, filterDiscussed, data);
+    filterPopular.addEventListener('click', filterHandler);
+    filterNew.addEventListener('click', filterHandler);
+    filterDiscussed.addEventListener('click', filterHandler);
   };
 
   var getRandomInt = function (min, max) {
