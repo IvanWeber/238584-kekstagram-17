@@ -3,33 +3,86 @@
 (function () {
 
   var onError = function (message) {
-    console.error(message);
+    var messageElement = document.querySelector('p');
+    var bodyElement = document.querySelector('body');
+    messageElement.textContent = message;
+    messageElement.style.color = 'red';
+    messageElement.style.fontSize = '32px';
+    messageElement.style.backgroundColor = 'white';
+    bodyElement.insertBefore(messageElement, bodyElement.firstChild);
   };
 
   var onSuccess = function (data) {
-    console.log(data);
-    insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(getPictureObjects(data))));
+    insertUserPictureDomElements(getUserPictureDomElements(data));
+    setFilterButtonClickHandler(data);
   };
 
   window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
 
+  var showImgFilters = function () {
+    var imgFiltersElement = document.querySelector('.img-filters');
+    imgFiltersElement.classList.remove('img-filters--inactive');
+  };
+  showImgFilters();
+
+  var getRandomNElementsFromArray = function (numberOfElements, array) {
+    var arrayClone = array.slice();
+    var randomNElementsFromArray = [];
+    for (var i = 0; i < numberOfElements; i++) {
+      var randIndex = getRandomInt(0, arrayClone.length - 1);
+      randomNElementsFromArray[randomNElementsFromArray.length] = arrayClone[randIndex];
+      arrayClone.splice(randIndex, 1);
+    }
+    return randomNElementsFromArray;
+  };
+
+  var getSortedArrayByDescending = function (array) {
+    var arrayClone = array.slice();
+    arrayClone.sort(function (a, b) {
+      return b.comments.length - a.comments.length;
+    });
+    return arrayClone;
+  };
+
+  var createFilterHandler = function (filterPopular, filterNew, filterDiscussed, data) {
+    var lastTimeout = null;
+    return function (evt) {
+      deleteSpecificItemsOfParent('.pictures', '.picture');
+      filterPopular.classList.remove('img-filters__button--active');
+      filterNew.classList.remove('img-filters__button--active');
+      filterDiscussed.classList.remove('img-filters__button--active');
+      evt.target.classList.add('img-filters__button--active');
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+      lastTimeout = setTimeout(function () {
+        var selectedPics = null;
+        if (evt.target.id === 'filter-popular') {
+          selectedPics = data;
+        } else if (evt.target.id === 'filter-new') {
+          selectedPics = getRandomNElementsFromArray(15, data);
+        } else if (evt.target.id === 'filter-discussed') {
+          selectedPics = getSortedArrayByDescending(data);
+        }
+        var selectedPicsDomElements = getUserPictureDomElements(selectedPics);
+        insertUserPictureDomElements(selectedPicsDomElements);
+      }, 1000);
+    };
+  };
+
+  var setFilterButtonClickHandler = function (data) {
+    var filterPopular = document.getElementById('filter-popular');
+    var filterNew = document.getElementById('filter-new');
+    var filterDiscussed = document.getElementById('filter-discussed');
+    var filterHandler = createFilterHandler(filterPopular, filterNew, filterDiscussed, data);
+    filterPopular.addEventListener('click', filterHandler);
+    filterNew.addEventListener('click', filterHandler);
+    filterDiscussed.addEventListener('click', filterHandler);
+  };
+
   var getRandomInt = function (min, max) {
     var randomInt = Math.round(Math.random() * (max - min));
     return randomInt;
-  };
-
-  var getPictureObjects = function (data) {
-    var pictureObjects = [];
-
-    for (var i = 0; i < data.length; i++) {
-      pictureObjects[i] =
-          {
-            url: data[i].url,
-            likes: data[i].likes,
-            comments: data[i].comments,
-          };
-    }
-    return pictureObjects;
   };
 
   var getUserPictureDomElement = function (pictureObject) {
@@ -57,12 +110,17 @@
     parent.appendChild(documentFragmentVar);
   };
 
+  var deleteSpecificItemsOfParent = function (parentSelector, deleteElementsSelector) {
+    var elementsToBeDeleted = document.querySelectorAll(deleteElementsSelector);
+    var parent = document.querySelector(parentSelector);
+    for (var i = 0; i < elementsToBeDeleted.length; i++) {
+      parent.removeChild(elementsToBeDeleted[i]);
+    }
+  };
+
   var insertUserPictureDomElements = function (pictureDomElements) {
     for (var i = 0; i < pictureDomElements.length; i++) {
       insertUserPictureDomElement(pictureDomElements[i]);
     }
   };
-
-
-  // insertUserPictureDomElements(getUserPictureDomElements(getPictureObjects(window.data.NUMBER_OF_PICTURES)));
 })();
