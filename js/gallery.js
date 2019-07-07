@@ -15,6 +15,7 @@
   var onSuccess = function (data) {
     insertUserPictureDomElements(getUserPictureDomElements(data));
     setFilterButtonClickHandler(data);
+    insertDataForBigPic(data);
   };
 
   window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
@@ -127,6 +128,15 @@
   var deleteHiddenFromBigPicture = function () {
     var bigPicture = document.querySelector('.big-picture');
     bigPicture.classList.remove('hidden');
+  };
+
+  var insertDataForBigPic = function (data) {
+    document.querySelector('.big-picture__img').src = data[0].url;
+    document.querySelector('.likes-count').textContent = data[0].likes;
+    document.querySelector('.comments-count').textContent = data[0].comments;
+    document.querySelector('.social__caption').textContent = data[0].description;
+    document.querySelector('.social__comment-count').classList.add('visually-hidden');
+    document.querySelector('.comments-loader').classList.add('visually-hidden');
   };
 
   deleteHiddenFromBigPicture();
