@@ -123,4 +123,11 @@
       insertUserPictureDomElement(pictureDomElements[i]);
     }
   };
+
+  var deleteHiddenFromBigPicture = function () {
+    var bigPicture = document.querySelector('.big-picture');
+    bigPicture.classList.remove('hidden');
+  };
+
+  deleteHiddenFromBigPicture();
 })();
