@@ -15,7 +15,7 @@
   var onSuccess = function (data) {
     insertUserPictureDomElements(getUserPictureDomElements(data));
     setFilterButtonClickHandler(data);
-    insertDataForBigPic(data);
+    initialiseOpenBigPicOnClickThumbnail(data);
   };
 
   window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
@@ -67,6 +67,7 @@
         }
         var selectedPicsDomElements = getUserPictureDomElements(selectedPics);
         insertUserPictureDomElements(selectedPicsDomElements);
+        initialiseOpenBigPicOnClickThumbnail(data);
       }, 1000);
     };
   };
@@ -126,15 +127,16 @@
   };
 
   var deleteHiddenFromBigPicture = function () {
-    var bigPicture = document.querySelector('.big-picture');
-    bigPicture.classList.remove('hidden');
+    var bigPic = document.querySelector('.big-picture');
+    bigPic.classList.remove('hidden');
   };
 
-  var insertDataForBigPic = function (data) {
-    document.querySelector('.big-picture__img').src = data[0].url;
-    document.querySelector('.likes-count').textContent = data[0].likes;
-    document.querySelector('.comments-count').textContent = data[0].comments.length;
-    document.querySelector('.social__caption').textContent = data[0].description;
+  var insertDataForBigPic = function (element) {
+    deleteHiddenFromBigPicture();
+    document.querySelector('.big-picture__img img').src = element.url;
+    document.querySelector('.likes-count').textContent = element.likes;
+    document.querySelector('.comments-count').textContent = element.comments.length;
+    document.querySelector('.social__caption').textContent = element.description;
     document.querySelector('.social__comment-count').classList.add('visually-hidden');
     document.querySelector('.comments-loader').classList.add('visually-hidden');
     var socialComment = document.querySelector('.social__comment').cloneNode(true);
@@ -142,13 +144,48 @@
     while (socialComments.firstChild) {
       socialComments.removeChild(socialComments.firstChild);
     }
-    for (var i = 0; i < data[0].comments.length; i++) {
+    for (var i = 0; i < element.comments.length; i++) {
       var newSocialComment = socialComment.cloneNode(true);
       newSocialComment.querySelector('.social__picture').src = 'img/avatar-' + getRandomInt(1, 6) + '.svg';
-      newSocialComment.querySelector('.social__text').textContent = data[0].comments[i].message;
+      newSocialComment.querySelector('.social__text').textContent = element.comments[i].message;
       socialComments.appendChild(newSocialComment);
     }
   };
 
-  deleteHiddenFromBigPicture();
+  var initialiseHideBigPicOnEsc = function () {
+    var bigPic = document.querySelector('.big-picture');
+    var bigPicEscKeydownHandler = function (evt) {
+      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+        bigPic.classList.add('hidden');
+      }
+    };
+    document.addEventListener('keydown', bigPicEscKeydownHandler);
+  };
+
+  var initialiseHideBigPicOnClickCloseButton = function () {
+    var bigPic = document.querySelector('.big-picture');
+    var picCancel = document.getElementById('picture-cancel');
+    var PicCancelClickHandler = function () {
+      bigPic.classList.add('hidden');
+    };
+    picCancel.addEventListener('click', PicCancelClickHandler);
+  };
+
+  var initialiseOpenBigPicOnClickThumbnail = function (data) {
+    var thumbNailsCollection = document.querySelectorAll('.picture__img');
+    var thumbnailClickHandler = function (evt) {
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].url === evt.currentTarget.getAttribute('src')) {
+          var elementToBeInserted = data[i];
+        }
+      }
+      insertDataForBigPic(elementToBeInserted);
+    };
+    for (var i = 0; i < thumbNailsCollection.length; i++) {
+      thumbNailsCollection[i].addEventListener('click', thumbnailClickHandler);
+    }
+  };
+
+  initialiseHideBigPicOnEsc();
+  initialiseHideBigPicOnClickCloseButton();
 })();
