@@ -126,8 +126,8 @@
   };
 
   var deleteHiddenFromBigPicture = function () {
-    var bigPicture = document.querySelector('.big-picture');
-    bigPicture.classList.remove('hidden');
+    var bigPic = document.querySelector('.big-picture');
+    bigPic.classList.remove('hidden');
   };
 
   var insertDataForBigPic = function (data) {
@@ -151,4 +151,26 @@
   };
 
   deleteHiddenFromBigPicture();
+
+  var initialiseHideBigPicOnEsc = function () {
+    var bigPic = document.querySelector('.big-picture');
+    var bigPicEscKeydownHandler = function (evt) {
+      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+        bigPic.classList.add('hidden');
+      }
+    };
+    document.addEventListener('keydown', bigPicEscKeydownHandler);
+  };
+
+  var initialiseHideBigPicOnClickCloseButton = function () {
+    var bigPic = document.querySelector('.big-picture');
+    var picCancel = document.getElementById('picture-cancel');
+    var PicCancelClickHandler = function () {
+      bigPic.classList.add('hidden');
+    };
+    picCancel.addEventListener('click', PicCancelClickHandler);
+  };
+
+  initialiseHideBigPicOnEsc();
+  initialiseHideBigPicOnClickCloseButton();
 })();
