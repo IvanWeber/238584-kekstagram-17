@@ -131,26 +131,6 @@
     bigPic.classList.remove('hidden');
   };
 
-  var insertDataForBigPic = function (data) {
-    document.querySelector('.big-picture__img').src = data[0].url;
-    document.querySelector('.likes-count').textContent = data[0].likes;
-    document.querySelector('.comments-count').textContent = data[0].comments.length;
-    document.querySelector('.social__caption').textContent = data[0].description;
-    document.querySelector('.social__comment-count').classList.add('visually-hidden');
-    document.querySelector('.comments-loader').classList.add('visually-hidden');
-    var socialComment = document.querySelector('.social__comment').cloneNode(true);
-    var socialComments = document.querySelector('.social__comments');
-    while (socialComments.firstChild) {
-      socialComments.removeChild(socialComments.firstChild);
-    }
-    for (var i = 0; i < data[0].comments.length; i++) {
-      var newSocialComment = socialComment.cloneNode(true);
-      newSocialComment.querySelector('.social__picture').src = 'img/avatar-' + getRandomInt(1, 6) + '.svg';
-      newSocialComment.querySelector('.social__text').textContent = data[0].comments[i].message;
-      socialComments.appendChild(newSocialComment);
-    }
-  };
-
   var insertDataForBigPic = function (element) {
     deleteHiddenFromBigPicture();
     document.querySelector('.big-picture__img img').src = element.url;
