@@ -92,7 +92,7 @@
     commentaryElement.addEventListener('keydown', commentaryElementKeydownEscHandler);
   };
 
-  var CHECKS = [{
+  var TEXTAREA_CHECKS = [{
     checker: function (value) {
       return value.length < 140;
     },
@@ -100,17 +100,45 @@
   }
   ];
 
-  var initiateCheckOnChangeElementOfForm = function (elementSelector) {
-    var textarea = document.querySelector(elementSelector);
+  var HASHTAGS_CHECKS = [
+    {
+      checker: function (value) {
+        return value.length < 140;
+      },
+      message: 'Длина сообщения должна быть меньше 140 символов',
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        return valueArray[0] === '#';
+      },
+      message: 'Поле должно начинаться с символа #'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        for (var i = 0; i < valueArray.length; i++) {
+          if (valueArray[i] === ' ' && valueArray[i + 1] !== '#') {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Каждый новый хэштег после пробела должен начинаться с символа #'
+    }
+  ];
+
+  var initiateCheckOnChangeElementOfForm = function (elementSelector, checks) {
+    var element = document.querySelector(elementSelector);
     var commentaryElementChangeHandler = function () {
-      textarea.setCustomValidity('');
-      for (var i = 0; i < CHECKS.length; i++) {
-        if (!CHECKS[i].checker(textarea.value)) {
-          textarea.setCustomValidity(CHECKS[i].message);
+      element.setCustomValidity('');
+      for (var i = 0; i < checks.length; i++) {
+        if (!checks[i].checker(element.value)) {
+          element.setCustomValidity(checks[i].message);
         }
       }
     };
-    textarea.addEventListener('input', commentaryElementChangeHandler);
+    element.addEventListener('input', commentaryElementChangeHandler);
   };
 
   var initiateLevelPinDrugAndDrop = function (levelPinSelector, levelOuterBarSelector, levelDepthSelector, elementToBeProcessedSelector, intensityInputSelector) {
@@ -175,7 +203,9 @@
     return valueOfLevelPin;
   };
 
-  initiateCheckOnChangeElementOfForm('.text__description');
+  initiateCheckOnChangeElementOfForm('.text__description', TEXTAREA_CHECKS);
+
+  initiateCheckOnChangeElementOfForm('.text__hashtags', HASHTAGS_CHECKS);
 
   stopEventPropagationOnKeydownEscOnCommentary();
 
