@@ -18,7 +18,7 @@
     initialiseOpenBigPicOnClickThumbnail(data);
   };
 
-  window.load(' https://js.dump.academy/kekstagram/data', onSuccess, onError);
+  window.load('https://js.dump.academy/kekstagram/data', onSuccess, onError);
 
   var showImgFilters = function () {
     var imgFiltersElement = document.querySelector('.img-filters');
