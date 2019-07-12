@@ -172,7 +172,7 @@
 
       var intensityInput = document.querySelector(intensityInputSelector);
 
-      intensityInput.value = getValueOfLevelPin(levelPinSelector);
+      intensityInput.value = Math.round(getValueOfLevelPin(levelPinSelector));
 
       elementToBeProcessed.style.filter = buildEffectStyle(window.data.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
     };
@@ -202,6 +202,126 @@
     var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.data.FILTER_VALUE_INPUT_MAX / window.data.LEVEL_PIN_MAX_LEFT;
     return valueOfLevelPin;
   };
+
+  var onSuccessPost = function () {
+
+    var editForm = document.querySelector('.img-upload__overlay');
+    editForm.classList.add('hidden');
+
+    var template = document.querySelector('#success').cloneNode(true);
+    var successSection = template.content.querySelector('.success').cloneNode(true);
+    var main = document.querySelector('main');
+    main.insertBefore(successSection, main.firstChild);
+    var successButton = main.querySelector('.success__button');
+
+    var successButtonClickHandler = function () {
+      main.removeChild(successSection);
+      var uploadForm = document.querySelector('.img-upload__form');
+      uploadForm.reset();
+      successButton.removeEventListener('click', successButtonClickHandler);
+      document.removeEventListener('keydown', successSectionKeydownEscHandler);
+      document.removeEventListener('click', successSectionOutClickHandler);
+    };
+
+    var successSectionKeydownEscHandler = function (evt) {
+      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+        main.removeChild(successSection);
+        var uploadForm = document.querySelector('.img-upload__form');
+        uploadForm.reset();
+        successButton.removeEventListener('click', successButtonClickHandler);
+        document.removeEventListener('keydown', successSectionKeydownEscHandler);
+        document.removeEventListener('click', successSectionOutClickHandler);
+      }
+    };
+
+    var successSectionOutClickHandler = function (evt) {
+      if (document.querySelector('.success__inner') !== null && !document.querySelector('.success__inner') !== undefined) {
+        if (!document.querySelector('.success__inner').contains(evt.target)) {
+          successButton.removeEventListener('click', successButtonClickHandler);
+          document.removeEventListener('keydown', successSectionKeydownEscHandler);
+          document.removeEventListener('click', successSectionOutClickHandler);
+          main.removeChild(successSection);
+          var uploadForm = document.querySelector('.img-upload__form');
+          uploadForm.reset();
+        }
+      }
+    };
+
+    successButton.addEventListener('click', successButtonClickHandler);
+    document.addEventListener('keydown', successSectionKeydownEscHandler);
+    document.addEventListener('click', successSectionOutClickHandler);
+  };
+
+  var onErrorPost = function () {
+
+    var editForm = document.querySelector('.img-upload__overlay');
+    editForm.classList.add('hidden');
+
+    var template = document.querySelector('#error').cloneNode(true);
+    var errorSection = template.content.querySelector('.error').cloneNode(true);
+    var main = document.querySelector('main');
+    main.insertBefore(errorSection, main.firstChild);
+    var tryAgainButton = main.querySelectorAll('.error__button')[0];
+    var uploadAnotherFileButton = main.querySelectorAll('.error__button')[1];
+
+    var tryAgainButtonClickHandler = function () {
+      main.removeChild(errorSection);
+      window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
+    };
+
+    var uploadAnotherFileButtonClickHandler = function () {
+      main.removeChild(errorSection);
+      var uploadForm = document.querySelector('.img-upload__form');
+      uploadForm.reset();
+      document.querySelector('.img-upload__control').click();
+    };
+
+    var errorSectionKeydownEscHandler = function (evt) {
+      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+        main.removeChild(errorSection);
+        var uploadForm = document.querySelector('.img-upload__form');
+        uploadForm.reset();
+        document.removeEventListener('keydown', errorSectionKeydownEscHandler);
+        document.removeEventListener('click', errorSectionOutClickHandler);
+      }
+    };
+
+    var errorSectionOutClickHandler = function (evt) {
+      if (document.querySelector('.error__inner') !== null && !document.querySelector('.error__inner') !== undefined) {
+        if (!document.querySelector('.error__inner').contains(evt.target)) {
+          document.removeEventListener('keydown', errorSectionKeydownEscHandler);
+          document.removeEventListener('click', errorSectionOutClickHandler);
+          main.removeChild(errorSection);
+          var uploadForm = document.querySelector('.img-upload__form');
+          uploadForm.reset();
+        }
+      }
+    };
+
+    tryAgainButton.addEventListener('click', tryAgainButtonClickHandler);
+    uploadAnotherFileButton.addEventListener('click', uploadAnotherFileButtonClickHandler);
+
+    document.addEventListener('keydown', errorSectionKeydownEscHandler);
+    document.addEventListener('click', errorSectionOutClickHandler);
+  };
+
+  var initiateAjaxOnFormSubmit = function () {
+    // var submitButton = document.querySelector('.img-upload__submit');
+    // var submitButtonClickHandler = function (evt) {
+    //   evt.preventDefault();
+    //   window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
+    // };
+    // submitButton.addEventListener('click', submitButtonClickHandler);
+
+    var form = document.querySelector('.img-upload__form');
+    var formSubmitHandler = function (evt) {
+      evt.preventDefault();
+      window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
+    };
+    form.addEventListener('submit', formSubmitHandler);
+  };
+
+  initiateAjaxOnFormSubmit();
 
   initiateCheckOnChangeElementOfForm('.text__description', TEXTAREA_CHECKS);
 
