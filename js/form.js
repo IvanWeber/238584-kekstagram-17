@@ -108,7 +108,7 @@
     commentaryElement.addEventListener('keydown', commentaryElementKeydownEscHandler);
   };
 
-  var TEXTAREA_CHECKS = [{
+  var TextareaChecks = [{
     checker: function (value) {
       return value.length < 140;
     },
@@ -116,7 +116,7 @@
   }
   ];
 
-  var HASHTAGS_CHECKS = [
+  var HashtagsChecks = [
     {
       checker: function (value) {
         return value.length < 140;
@@ -377,9 +377,9 @@
 
   initiateAjaxOnFormSubmit();
 
-  initiateCheckOnChangeElementOfForm('.text__description', TEXTAREA_CHECKS);
+  initiateCheckOnChangeElementOfForm('.text__description', TextareaChecks);
 
-  initiateCheckOnChangeElementOfForm('.text__hashtags', HASHTAGS_CHECKS);
+  initiateCheckOnChangeElementOfForm('.text__hashtags', HashtagsChecks);
 
   stopEventPropagationOnKeydownEscOnCommentary();
 

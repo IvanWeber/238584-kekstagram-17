@@ -32,7 +32,7 @@
 
   var LEVEL_PIN_MAX_LEFT = 452;
 
-  var EFFECTS = {
+  var Effects = {
     'effect-chrome': {
       FILTER: 'grayscale',
       MAX: 1,
@@ -72,6 +72,6 @@
     ESC_KEY_CODE: ESC_KEY_CODE,
     GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS: GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS,
     LEVEL_PIN_MAX_LEFT: LEVEL_PIN_MAX_LEFT,
-    EFFECTS: EFFECTS
+    EFFECTS: Effects
   };
 })();
