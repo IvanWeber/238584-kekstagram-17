@@ -101,7 +101,7 @@
   var stopEventPropagationOnKeydownEscOnCommentary = function () {
     var commentaryElement = document.querySelector('.text__description');
     var commentaryElementKeydownEscHandler = function (evt) {
-      if (evt.which === 27) {
+      if (evt.keyCode === window.data.ESC_KEY_CODE) {
         evt.stopPropagation();
       }
     };
