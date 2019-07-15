@@ -330,7 +330,36 @@
     fileInput.addEventListener('change', fileInputChangeHandler);
   };
 
+  var initiateChangeImgSizeOnClickPlusMinusButtons = function () {
+    var minusButton = document.querySelector('.scale__control--smaller');
+    var plusButton = document.querySelector('.scale__control--bigger');
+    var sizeInput = document.querySelector('.scale__control--value');
+    var image = document.querySelector('.img-upload__preview img');
+    var imageSize = 55;
+    image.style.width = imageSize + '%';
+    var minusButtonClickHandler = function () {
+      if (imageSize >= 1 && imageSize <= 100) {
+        imageSize = imageSize - 1;
+        image.style.width = imageSize + '%';
+        sizeInput.value = imageSize + '%';
+        console.log(imageSize);
+      }
+    };
+    var plusButtonClickHandler = function () {
+      if (imageSize >= 0 && imageSize <= 99) {
+        imageSize = imageSize + 1;
+        image.style.width = imageSize + '%';
+        sizeInput.value = imageSize + '%';
+        console.log(imageSize);
+      }
+    };
+    minusButton.addEventListener('click', minusButtonClickHandler);
+    plusButton.addEventListener('click', plusButtonClickHandler);
+  };
+
   initiateInsertImgOnChangeFileInput();
+
+  initiateChangeImgSizeOnClickPlusMinusButtons();
 
   initiateAjaxOnFormSubmit();
 
