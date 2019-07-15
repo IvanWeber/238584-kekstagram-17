@@ -342,7 +342,6 @@
         imageSize = imageSize - 1;
         image.style.width = imageSize + '%';
         sizeInput.value = imageSize + '%';
-        console.log(imageSize);
       }
     };
     var plusButtonClickHandler = function () {
@@ -350,7 +349,6 @@
         imageSize = imageSize + 1;
         image.style.width = imageSize + '%';
         sizeInput.value = imageSize + '%';
-        console.log(imageSize);
       }
     };
     minusButton.addEventListener('click', minusButtonClickHandler);
