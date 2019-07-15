@@ -23,6 +23,22 @@
       document.removeEventListener('keydown', editFormEscKeydownHandler);
     };
     closeButton.addEventListener('click', closeButtonClickHandler);
+
+    // ButNotIfFocusOnInputField
+    var hashTagsInput = document.querySelector('.text__hashtags');
+    var descriptionInput = document.querySelector('.text__description');
+    var hashTagsInputEscKeydownHandler = function (evt) {
+      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+        evt.stopPropagation();
+      }
+    };
+    var descriptionInputInputEscKeydownHandler = function (evt) {
+      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+        evt.stopPropagation();
+      }
+    };
+    hashTagsInput.addEventListener('keydown', hashTagsInputEscKeydownHandler);
+    descriptionInput.addEventListener('keydown', descriptionInputInputEscKeydownHandler);
   };
 
   var openEditFormOnDownloadPic = function () {
