@@ -321,6 +321,17 @@
     form.addEventListener('submit', formSubmitHandler);
   };
 
+  var initiateInsertImgOnChangeFileInput = function () {
+    var fileInput = document.getElementById('upload-file');
+    var image = document.querySelector('.img-upload__preview img');
+    var fileInputChangeHandler = function (evt) {
+      image.src = URL.createObjectURL(evt.target.files[0]);
+    };
+    fileInput.addEventListener('change', fileInputChangeHandler);
+  };
+
+  initiateInsertImgOnChangeFileInput();
+
   initiateAjaxOnFormSubmit();
 
   initiateCheckOnChangeElementOfForm('.text__description', TEXTAREA_CHECKS);
