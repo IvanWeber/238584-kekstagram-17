@@ -164,13 +164,13 @@
 
     var elementToBeProcessed = document.querySelector(elementToBeProcessedSelector);
 
-    var movePin = function (event) {
-      event.preventDefault();
+    var movePin = function (evt) {
+      evt.preventDefault();
 
       var rect = levelOuterLine.getBoundingClientRect();
 
       var shift = {
-        x: event.clientX - rect.x
+        x: evt.clientX - rect.x
       };
 
       var shiftX = shift.x - window.data.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
@@ -322,13 +322,6 @@
   };
 
   var initiateAjaxOnFormSubmit = function () {
-    // var submitButton = document.querySelector('.img-upload__submit');
-    // var submitButtonClickHandler = function (evt) {
-    //   evt.preventDefault();
-    //   window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
-    // };
-    // submitButton.addEventListener('click', submitButtonClickHandler);
-
     var form = document.querySelector('.img-upload__form');
     var formSubmitHandler = function (evt) {
       evt.preventDefault();
