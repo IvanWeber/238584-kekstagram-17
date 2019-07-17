@@ -407,19 +407,20 @@
     var plusButton = document.querySelector('.scale__control--bigger');
     var sizeInput = document.querySelector('.scale__control--value');
     var image = document.querySelector('.img-upload__preview img');
-    var imageSize = 55;
-    image.style.width = imageSize + '%';
+    var imageSize = 50;
+    sizeInput.value = imageSize + '%';
+    image.style.transform = 'scale(' + imageSize * 0.01 + ')';
     var minusButtonClickHandler = function () {
       if (imageSize >= 1 && imageSize <= 100) {
-        imageSize = imageSize - 1;
-        image.style.width = imageSize + '%';
+        imageSize = imageSize - 25;
+        image.style.transform = 'scale(' + imageSize * 0.01 + ')';
         sizeInput.value = imageSize + '%';
       }
     };
     var plusButtonClickHandler = function () {
       if (imageSize >= 0 && imageSize <= 99) {
-        imageSize = imageSize + 1;
-        image.style.width = imageSize + '%';
+        imageSize = imageSize + 25;
+        image.style.transform = 'scale(' + imageSize * 0.01 + ')';
         sizeInput.value = imageSize + '%';
       }
     };
