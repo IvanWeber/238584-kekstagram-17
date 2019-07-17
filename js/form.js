@@ -140,7 +140,70 @@
         }
         return true;
       },
-      message: 'Каждый новый хэштег после пробела должен начинаться с символа #'
+      message: 'Каждый новый хэш-тег после пробела должен начинаться с символа #'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        for (var i = 0; i < valueArray.length; i++) {
+          if (valueArray[i] === '#' && valueArray[i + 1] === ' ' || valueArray[i] === '#' && valueArray[i + 1] === undefined) {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Хэш-тег не может состоять только из одной решётки'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        for (var i = 0; i < valueArray.length; i++) {
+          if (valueArray[i - 1] !== undefined && valueArray[i - 1] !== ' ' && valueArray[i] === '#') {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Хэш-теги разделяются пробелами'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        for (var i = 0; i < valueArray.length; i++) {
+          valueArray[i] = valueArray[i].toLowerCase();
+        }
+        var newValue = valueArray.join('');
+        valueArray = newValue.split(' ');
+        for (var j = 0; j < valueArray.length; j++) {
+          if (valueArray[j] === valueArray[j + 1]) {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Один и тот же хэш-тег не может быть использован дважды. Теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split(' ');
+        if (valueArray.length > 5) {
+          return false;
+        }
+        return true;
+      },
+      message: 'Нельзя указать больше пяти хэш-тегов'
+    },
+    {
+      checker: function (value) {
+        var hashtagsArray = value.split(' ');
+        for (var i = 0; i < hashtagsArray.length; i++) {
+          if (hashtagsArray[i].split('').length > 20) {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Максимальная длина одного хэш-тега 20 символов, включая решётку'
     }
   ];
 
