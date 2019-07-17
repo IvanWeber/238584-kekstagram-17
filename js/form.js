@@ -47,6 +47,7 @@
       var editFormElement = document.querySelector('.img-upload__overlay');
       editFormElement.classList.remove('hidden');
       closeEditFormOnKeydownEscAndOnClickCloseButton();
+      initiateChangeImgSizeOnClickPlusMinusButtons();
     };
     inputElement.addEventListener('change', pictureInputChangeHandler);
   };
@@ -432,8 +433,6 @@
   };
 
   initiateInsertImgOnChangeFileInput();
-
-  initiateChangeImgSizeOnClickPlusMinusButtons();
 
   initiateAjaxOnFormSubmit();
 
