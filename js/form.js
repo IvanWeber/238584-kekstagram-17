@@ -175,8 +175,10 @@
         var newValue = valueArray.join('');
         valueArray = newValue.split(' ');
         for (var j = 0; j < valueArray.length; j++) {
-          if (valueArray[j] === valueArray[j + 1]) {
-            return false;
+          for (var k = 0; k < valueArray.length; k++) {
+            if (valueArray[j] === valueArray[k] && j !== k) {
+              return false;
+            }
           }
         }
         return true;
@@ -214,6 +216,7 @@
       for (var i = 0; i < checks.length; i++) {
         if (!checks[i].checker(element.value)) {
           element.setCustomValidity(checks[i].message);
+          document.styleSheets[0].insertRule(elementSelector + ':invalid { border-color: red; }', 0);
         }
       }
     };
