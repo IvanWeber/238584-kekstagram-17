@@ -4,7 +4,7 @@
   // OnKeydownEsc
     var editForm = document.querySelector('.img-upload__overlay');
     var editFormEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         editForm.classList.add('hidden');
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -28,12 +28,12 @@
     var hashTagsInput = document.querySelector('.text__hashtags');
     var descriptionInput = document.querySelector('.text__description');
     var hashTagsInputEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         evt.stopPropagation();
       }
     };
     var descriptionInputInputEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         evt.stopPropagation();
       }
     };
@@ -52,7 +52,7 @@
   };
 
   function buildEffectStyle(effect, filterValueInput) {
-    return effect.FILTER + '(' + filterValueInput * effect.MAX / window.data.STEPS_COUNT + effect.UNITS + ')';
+    return effect.FILTER + '(' + filterValueInput * effect.MAX / window.constants.STEPS_COUNT + effect.UNITS + ')';
   }
 
   var changeFilterIntensityOnMouseUp = function () {
@@ -60,9 +60,9 @@
     var sliderPin = document.querySelector('.effect-level__pin');
     var filterValueInput = document.querySelector('.effect-level__value');
     var sliderPinMouseUpHandler = function () {
-      filterValueInput.value = window.data.FILTER_VALUE_INPUT_TEST;
+      filterValueInput.value = window.constants.FILTER_VALUE_INPUT_TEST;
       var effectKey = imgUploadPreview.classList[1];
-      imgUploadPreview.style.filter = buildEffectStyle(window.data.EFFECTS[effectKey], filterValueInput.value);
+      imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS[effectKey], filterValueInput.value);
     };
     sliderPin.addEventListener('mouseup', sliderPinMouseUpHandler);
   };
@@ -73,8 +73,8 @@
 
       var levelPin = document.querySelector('.effect-level__pin');
       var levelDepth = document.querySelector('.effect-level__depth');
-      levelPin.style.left = window.data.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.data.LEVEL_PIN_MAX_LEFT + 'px';
+      levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+      levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
 
       var imgUploadPreview = document.querySelector('.img-upload__preview');
       imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
@@ -88,8 +88,8 @@
         imgUploadPreview.style.filter = 'none';
       } else {
         slider.classList.remove('hidden');
-        filterValueInput.value = window.data.FILTER_VALUE_INPUT_MAX;
-        imgUploadPreview.style.filter = buildEffectStyle(window.data.EFFECTS[evt.currentTarget.id], filterValueInput.value);
+        filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
+        imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS[evt.currentTarget.id], filterValueInput.value);
       }
     };
     for (var i = 1; i <= radioButtons.childElementCount; i++) {
@@ -101,7 +101,7 @@
   var stopEventPropagationOnKeydownEscOnCommentary = function () {
     var commentaryElement = document.querySelector('.text__description');
     var commentaryElementKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         evt.stopPropagation();
       }
     };
@@ -173,13 +173,13 @@
         x: evt.clientX - rect.x
       };
 
-      var shiftX = shift.x - window.data.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
+      var shiftX = shift.x - window.constants.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
 
       if (shiftX < 0) {
         shiftX = 0;
       }
-      if (shiftX > window.data.LEVEL_PIN_MAX_LEFT) {
-        shiftX = window.data.LEVEL_PIN_MAX_LEFT;
+      if (shiftX > window.constants.LEVEL_PIN_MAX_LEFT) {
+        shiftX = window.constants.LEVEL_PIN_MAX_LEFT;
       }
 
       levelPin.style.left = shiftX + 'px';
@@ -190,7 +190,7 @@
 
       intensityInput.value = Math.round(getValueOfLevelPin(levelPinSelector));
 
-      elementToBeProcessed.style.filter = buildEffectStyle(window.data.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
+      elementToBeProcessed.style.filter = buildEffectStyle(window.constants.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
     };
 
     var effectLevelLineMousedownHandler = function (evt) {
@@ -215,7 +215,7 @@
 
   var getValueOfLevelPin = function (levelPinSelector) {
     var levelPin = document.querySelector(levelPinSelector);
-    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.data.FILTER_VALUE_INPUT_MAX / window.data.LEVEL_PIN_MAX_LEFT;
+    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.constants.FILTER_VALUE_INPUT_MAX / window.constants.LEVEL_PIN_MAX_LEFT;
     return valueOfLevelPin;
   };
 
@@ -240,7 +240,7 @@
     };
 
     var successSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         main.removeChild(successSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -293,7 +293,7 @@
     };
 
     var errorSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         main.removeChild(errorSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();

@@ -156,7 +156,7 @@
   var initialiseHideBigPicOnEsc = function () {
     var bigPic = document.querySelector('.big-picture');
     var bigPicEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         bigPic.classList.add('hidden');
         initialiseHideExtraCommentsUnderDownloadMoreButton();
         resetDownloadMoreButtonHiding();

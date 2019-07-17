@@ -59,7 +59,7 @@
       UNITS: ''}
   };
 
-  window.data = {
+  window.constants = {
     COMMENT_PHRASES: COMMENT_PHRASES,
     MAX_NUMBER_OF_COMMENTS: MAX_NUMBER_OF_COMMENTS,
     NAMES: NAMES,
