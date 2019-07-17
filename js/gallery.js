@@ -186,8 +186,19 @@
       }
       insertDataForBigPic(elementToBeInserted);
     };
+    var thumbnailEnterKeydownHandler = function (evt) {
+      if (evt.keyCode === 13) {
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].url === evt.currentTarget.querySelector('.picture__img').getAttribute('src')) {
+            var elementToBeInserted = data[i];
+          }
+        }
+        insertDataForBigPic(elementToBeInserted);
+      }
+    };
     for (var i = 0; i < thumbNailsCollection.length; i++) {
       thumbNailsCollection[i].addEventListener('click', thumbnailClickHandler);
+      thumbNailsCollection[i].parentElement.addEventListener('keydown', thumbnailEnterKeydownHandler);
     }
   };
 
