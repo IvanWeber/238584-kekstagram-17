@@ -14,6 +14,7 @@
 
   var onSuccess = function (data) {
     insertUserPictureDomElements(getUserPictureDomElements(data));
+    showImgFilters();
     setFilterButtonClickHandler(data);
     initialiseOpenBigPicOnClickThumbnail(data);
   };
@@ -24,7 +25,6 @@
     var imgFiltersElement = document.querySelector('.img-filters');
     imgFiltersElement.classList.remove('img-filters--inactive');
   };
-  showImgFilters();
 
   var getRandomNElementsFromArray = function (numberOfElements, array) {
     var arrayClone = array.slice();
