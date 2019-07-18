@@ -149,6 +149,7 @@
       newSocialComment.querySelector('.social__text').textContent = element.comments[i].message;
       socialComments.appendChild(newSocialComment);
     }
+
     initialiseHideExtraCommentsUnderDownloadMoreButton();
     initialiseDownloadMoreCommentsOnClickDownloadMoreButton();
   };
@@ -214,6 +215,9 @@
   var initialiseDownloadMoreCommentsOnClickDownloadMoreButton = function () {
     var downloadMoreButton = document.querySelector('.comments-loader');
     var comments = document.querySelectorAll('.social__comment');
+    if (comments.length < 5) {
+      downloadMoreButton.classList.add('visually-hidden');
+    }
     var downloadMoreButtonClickHandler = function () {
       var commentsVisuallyHidden = document.querySelector('.social__comments').querySelectorAll('.visually-hidden');
       var commentsShown = comments.length - commentsVisuallyHidden.length;
@@ -229,7 +233,22 @@
         }
       }
     };
+
+    var escKeydownHandler = function (evt) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+        downloadMoreButton.removeEventListener('click', downloadMoreButtonClickHandler);
+      }
+    };
+
+    var bigPicCancelClickHandler = function () {
+      downloadMoreButton.removeEventListener('click', downloadMoreButtonClickHandler);
+    };
+
     downloadMoreButton.addEventListener('click', downloadMoreButtonClickHandler);
+    document.addEventListener('keydown', escKeydownHandler);
+
+    var bigPicCancel = document.querySelector('.big-picture__cancel');
+    bigPicCancel.addEventListener('click', bigPicCancelClickHandler);
   };
 
   var resetDownloadMoreButtonHiding = function () {
