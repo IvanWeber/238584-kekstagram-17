@@ -14,8 +14,9 @@
 
   var onSuccess = function (data) {
     insertUserPictureDomElements(getUserPictureDomElements(data));
+    showImgFilters();
     setFilterButtonClickHandler(data);
-    initialiseOpenBigPicOnClickThumbnail(data);
+    initiateOpenBigPicOnClickThumbnail(data);
   };
 
   window.load('https://js.dump.academy/kekstagram/data', onSuccess, onError);
@@ -24,7 +25,6 @@
     var imgFiltersElement = document.querySelector('.img-filters');
     imgFiltersElement.classList.remove('img-filters--inactive');
   };
-  showImgFilters();
 
   var getRandomNElementsFromArray = function (numberOfElements, array) {
     var arrayClone = array.slice();
@@ -67,7 +67,7 @@
         }
         var selectedPicsDomElements = getUserPictureDomElements(selectedPics);
         insertUserPictureDomElements(selectedPicsDomElements);
-        initialiseOpenBigPicOnClickThumbnail(data);
+        initiateOpenBigPicOnClickThumbnail(data);
       }, 1000);
     };
   };
@@ -149,34 +149,35 @@
       newSocialComment.querySelector('.social__text').textContent = element.comments[i].message;
       socialComments.appendChild(newSocialComment);
     }
-    initialiseHideExtraCommentsUnderDownloadMoreButton();
-    initialiseDownloadMoreCommentsOnClickDownloadMoreButton();
+
+    initiateHideExtraCommentsUnderDownloadMoreButton();
+    initiateDownloadMoreCommentsOnClickDownloadMoreButton();
   };
 
-  var initialiseHideBigPicOnEsc = function () {
+  var initiateHideBigPicOnEsc = function () {
     var bigPic = document.querySelector('.big-picture');
     var bigPicEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         bigPic.classList.add('hidden');
-        initialiseHideExtraCommentsUnderDownloadMoreButton();
+        initiateHideExtraCommentsUnderDownloadMoreButton();
         resetDownloadMoreButtonHiding();
       }
     };
     document.addEventListener('keydown', bigPicEscKeydownHandler);
   };
 
-  var initialiseHideBigPicOnClickCloseButton = function () {
+  var initiateHideBigPicOnClickCloseButton = function () {
     var bigPic = document.querySelector('.big-picture');
     var picCancel = document.getElementById('picture-cancel');
     var PicCancelClickHandler = function () {
       bigPic.classList.add('hidden');
-      initialiseHideExtraCommentsUnderDownloadMoreButton();
+      initiateHideExtraCommentsUnderDownloadMoreButton();
       resetDownloadMoreButtonHiding();
     };
     picCancel.addEventListener('click', PicCancelClickHandler);
   };
 
-  var initialiseOpenBigPicOnClickThumbnail = function (data) {
+  var initiateOpenBigPicOnClickThumbnail = function (data) {
     var thumbNailsCollection = document.querySelectorAll('.picture__img');
     var thumbnailClickHandler = function (evt) {
       for (var i = 0; i < data.length; i++) {
@@ -186,12 +187,23 @@
       }
       insertDataForBigPic(elementToBeInserted);
     };
+    var thumbnailEnterKeydownHandler = function (evt) {
+      if (evt.keyCode === 13) {
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].url === evt.currentTarget.querySelector('.picture__img').getAttribute('src')) {
+            var elementToBeInserted = data[i];
+          }
+        }
+        insertDataForBigPic(elementToBeInserted);
+      }
+    };
     for (var i = 0; i < thumbNailsCollection.length; i++) {
       thumbNailsCollection[i].addEventListener('click', thumbnailClickHandler);
+      thumbNailsCollection[i].parentElement.addEventListener('keydown', thumbnailEnterKeydownHandler);
     }
   };
 
-  var initialiseHideExtraCommentsUnderDownloadMoreButton = function () {
+  var initiateHideExtraCommentsUnderDownloadMoreButton = function () {
     var comments = document.querySelectorAll('.social__comment');
     if (comments.length > 5) {
       for (var i = 5; i < comments.length; i++) {
@@ -200,9 +212,12 @@
     }
   };
 
-  var initialiseDownloadMoreCommentsOnClickDownloadMoreButton = function () {
+  var initiateDownloadMoreCommentsOnClickDownloadMoreButton = function () {
     var downloadMoreButton = document.querySelector('.comments-loader');
     var comments = document.querySelectorAll('.social__comment');
+    if (comments.length < 5) {
+      downloadMoreButton.classList.add('visually-hidden');
+    }
     var downloadMoreButtonClickHandler = function () {
       var commentsVisuallyHidden = document.querySelector('.social__comments').querySelectorAll('.visually-hidden');
       var commentsShown = comments.length - commentsVisuallyHidden.length;
@@ -218,13 +233,28 @@
         }
       }
     };
+
+    var escKeydownHandler = function (evt) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+        downloadMoreButton.removeEventListener('click', downloadMoreButtonClickHandler);
+      }
+    };
+
+    var bigPicCancelClickHandler = function () {
+      downloadMoreButton.removeEventListener('click', downloadMoreButtonClickHandler);
+    };
+
     downloadMoreButton.addEventListener('click', downloadMoreButtonClickHandler);
+    document.addEventListener('keydown', escKeydownHandler);
+
+    var bigPicCancel = document.querySelector('.big-picture__cancel');
+    bigPicCancel.addEventListener('click', bigPicCancelClickHandler);
   };
 
   var resetDownloadMoreButtonHiding = function () {
     document.querySelector('.comments-loader').classList.remove('visually-hidden');
   };
 
-  initialiseHideBigPicOnEsc();
-  initialiseHideBigPicOnClickCloseButton();
+  initiateHideBigPicOnEsc();
+  initiateHideBigPicOnClickCloseButton();
 })();

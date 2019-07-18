@@ -4,7 +4,7 @@
   // OnKeydownEsc
     var editForm = document.querySelector('.img-upload__overlay');
     var editFormEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         editForm.classList.add('hidden');
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -23,42 +23,69 @@
       document.removeEventListener('keydown', editFormEscKeydownHandler);
     };
     closeButton.addEventListener('click', closeButtonClickHandler);
+
+    // ButNotIfFocusOnInputField
+    var hashTagsInput = document.querySelector('.text__hashtags');
+    var descriptionInput = document.querySelector('.text__description');
+    var hashTagsInputEscKeydownHandler = function (evt) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+        evt.stopPropagation();
+      }
+    };
+    var descriptionInputInputEscKeydownHandler = function (evt) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+        evt.stopPropagation();
+      }
+    };
+    hashTagsInput.addEventListener('keydown', hashTagsInputEscKeydownHandler);
+    descriptionInput.addEventListener('keydown', descriptionInputInputEscKeydownHandler);
   };
 
-  var openEditFormOnDownloadPic = function () {
+  var initiateOpenEditFormOnDownloadPic = function () {
     var inputElement = document.querySelector('.img-upload__input');
+
     var pictureInputChangeHandler = function () {
+      var levelPin = document.querySelector('.effect-level__pin');
+      var levelDepth = document.querySelector('.effect-level__depth');
+      levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+      levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+      var filterValueInput = document.querySelector('.effect-level__value');
+      filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
+      var imgUploadPreview = document.querySelector('.img-upload__preview');
+      imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
+
       var editFormElement = document.querySelector('.img-upload__overlay');
       editFormElement.classList.remove('hidden');
       closeEditFormOnKeydownEscAndOnClickCloseButton();
+      initiateChangeImgSizeOnClickPlusMinusButtons();
     };
     inputElement.addEventListener('change', pictureInputChangeHandler);
   };
 
   function buildEffectStyle(effect, filterValueInput) {
-    return effect.FILTER + '(' + filterValueInput * effect.MAX / window.data.STEPS_COUNT + effect.UNITS + ')';
+    return effect.FILTER + '(' + filterValueInput * effect.MAX / window.constants.STEPS_COUNT + effect.UNITS + ')';
   }
 
-  var changeFilterIntensityOnMouseUp = function () {
+  var initiateChangeFilterIntensityOnMouseUp = function () {
     var imgUploadPreview = document.querySelector('.img-upload__preview');
     var sliderPin = document.querySelector('.effect-level__pin');
     var filterValueInput = document.querySelector('.effect-level__value');
     var sliderPinMouseUpHandler = function () {
-      filterValueInput.value = window.data.FILTER_VALUE_INPUT_TEST;
+      filterValueInput.value = window.constants.FILTER_VALUE_INPUT_TEST;
       var effectKey = imgUploadPreview.classList[1];
-      imgUploadPreview.style.filter = buildEffectStyle(window.data.EFFECTS[effectKey], filterValueInput.value);
+      imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS[effectKey], filterValueInput.value);
     };
     sliderPin.addEventListener('mouseup', sliderPinMouseUpHandler);
   };
 
-  var changeFilterOnChangeFilterRadioButton = function () {
+  var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = document.querySelector('.effects__list').cloneNode(true);
     var radioButtonChangeHandler = function (evt) {
 
       var levelPin = document.querySelector('.effect-level__pin');
       var levelDepth = document.querySelector('.effect-level__depth');
-      levelPin.style.left = window.data.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.data.LEVEL_PIN_MAX_LEFT + 'px';
+      levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+      levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
 
       var imgUploadPreview = document.querySelector('.img-upload__preview');
       imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
@@ -72,8 +99,8 @@
         imgUploadPreview.style.filter = 'none';
       } else {
         slider.classList.remove('hidden');
-        filterValueInput.value = window.data.FILTER_VALUE_INPUT_MAX;
-        imgUploadPreview.style.filter = buildEffectStyle(window.data.EFFECTS[evt.currentTarget.id], filterValueInput.value);
+        filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
+        imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS[evt.currentTarget.id], filterValueInput.value);
       }
     };
     for (var i = 1; i <= radioButtons.childElementCount; i++) {
@@ -82,17 +109,17 @@
     }
   };
 
-  var stopEventPropagationOnKeydownEscOnCommentary = function () {
+  var initiateStopEventPropagationOnKeydownEscOnCommentary = function () {
     var commentaryElement = document.querySelector('.text__description');
     var commentaryElementKeydownEscHandler = function (evt) {
-      if (evt.which === 27) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         evt.stopPropagation();
       }
     };
     commentaryElement.addEventListener('keydown', commentaryElementKeydownEscHandler);
   };
 
-  var TEXTAREA_CHECKS = [{
+  var TextareaChecks = [{
     checker: function (value) {
       return value.length < 140;
     },
@@ -100,7 +127,7 @@
   }
   ];
 
-  var HASHTAGS_CHECKS = [
+  var HashtagsChecks = [
     {
       checker: function (value) {
         return value.length < 140;
@@ -124,7 +151,72 @@
         }
         return true;
       },
-      message: 'Каждый новый хэштег после пробела должен начинаться с символа #'
+      message: 'Каждый новый хэш-тег после пробела должен начинаться с символа #'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        for (var i = 0; i < valueArray.length; i++) {
+          if (valueArray[i] === '#' && valueArray[i + 1] === ' ' || valueArray[i] === '#' && valueArray[i + 1] === undefined) {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Хэш-тег не может состоять только из одной решётки'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        for (var i = 0; i < valueArray.length; i++) {
+          if (valueArray[i - 1] !== undefined && valueArray[i - 1] !== ' ' && valueArray[i] === '#') {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Хэш-теги разделяются пробелами'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split('');
+        for (var i = 0; i < valueArray.length; i++) {
+          valueArray[i] = valueArray[i].toLowerCase();
+        }
+        var newValue = valueArray.join('');
+        valueArray = newValue.split(' ');
+        for (var j = 0; j < valueArray.length; j++) {
+          for (var k = 0; k < valueArray.length; k++) {
+            if (valueArray[j] === valueArray[k] && j !== k) {
+              return false;
+            }
+          }
+        }
+        return true;
+      },
+      message: 'Один и тот же хэш-тег не может быть использован дважды. Теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом'
+    },
+    {
+      checker: function (value) {
+        var valueArray = value.split(' ');
+        if (valueArray.length > 5) {
+          return false;
+        }
+        return true;
+      },
+      message: 'Нельзя указать больше пяти хэш-тегов'
+    },
+    {
+      checker: function (value) {
+        var hashtagsArray = value.split(' ');
+        for (var i = 0; i < hashtagsArray.length; i++) {
+          if (hashtagsArray[i].split('').length > 20) {
+            return false;
+          }
+        }
+        return true;
+      },
+      message: 'Максимальная длина одного хэш-тега 20 символов, включая решётку'
     }
   ];
 
@@ -135,6 +227,7 @@
       for (var i = 0; i < checks.length; i++) {
         if (!checks[i].checker(element.value)) {
           element.setCustomValidity(checks[i].message);
+          document.styleSheets[0].insertRule(elementSelector + ':invalid { border-color: red; }', 0);
         }
       }
     };
@@ -148,22 +241,22 @@
 
     var elementToBeProcessed = document.querySelector(elementToBeProcessedSelector);
 
-    var movePin = function (event) {
-      event.preventDefault();
+    var movePin = function (evt) {
+      evt.preventDefault();
 
       var rect = levelOuterLine.getBoundingClientRect();
 
       var shift = {
-        x: event.clientX - rect.x
+        x: evt.clientX - rect.x
       };
 
-      var shiftX = shift.x - window.data.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
+      var shiftX = shift.x - window.constants.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
 
       if (shiftX < 0) {
         shiftX = 0;
       }
-      if (shiftX > window.data.LEVEL_PIN_MAX_LEFT) {
-        shiftX = window.data.LEVEL_PIN_MAX_LEFT;
+      if (shiftX > window.constants.LEVEL_PIN_MAX_LEFT) {
+        shiftX = window.constants.LEVEL_PIN_MAX_LEFT;
       }
 
       levelPin.style.left = shiftX + 'px';
@@ -174,7 +267,7 @@
 
       intensityInput.value = Math.round(getValueOfLevelPin(levelPinSelector));
 
-      elementToBeProcessed.style.filter = buildEffectStyle(window.data.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
+      elementToBeProcessed.style.filter = buildEffectStyle(window.constants.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
     };
 
     var effectLevelLineMousedownHandler = function (evt) {
@@ -199,7 +292,7 @@
 
   var getValueOfLevelPin = function (levelPinSelector) {
     var levelPin = document.querySelector(levelPinSelector);
-    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.data.FILTER_VALUE_INPUT_MAX / window.data.LEVEL_PIN_MAX_LEFT;
+    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.constants.FILTER_VALUE_INPUT_MAX / window.constants.LEVEL_PIN_MAX_LEFT;
     return valueOfLevelPin;
   };
 
@@ -224,7 +317,7 @@
     };
 
     var successSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         main.removeChild(successSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -277,7 +370,7 @@
     };
 
     var errorSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.data.ESC_KEY_CODE) {
+      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         main.removeChild(errorSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -306,13 +399,6 @@
   };
 
   var initiateAjaxOnFormSubmit = function () {
-    // var submitButton = document.querySelector('.img-upload__submit');
-    // var submitButtonClickHandler = function (evt) {
-    //   evt.preventDefault();
-    //   window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
-    // };
-    // submitButton.addEventListener('click', submitButtonClickHandler);
-
     var form = document.querySelector('.img-upload__form');
     var formSubmitHandler = function (evt) {
       evt.preventDefault();
@@ -321,18 +407,55 @@
     form.addEventListener('submit', formSubmitHandler);
   };
 
+  var initiateInsertImgOnChangeFileInput = function () {
+    var fileInput = document.getElementById('upload-file');
+    var image = document.querySelector('.img-upload__preview img');
+    var fileInputChangeHandler = function (evt) {
+      image.src = URL.createObjectURL(evt.target.files[0]);
+    };
+    fileInput.addEventListener('change', fileInputChangeHandler);
+  };
+
+  var initiateChangeImgSizeOnClickPlusMinusButtons = function () {
+    var minusButton = document.querySelector('.scale__control--smaller');
+    var plusButton = document.querySelector('.scale__control--bigger');
+    var sizeInput = document.querySelector('.scale__control--value');
+    var image = document.querySelector('.img-upload__preview img');
+    var imageSize = 50;
+    sizeInput.value = imageSize + '%';
+    image.style.transform = 'scale(' + imageSize * 0.01 + ')';
+    var minusButtonClickHandler = function () {
+      if (imageSize >= 1 && imageSize <= 100) {
+        imageSize = imageSize - 25;
+        image.style.transform = 'scale(' + imageSize * 0.01 + ')';
+        sizeInput.value = imageSize + '%';
+      }
+    };
+    var plusButtonClickHandler = function () {
+      if (imageSize >= 0 && imageSize <= 99) {
+        imageSize = imageSize + 25;
+        image.style.transform = 'scale(' + imageSize * 0.01 + ')';
+        sizeInput.value = imageSize + '%';
+      }
+    };
+    minusButton.addEventListener('click', minusButtonClickHandler);
+    plusButton.addEventListener('click', plusButtonClickHandler);
+  };
+
+  initiateInsertImgOnChangeFileInput();
+
   initiateAjaxOnFormSubmit();
 
-  initiateCheckOnChangeElementOfForm('.text__description', TEXTAREA_CHECKS);
+  initiateCheckOnChangeElementOfForm('.text__description', TextareaChecks);
 
-  initiateCheckOnChangeElementOfForm('.text__hashtags', HASHTAGS_CHECKS);
+  initiateCheckOnChangeElementOfForm('.text__hashtags', HashtagsChecks);
 
-  stopEventPropagationOnKeydownEscOnCommentary();
+  initiateStopEventPropagationOnKeydownEscOnCommentary();
 
-  openEditFormOnDownloadPic();
+  initiateOpenEditFormOnDownloadPic();
 
-  changeFilterOnChangeFilterRadioButton();
-  changeFilterIntensityOnMouseUp();
+  initiateChangeFilterOnChangeFilterRadioButton();
+  initiateChangeFilterIntensityOnMouseUp();
 
   initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth', '.img-upload__preview', '.effect-level__value');
 })();
