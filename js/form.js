@@ -41,7 +41,7 @@
     descriptionInput.addEventListener('keydown', descriptionInputInputEscKeydownHandler);
   };
 
-  var openEditFormOnDownloadPic = function () {
+  var initiateOpenEditFormOnDownloadPic = function () {
     var inputElement = document.querySelector('.img-upload__input');
 
     var pictureInputChangeHandler = function () {
@@ -66,7 +66,7 @@
     return effect.FILTER + '(' + filterValueInput * effect.MAX / window.constants.STEPS_COUNT + effect.UNITS + ')';
   }
 
-  var changeFilterIntensityOnMouseUp = function () {
+  var initiateChangeFilterIntensityOnMouseUp = function () {
     var imgUploadPreview = document.querySelector('.img-upload__preview');
     var sliderPin = document.querySelector('.effect-level__pin');
     var filterValueInput = document.querySelector('.effect-level__value');
@@ -78,7 +78,7 @@
     sliderPin.addEventListener('mouseup', sliderPinMouseUpHandler);
   };
 
-  var changeFilterOnChangeFilterRadioButton = function () {
+  var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = document.querySelector('.effects__list').cloneNode(true);
     var radioButtonChangeHandler = function (evt) {
 
@@ -109,7 +109,7 @@
     }
   };
 
-  var stopEventPropagationOnKeydownEscOnCommentary = function () {
+  var initiateStopEventPropagationOnKeydownEscOnCommentary = function () {
     var commentaryElement = document.querySelector('.text__description');
     var commentaryElementKeydownEscHandler = function (evt) {
       if (evt.keyCode === window.constants.ESC_KEY_CODE) {
@@ -450,12 +450,12 @@
 
   initiateCheckOnChangeElementOfForm('.text__hashtags', HashtagsChecks);
 
-  stopEventPropagationOnKeydownEscOnCommentary();
+  initiateStopEventPropagationOnKeydownEscOnCommentary();
 
-  openEditFormOnDownloadPic();
+  initiateOpenEditFormOnDownloadPic();
 
-  changeFilterOnChangeFilterRadioButton();
-  changeFilterIntensityOnMouseUp();
+  initiateChangeFilterOnChangeFilterRadioButton();
+  initiateChangeFilterIntensityOnMouseUp();
 
   initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth', '.img-upload__preview', '.effect-level__value');
 })();
