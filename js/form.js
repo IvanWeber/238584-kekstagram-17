@@ -58,6 +58,8 @@
       editFormElement.classList.remove('hidden');
       closeEditFormOnKeydownEscAndOnClickCloseButton();
       initiateChangeImgSizeOnClickPlusMinusButtons();
+      initiateCheckOnChangeElementOfForm('.text__description', TextareaChecks);
+      initiateCheckOnChangeElementOfForm('.text__hashtags', HashtagsChecks);
     };
     inputElement.addEventListener('change', pictureInputChangeHandler);
   };
@@ -222,6 +224,7 @@
 
   var initiateCheckOnChangeElementOfForm = function (elementSelector, checks) {
     var element = document.querySelector(elementSelector);
+    element.setCustomValidity('');
     var commentaryElementChangeHandler = function () {
       element.setCustomValidity('');
       for (var i = 0; i < checks.length; i++) {
@@ -231,6 +234,7 @@
         }
       }
     };
+    element.removeEventListener('input', commentaryElementChangeHandler);
     element.addEventListener('input', commentaryElementChangeHandler);
   };
 
@@ -445,10 +449,6 @@
   initiateInsertImgOnChangeFileInput();
 
   initiateAjaxOnFormSubmit();
-
-  initiateCheckOnChangeElementOfForm('.text__description', TextareaChecks);
-
-  initiateCheckOnChangeElementOfForm('.text__hashtags', HashtagsChecks);
 
   initiateStopEventPropagationOnKeydownEscOnCommentary();
 
