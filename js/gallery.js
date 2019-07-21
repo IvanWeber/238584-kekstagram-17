@@ -52,7 +52,7 @@
   var createFilterHandler = function (filterPopular, filterNew, filterDiscussed, data) {
     var lastTimeout = null;
     return function (evt) {
-      deleteSpecificItemsOfParent('.pictures', '.picture');
+      deleteSpecificItemsOfParent(picsParent, '.picture');
       filterPopular.classList.remove('img-filters__button--active');
       filterNew.classList.remove('img-filters__button--active');
       filterDiscussed.classList.remove('img-filters__button--active');
@@ -111,9 +111,8 @@
     picsParent.appendChild(documentFragmentVar);
   };
 
-  var deleteSpecificItemsOfParent = function (parentSelector, deleteElementsSelector) {
+  var deleteSpecificItemsOfParent = function (parent, deleteElementsSelector) {
     var elementsToBeDeleted = document.querySelectorAll(deleteElementsSelector);
-    var parent = document.querySelector(parentSelector);
     for (var i = 0; i < elementsToBeDeleted.length; i++) {
       parent.removeChild(elementsToBeDeleted[i]);
     }
