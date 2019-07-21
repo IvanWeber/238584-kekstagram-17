@@ -2,9 +2,14 @@
 
 (function () {
 
+  var body = document.querySelector('body');
+  var imgFilters = body.querySelector('.img-filters');
+  var filters = body.querySelectorAll('.img-filters__button');
+  var picTemplate = body.querySelector('#picture');
+  var picsParent = body.querySelector('.pictures');
+
   var onError = function (message) {
     var messageParagraph = document.querySelector('p');
-    var body = document.querySelector('body');
     messageParagraph.textContent = message;
     messageParagraph.style.color = 'red';
     messageParagraph.style.fontSize = '32px';
@@ -22,7 +27,6 @@
   window.load('https://js.dump.academy/kekstagram/data', onSuccess, onError);
 
   var showImgFilters = function () {
-    var imgFilters = document.querySelector('.img-filters');
     imgFilters.classList.remove('img-filters--inactive');
   };
 
@@ -73,13 +77,10 @@
   };
 
   var setFilterButtonClickHandler = function (data) {
-    var filterPopular = document.getElementById('filter-popular');
-    var filterNew = document.getElementById('filter-new');
-    var filterDiscussed = document.getElementById('filter-discussed');
-    var filterHandler = createFilterHandler(filterPopular, filterNew, filterDiscussed, data);
-    filterPopular.addEventListener('click', filterHandler);
-    filterNew.addEventListener('click', filterHandler);
-    filterDiscussed.addEventListener('click', filterHandler);
+    var filterHandler = createFilterHandler(filters[0], filters[1], filters[2], data);
+    filters[0].addEventListener('click', filterHandler);
+    filters[1].addEventListener('click', filterHandler);
+    filters[2].addEventListener('click', filterHandler);
   };
 
   var getRandomInt = function (min, max) {
@@ -88,8 +89,7 @@
   };
 
   var getUserPictureDomElement = function (pictureObject) {
-    var template = document.querySelector('#picture');
-    var picture = template.content.querySelector('.picture').cloneNode(true);
+    var picture = picTemplate.content.querySelector('.picture').cloneNode(true);
     picture.querySelector('.picture__img').src = pictureObject.url;
     picture.querySelector('.picture__likes').textContent = pictureObject.likes;
     picture.querySelector('.picture__comments').textContent = pictureObject.comments.length;
@@ -108,8 +108,7 @@
     var documentFragmentVar = new DocumentFragment();
 
     documentFragmentVar.appendChild(pictureDomElement);
-    var parent = document.querySelector('.pictures');
-    parent.appendChild(documentFragmentVar);
+    picsParent.appendChild(documentFragmentVar);
   };
 
   var deleteSpecificItemsOfParent = function (parentSelector, deleteElementsSelector) {
