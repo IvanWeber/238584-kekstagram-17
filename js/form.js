@@ -425,7 +425,7 @@
     var plusButton = document.querySelector('.scale__control--bigger');
     var sizeInput = document.querySelector('.scale__control--value');
     var image = document.querySelector('.img-upload__preview img');
-    var imageSize = 50;
+    var imageSize = 100;
     sizeInput.value = imageSize + '%';
     image.style.transform = 'scale(' + imageSize * 0.01 + ')';
     var minusButtonClickHandler = function () {
