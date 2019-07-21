@@ -174,7 +174,7 @@
   };
 
   var initiateOpenBigPicOnClickThumbnail = function (data) {
-    var thumbNailsCollection = document.querySelectorAll('.picture__img');
+    var thumbNailsCollection = picsParent.querySelectorAll('.picture__img');
     var thumbnailClickHandler = function (evt) {
       for (var i = 0; i < data.length; i++) {
         if (data[i].url === evt.currentTarget.getAttribute('src')) {
@@ -200,7 +200,7 @@
   };
 
   var initiateHideExtraCommentsUnderDownloadMoreButton = function () {
-    var comments = document.querySelectorAll('.social__comment');
+    var comments = bigPic.querySelectorAll('.social__comment');
     if (comments.length > 5) {
       for (var i = 5; i < comments.length; i++) {
         comments[i].classList.add('visually-hidden');
@@ -209,13 +209,13 @@
   };
 
   var initiateDownloadMoreCommentsOnClickDownloadMoreButton = function () {
-    var downloadMoreButton = document.querySelector('.comments-loader');
-    var comments = document.querySelectorAll('.social__comment');
+    var downloadMoreButton = bigPic.querySelector('.comments-loader');
+    var comments = bigPic.querySelectorAll('.social__comment');
     if (comments.length < 5) {
       downloadMoreButton.classList.add('visually-hidden');
     }
     var downloadMoreButtonClickHandler = function () {
-      var commentsVisuallyHidden = document.querySelector('.social__comments').querySelectorAll('.visually-hidden');
+      var commentsVisuallyHidden = bigPic.querySelector('.social__comments').querySelectorAll('.visually-hidden');
       var commentsShown = comments.length - commentsVisuallyHidden.length;
       var commentsRemainForDownloading = commentsVisuallyHidden.length;
       if (commentsRemainForDownloading > 5) {
@@ -243,12 +243,12 @@
     downloadMoreButton.addEventListener('click', downloadMoreButtonClickHandler);
     document.addEventListener('keydown', escKeydownHandler);
 
-    var bigPicCancel = document.querySelector('.big-picture__cancel');
+    var bigPicCancel = bigPic.querySelector('.big-picture__cancel');
     bigPicCancel.addEventListener('click', bigPicCancelClickHandler);
   };
 
   var resetDownloadMoreButtonHiding = function () {
-    document.querySelector('.comments-loader').classList.remove('visually-hidden');
+    bigPic.querySelector('.comments-loader').classList.remove('visually-hidden');
   };
 
   initiateHideBigPicOnEsc();
