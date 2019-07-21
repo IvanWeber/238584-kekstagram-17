@@ -45,6 +45,9 @@
     var inputElement = document.querySelector('.img-upload__input');
 
     var pictureInputChangeHandler = function () {
+      var slider = document.querySelector('.img-upload__effect-level');
+      slider.classList.remove('hidden');
+
       var levelPin = document.querySelector('.effect-level__pin');
       var levelDepth = document.querySelector('.effect-level__depth');
       levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
