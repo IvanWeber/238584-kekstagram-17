@@ -67,9 +67,9 @@
     inputElement.addEventListener('change', pictureInputChangeHandler);
   };
 
-  function buildEffectStyle(effect, filterValueInput) {
+  var buildEffectStyle = function (effect, filterValueInput) {
     return effect.FILTER + '(' + filterValueInput * effect.MAX / window.constants.STEPS_COUNT + effect.UNITS + ')';
-  }
+  };
 
   var initiateChangeFilterIntensityOnMouseUp = function () {
     var imgUploadPreview = document.querySelector('.img-upload__preview');
