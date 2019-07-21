@@ -7,7 +7,8 @@
   var filters = body.querySelectorAll('.img-filters__button');
   var picTemplate = body.querySelector('#picture');
   var picsParent = body.querySelector('.pictures');
-  var bigPic = document.querySelector('.big-picture');
+  var bigPic = body.querySelector('.big-picture');
+  var picCancel = bigPic.querySelector('.big-picture__cancel');
 
   var onError = function (message) {
     var messageParagraph = document.querySelector('p');
@@ -153,7 +154,6 @@
   };
 
   var initiateHideBigPicOnEsc = function () {
-    var bigPic = document.querySelector('.big-picture');
     var bigPicEscKeydownHandler = function (evt) {
       if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         bigPic.classList.add('hidden');
@@ -165,8 +165,6 @@
   };
 
   var initiateHideBigPicOnClickCloseButton = function () {
-    var bigPic = document.querySelector('.big-picture');
-    var picCancel = document.getElementById('picture-cancel');
     var PicCancelClickHandler = function () {
       bigPic.classList.add('hidden');
       initiateHideExtraCommentsUnderDownloadMoreButton();
