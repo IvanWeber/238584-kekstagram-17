@@ -1,8 +1,10 @@
 'use strict';
 (function () {
+  var picDownloaded = document.querySelector('.img-upload');
+
   var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
-    var editForm = document.querySelector('.img-upload__overlay');
+    var editForm = picDownloaded.querySelector('.img-upload__overlay');
     var editFormEscKeydownHandler = function (evt) {
       if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         editForm.classList.add('hidden');
@@ -16,17 +18,16 @@
     // OnClickCloseButton
     var closeButton = document.querySelector('.img-upload__cancel');
     var closeButtonClickHandler = function () {
-      var editForm = document.querySelector('.img-upload__overlay');
       editForm.classList.add('hidden');
-      var uploadForm = document.querySelector('.img-upload__form');
+      var uploadForm = picDownloaded.querySelector('.img-upload__form');
       uploadForm.reset();
       document.removeEventListener('keydown', editFormEscKeydownHandler);
     };
     closeButton.addEventListener('click', closeButtonClickHandler);
 
     // ButNotIfFocusOnInputField
-    var hashTagsInput = document.querySelector('.text__hashtags');
-    var descriptionInput = document.querySelector('.text__description');
+    var hashTagsInput = editForm.querySelector('.text__hashtags');
+    var descriptionInput = editForm.querySelector('.text__description');
     var hashTagsInputEscKeydownHandler = function (evt) {
       if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         evt.stopPropagation();
