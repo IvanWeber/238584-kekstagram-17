@@ -16,8 +16,8 @@
     // OnClickCloseButton
     var closeButton = document.querySelector('.img-upload__cancel');
     var closeButtonClickHandler = function () {
-      var editFormElement = document.querySelector('.img-upload__overlay');
-      editFormElement.classList.add('hidden');
+      var editForm = document.querySelector('.img-upload__overlay');
+      editForm.classList.add('hidden');
       var uploadForm = document.querySelector('.img-upload__form');
       uploadForm.reset();
       document.removeEventListener('keydown', editFormEscKeydownHandler);
@@ -42,7 +42,7 @@
   };
 
   var initiateOpenEditFormOnDownloadPic = function () {
-    var inputElement = document.querySelector('.img-upload__input');
+    var input = document.querySelector('.img-upload__input');
 
     var pictureInputChangeHandler = function () {
       var slider = document.querySelector('.img-upload__effect-level');
@@ -57,14 +57,14 @@
       var imgUploadPreview = document.querySelector('.img-upload__preview');
       imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
 
-      var editFormElement = document.querySelector('.img-upload__overlay');
-      editFormElement.classList.remove('hidden');
+      var editForm = document.querySelector('.img-upload__overlay');
+      editForm.classList.remove('hidden');
       closeEditFormOnKeydownEscAndOnClickCloseButton();
       initiateChangeImgSizeOnClickPlusMinusButtons();
       initiateCheckOnChangeElementOfForm('.text__description', TextareaChecks);
       initiateCheckOnChangeElementOfForm('.text__hashtags', HashtagsChecks);
     };
-    inputElement.addEventListener('change', pictureInputChangeHandler);
+    input.addEventListener('change', pictureInputChangeHandler);
   };
 
   var buildEffectStyle = function (effect, filterValueInput) {
@@ -115,13 +115,13 @@
   };
 
   var initiateStopEventPropagationOnKeydownEscOnCommentary = function () {
-    var commentaryElement = document.querySelector('.text__description');
+    var commentary = document.querySelector('.text__description');
     var commentaryElementKeydownEscHandler = function (evt) {
       if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         evt.stopPropagation();
       }
     };
-    commentaryElement.addEventListener('keydown', commentaryElementKeydownEscHandler);
+    commentary.addEventListener('keydown', commentaryElementKeydownEscHandler);
   };
 
   var TextareaChecks = [{

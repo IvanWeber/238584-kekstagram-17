@@ -3,13 +3,13 @@
 (function () {
 
   var onError = function (message) {
-    var messageElement = document.querySelector('p');
-    var bodyElement = document.querySelector('body');
-    messageElement.textContent = message;
-    messageElement.style.color = 'red';
-    messageElement.style.fontSize = '32px';
-    messageElement.style.backgroundColor = 'white';
-    bodyElement.insertBefore(messageElement, bodyElement.firstChild);
+    var messageParagraph = document.querySelector('p');
+    var body = document.querySelector('body');
+    messageParagraph.textContent = message;
+    messageParagraph.style.color = 'red';
+    messageParagraph.style.fontSize = '32px';
+    messageParagraph.style.backgroundColor = 'white';
+    body.insertBefore(messageParagraph, body.firstChild);
   };
 
   var onSuccess = function (data) {
@@ -22,8 +22,8 @@
   window.load('https://js.dump.academy/kekstagram/data', onSuccess, onError);
 
   var showImgFilters = function () {
-    var imgFiltersElement = document.querySelector('.img-filters');
-    imgFiltersElement.classList.remove('img-filters--inactive');
+    var imgFilters = document.querySelector('.img-filters');
+    imgFilters.classList.remove('img-filters--inactive');
   };
 
   var getRandomNElementsFromArray = function (numberOfElements, array) {
