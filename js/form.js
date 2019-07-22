@@ -1,6 +1,13 @@
 'use strict';
 (function () {
   var picDownloaded = document.querySelector('.img-upload');
+  var input = picDownloaded.querySelector('.img-upload__input');
+  var slider = picDownloaded.querySelector('.img-upload__effect-level');
+  var levelPin = picDownloaded.querySelector('.effect-level__pin');
+  var levelDepth = picDownloaded.querySelector('.effect-level__depth');
+  var filterValueInput = picDownloaded.querySelector('.effect-level__value');
+  var imgUploadPreview = picDownloaded.querySelector('.img-upload__preview');
+  var editForm = picDownloaded.querySelector('.img-upload__overlay');
 
   var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
@@ -43,22 +50,12 @@
   };
 
   var initiateOpenEditFormOnDownloadPic = function () {
-    var input = document.querySelector('.img-upload__input');
-
     var pictureInputChangeHandler = function () {
-      var slider = document.querySelector('.img-upload__effect-level');
       slider.classList.remove('hidden');
-
-      var levelPin = document.querySelector('.effect-level__pin');
-      var levelDepth = document.querySelector('.effect-level__depth');
       levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
       levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
-      var filterValueInput = document.querySelector('.effect-level__value');
       filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
-      var imgUploadPreview = document.querySelector('.img-upload__preview');
       imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
-
-      var editForm = document.querySelector('.img-upload__overlay');
       editForm.classList.remove('hidden');
       closeEditFormOnKeydownEscAndOnClickCloseButton();
       initiateChangeImgSizeOnClickPlusMinusButtons();
