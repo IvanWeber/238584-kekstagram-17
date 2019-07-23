@@ -9,10 +9,16 @@
   var imgUploadPreview = picDownloaded.querySelector('.img-upload__preview');
   var editForm = picDownloaded.querySelector('.img-upload__overlay');
   var sliderPin = picDownloaded.querySelector('.effect-level__pin');
+  var commentary = picDownloaded.querySelector('.text__description');
+  var minusButton = picDownloaded.querySelector('.scale__control--smaller');
+  var plusButton = picDownloaded.querySelector('.scale__control--bigger');
+  var sizeInput = picDownloaded.querySelector('.scale__control--value');
+  var image = picDownloaded.querySelector('.img-upload__preview img');
+  var form = picDownloaded.querySelector('.img-upload__form');
+  var fileInput = picDownloaded.querySelector('.img-upload__input');
 
   var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
-    var editForm = picDownloaded.querySelector('.img-upload__overlay');
     var editFormEscKeydownHandler = function (evt) {
       if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         editForm.classList.add('hidden');
@@ -81,7 +87,7 @@
   };
 
   var initiateChangeFilterOnChangeFilterRadioButton = function () {
-    var radioButtons = document.querySelector('.effects__list').cloneNode(true);
+    var radioButtons = picDownloaded.querySelector('.effects__list').cloneNode(true);
 
     levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
     levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
@@ -111,13 +117,12 @@
       }
     };
     for (var i = 1; i <= radioButtons.childElementCount; i++) {
-      var radioButton = document.querySelector('.effects__item:nth-child(' + i + ')').querySelector('.effects__radio');
+      var radioButton = picDownloaded.querySelector('.effects__item:nth-child(' + i + ')').querySelector('.effects__radio');
       radioButton.addEventListener('change', radioButtonChangeHandler);
     }
   };
 
   var initiateStopEventPropagationOnKeydownEscOnCommentary = function () {
-    var commentary = document.querySelector('.text__description');
     var commentaryElementKeydownEscHandler = function (evt) {
       if (evt.keyCode === window.constants.ESC_KEY_CODE) {
         evt.stopPropagation();
@@ -307,7 +312,6 @@
 
   var onSuccessPost = function () {
 
-    var editForm = document.querySelector('.img-upload__overlay');
     editForm.classList.add('hidden');
 
     var template = document.querySelector('#success').cloneNode(true);
@@ -408,7 +412,6 @@
   };
 
   var initiateAjaxOnFormSubmit = function () {
-    var form = document.querySelector('.img-upload__form');
     var formSubmitHandler = function (evt) {
       evt.preventDefault();
       window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
@@ -417,8 +420,6 @@
   };
 
   var initiateInsertImgOnChangeFileInput = function () {
-    var fileInput = document.getElementById('upload-file');
-    var image = document.querySelector('.img-upload__preview img');
     var fileInputChangeHandler = function (evt) {
       image.src = URL.createObjectURL(evt.target.files[0]);
     };
@@ -426,10 +427,6 @@
   };
 
   var initiateChangeImgSizeOnClickPlusMinusButtons = function () {
-    var minusButton = document.querySelector('.scale__control--smaller');
-    var plusButton = document.querySelector('.scale__control--bigger');
-    var sizeInput = document.querySelector('.scale__control--value');
-    var image = document.querySelector('.img-upload__preview img');
     var imageSize = 100;
     sizeInput.value = imageSize + '%';
     image.style.transform = 'scale(' + imageSize * 0.01 + ')';
