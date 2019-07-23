@@ -75,6 +75,28 @@
     ENTER_KEY_CODE: ENTER_KEY_CODE,
     GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS: GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS,
     LEVEL_PIN_MAX_LEFT: LEVEL_PIN_MAX_LEFT,
-    EFFECTS: Effects
+    EFFECTS: Effects,
+    MAX_DOWNLOADED_COMMENTS: 5,
+    NUMBER_OF_RANDOM_PICS: 15,
+    GET_REQUEST_URL: 'https://js.dump.academy/kekstagram/data',
+    POST_REQUEST_URL: 'https://js.dump.academy/kekstagram',
+  };
+
+  window.validation = {
+    MESSAGE_MAX_LENGTH: 140,
+    MAX_NUMBER_OF_HASHTAGS: 5,
+    MAX_CHARS_OF_HASHTAG: 20
+  };
+
+  window.imgSizes = {
+    MAX_SIZE: 100,
+    MIN_DIFFERENCE_SIZE: 25,
+    PERCENT_TO_DECIMAL_CALIBRATION: 0.01,
+  };
+
+  window.imgSizes = {
+    MAX_SIZE: 100,
+    MIN_DIFFERENCE_SIZE: 25,
+    PERCENT_TO_DECIMAL_CALIBRATION: 0.01,
   };
 })();

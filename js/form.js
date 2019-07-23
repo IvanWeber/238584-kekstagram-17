@@ -133,7 +133,7 @@
 
   var TextareaChecks = [{
     checker: function (value) {
-      return value.length < 140;
+      return value.length < window.validation.MESSAGE_MAX_LENGTH;
     },
     message: 'Длина сообщения должна быть меньше 140 символов',
   }
@@ -142,7 +142,7 @@
   var HashtagsChecks = [
     {
       checker: function (value) {
-        return value.length < 140;
+        return value.length < window.validation.MESSAGE_MAX_LENGTH;
       },
       message: 'Длина сообщения должна быть меньше 140 символов',
     },
@@ -211,7 +211,7 @@
     {
       checker: function (value) {
         var valueArray = value.split(' ');
-        if (valueArray.length > 5) {
+        if (valueArray.length > window.validation.MAX_NUMBER_OF_HASHTAGS) {
           return false;
         }
         return true;
@@ -222,7 +222,7 @@
       checker: function (value) {
         var hashtagsArray = value.split(' ');
         for (var i = 0; i < hashtagsArray.length; i++) {
-          if (hashtagsArray[i].split('').length > 20) {
+          if (hashtagsArray[i].split('').length > window.validation.MAX_CHARS_OF_HASHTAG) {
             return false;
           }
         }
@@ -372,7 +372,7 @@
 
     var tryAgainButtonClickHandler = function () {
       main.removeChild(errorSection);
-      window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
+      window.postLoad(window.constants.POST_REQUEST_URL, onSuccessPost, onErrorPost);
     };
 
     var uploadAnotherFileButtonClickHandler = function () {
@@ -414,7 +414,7 @@
   var initiateAjaxOnFormSubmit = function () {
     var formSubmitHandler = function (evt) {
       evt.preventDefault();
-      window.postLoad('https://js.dump.academy/kekstagram', onSuccessPost, onErrorPost);
+      window.postLoad(window.constants.POST_REQUEST_URL, onSuccessPost, onErrorPost);
     };
     form.addEventListener('submit', formSubmitHandler);
   };
@@ -427,20 +427,20 @@
   };
 
   var initiateChangeImgSizeOnClickPlusMinusButtons = function () {
-    var imageSize = 100;
+    var imageSize = window.imgSizes.MAX_SIZE;
     sizeInput.value = imageSize + '%';
-    image.style.transform = 'scale(' + imageSize * 0.01 + ')';
+    image.style.transform = 'scale(' + imageSize * window.imgSizes.PERCENT_TO_DECIMAL_CALIBRATION + ')';
     var minusButtonClickHandler = function () {
-      if (imageSize >= 1 && imageSize <= 100) {
-        imageSize = imageSize - 25;
-        image.style.transform = 'scale(' + imageSize * 0.01 + ')';
+      if (imageSize >= 1 && imageSize <= window.imgSizes.MAX_SIZE) {
+        imageSize = imageSize - window.imgSizes.MIN_DIFFERENCE_SIZE;
+        image.style.transform = 'scale(' + imageSize * window.imgSizes.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }
     };
     var plusButtonClickHandler = function () {
-      if (imageSize >= 0 && imageSize <= 99) {
-        imageSize = imageSize + 25;
-        image.style.transform = 'scale(' + imageSize * 0.01 + ')';
+      if (imageSize >= 0 && imageSize <= window.imgSizes.MAX_SIZE - 1) {
+        imageSize = imageSize + window.imgSizes.MIN_DIFFERENCE_SIZE;
+        image.style.transform = 'scale(' + imageSize * window.imgSizes.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }
     };
