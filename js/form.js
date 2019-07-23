@@ -8,6 +8,7 @@
   var filterValueInput = picDownloaded.querySelector('.effect-level__value');
   var imgUploadPreview = picDownloaded.querySelector('.img-upload__preview');
   var editForm = picDownloaded.querySelector('.img-upload__overlay');
+  var sliderPin = picDownloaded.querySelector('.effect-level__pin');
 
   var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
@@ -71,9 +72,6 @@
   };
 
   var initiateChangeFilterIntensityOnMouseUp = function () {
-    var imgUploadPreview = document.querySelector('.img-upload__preview');
-    var sliderPin = document.querySelector('.effect-level__pin');
-    var filterValueInput = document.querySelector('.effect-level__value');
     var sliderPinMouseUpHandler = function () {
       filterValueInput.value = window.constants.FILTER_VALUE_INPUT_TEST;
       var effectKey = imgUploadPreview.classList[1];
@@ -85,34 +83,23 @@
   var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = document.querySelector('.effects__list').cloneNode(true);
 
-    var levelPin = document.querySelector('.effect-level__pin');
-    var levelDepth = document.querySelector('.effect-level__depth');
     levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
     levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
 
-    var imgUploadPreview = document.querySelector('.img-upload__preview');
     imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
     imgUploadPreview.classList.add('effect-heat');
 
-    var slider = document.querySelector('.img-upload__effect-level');
-    var filterValueInput = document.querySelector('.effect-level__value');
     imgUploadPreview.classList.add('effect-heat');
     slider.classList.remove('hidden');
     filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
     imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
     var radioButtonChangeHandler = function (evt) {
 
-      var levelPin = document.querySelector('.effect-level__pin');
-      var levelDepth = document.querySelector('.effect-level__depth');
       levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
       levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
 
-      var imgUploadPreview = document.querySelector('.img-upload__preview');
       imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
       imgUploadPreview.classList.add(evt.currentTarget.id);
-
-      var slider = document.querySelector('.img-upload__effect-level');
-      var filterValueInput = document.querySelector('.effect-level__value');
 
       if (evt.currentTarget.id === 'effect-none') {
         slider.classList.add('hidden');
