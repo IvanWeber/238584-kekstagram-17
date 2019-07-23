@@ -320,13 +320,17 @@
     main.insertBefore(successSection, main.firstChild);
     var successButton = main.querySelector('.success__button');
 
+    var removeEventListenersOnSuccessSection = function () {
+      successButton.removeEventListener('click', successButtonClickHandler);
+      document.removeEventListener('keydown', successSectionKeydownEscHandler);
+      document.removeEventListener('click', successSectionOutClickHandler);
+    };
+
     var successButtonClickHandler = function () {
       main.removeChild(successSection);
       var uploadForm = document.querySelector('.img-upload__form');
       uploadForm.reset();
-      successButton.removeEventListener('click', successButtonClickHandler);
-      document.removeEventListener('keydown', successSectionKeydownEscHandler);
-      document.removeEventListener('click', successSectionOutClickHandler);
+      removeEventListenersOnSuccessSection();
     };
 
     var successSectionKeydownEscHandler = function (evt) {
@@ -334,18 +338,14 @@
         main.removeChild(successSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
-        successButton.removeEventListener('click', successButtonClickHandler);
-        document.removeEventListener('keydown', successSectionKeydownEscHandler);
-        document.removeEventListener('click', successSectionOutClickHandler);
+        removeEventListenersOnSuccessSection();
       }
     };
 
     var successSectionOutClickHandler = function (evt) {
       if (document.querySelector('.success__inner') !== null && !document.querySelector('.success__inner') !== undefined) {
         if (!document.querySelector('.success__inner').contains(evt.target)) {
-          successButton.removeEventListener('click', successButtonClickHandler);
-          document.removeEventListener('keydown', successSectionKeydownEscHandler);
-          document.removeEventListener('click', successSectionOutClickHandler);
+          removeEventListenersOnSuccessSection();
           main.removeChild(successSection);
           var uploadForm = document.querySelector('.img-upload__form');
           uploadForm.reset();
