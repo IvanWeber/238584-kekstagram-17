@@ -57,6 +57,7 @@
       filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
       imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
       editForm.classList.remove('hidden');
+      initiateChangeFilterOnChangeFilterRadioButton();
       closeEditFormOnKeydownEscAndOnClickCloseButton();
       initiateChangeImgSizeOnClickPlusMinusButtons();
       initiateCheckOnChangeElementOfForm('.text__description', TextareaChecks);
@@ -65,8 +66,8 @@
     input.addEventListener('change', pictureInputChangeHandler);
   };
 
-  var buildEffectStyle = function (effect, filterValueInput) {
-    return effect.FILTER + '(' + filterValueInput * effect.MAX / window.constants.STEPS_COUNT + effect.UNITS + ')';
+  var buildEffectStyle = function (effect, filterInput) {
+    return effect.FILTER + '(' + filterInput * effect.MAX / window.constants.STEPS_COUNT + effect.UNITS + ')';
   };
 
   var initiateChangeFilterIntensityOnMouseUp = function () {
@@ -83,6 +84,22 @@
 
   var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = document.querySelector('.effects__list').cloneNode(true);
+
+    var levelPin = document.querySelector('.effect-level__pin');
+    var levelDepth = document.querySelector('.effect-level__depth');
+    levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+    levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+
+    var imgUploadPreview = document.querySelector('.img-upload__preview');
+    imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
+    imgUploadPreview.classList.add('effect-heat');
+
+    var slider = document.querySelector('.img-upload__effect-level');
+    var filterValueInput = document.querySelector('.effect-level__value');
+    imgUploadPreview.classList.add('effect-heat');
+    slider.classList.remove('hidden');
+    filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
+    imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
     var radioButtonChangeHandler = function (evt) {
 
       var levelPin = document.querySelector('.effect-level__pin');
@@ -455,7 +472,6 @@
 
   initiateOpenEditFormOnDownloadPic();
 
-  initiateChangeFilterOnChangeFilterRadioButton();
   initiateChangeFilterIntensityOnMouseUp();
 
   initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth', '.img-upload__preview', '.effect-level__value');
