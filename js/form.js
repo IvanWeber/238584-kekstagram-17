@@ -211,10 +211,8 @@
     {
       checker: function (value) {
         var valueArray = value.split(' ');
-        if (valueArray.length > window.validation.MAX_NUMBER_OF_HASHTAGS) {
-          return false;
-        }
-        return true;
+        var isInvalid = valueArray.length > window.validation.MAX_NUMBER_OF_HASHTAGS;
+        return isInvalid ? false : true;
       },
       message: 'Нельзя указать больше пяти хэш-тегов'
     },
