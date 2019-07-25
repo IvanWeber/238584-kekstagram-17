@@ -26,7 +26,7 @@
     initiateOpenBigPicOnClickThumbnail(data);
   };
 
-  window.load(window.UrlRequest.GET, onSuccess, onError);
+  window.getLoad(window.UrlRequest.GET, onSuccess, onError);
 
   var showImgFilters = function () {
     imgFilters.classList.remove('img-filters--inactive');
