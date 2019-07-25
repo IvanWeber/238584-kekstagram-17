@@ -26,7 +26,7 @@
     initiateOpenBigPicOnClickThumbnail(data);
   };
 
-  window.load(window.constants.GET_REQUEST_URL, onSuccess, onError);
+  window.load(window.UrlRequest.GET, onSuccess, onError);
 
   var showImgFilters = function () {
     imgFilters.classList.remove('img-filters--inactive');
@@ -67,7 +67,7 @@
         if (evt.target.id === 'filter-popular') {
           selectedPics = data;
         } else if (evt.target.id === 'filter-new') {
-          selectedPics = getRandomNElementsFromArray(window.constants.NUMBER_OF_RANDOM_PICS, data);
+          selectedPics = getRandomNElementsFromArray(window.General.NUMBER_OF_RANDOM_PICS, data);
         } else if (evt.target.id === 'filter-discussed') {
           selectedPics = getSortedArrayByDescending(data);
         }
@@ -155,7 +155,7 @@
 
   var initiateHideBigPicOnEsc = function () {
     var bigPicEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         bigPic.classList.add('hidden');
         initiateHideExtraCommentsUnderDownloadMoreButton();
         resetDownloadMoreButtonHiding();
@@ -184,7 +184,7 @@
       insertDataForBigPic(elementToBeInserted);
     };
     var thumbnailEnterKeydownHandler = function (evt) {
-      if (evt.keyCode === window.constants.ENTER_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ENTER) {
         for (var i = 0; i < data.length; i++) {
           if (data[i].url === evt.currentTarget.querySelector('.picture__img').getAttribute('src')) {
             var elementToBeInserted = data[i];
@@ -201,8 +201,8 @@
 
   var initiateHideExtraCommentsUnderDownloadMoreButton = function () {
     var comments = bigPic.querySelectorAll('.social__comment');
-    if (comments.length > window.constants.MAX_DOWNLOADED_COMMENTS) {
-      for (var i = window.constants.MAX_DOWNLOADED_COMMENTS; i < comments.length; i++) {
+    if (comments.length > window.General.MAX_DOWNLOADED_COMMENTS) {
+      for (var i = window.General.MAX_DOWNLOADED_COMMENTS; i < comments.length; i++) {
         comments[i].classList.add('visually-hidden');
       }
     }
@@ -211,15 +211,15 @@
   var initiateDownloadMoreCommentsOnClickDownloadMoreButton = function () {
     var downloadMoreButton = bigPic.querySelector('.comments-loader');
     var comments = bigPic.querySelectorAll('.social__comment');
-    if (comments.length < window.constants.MAX_DOWNLOADED_COMMENTS) {
+    if (comments.length < window.General.MAX_DOWNLOADED_COMMENTS) {
       downloadMoreButton.classList.add('visually-hidden');
     }
     var downloadMoreButtonClickHandler = function () {
       var commentsVisuallyHidden = bigPic.querySelector('.social__comments').querySelectorAll('.visually-hidden');
       var commentsShown = comments.length - commentsVisuallyHidden.length;
       var commentsRemainForDownloading = commentsVisuallyHidden.length;
-      if (commentsRemainForDownloading > window.constants.MAX_DOWNLOADED_COMMENTS) {
-        for (var i = commentsShown; i < commentsShown + window.constants.MAX_DOWNLOADED_COMMENTS; i++) {
+      if (commentsRemainForDownloading > window.General.MAX_DOWNLOADED_COMMENTS) {
+        for (var i = commentsShown; i < commentsShown + window.General.MAX_DOWNLOADED_COMMENTS; i++) {
           comments[i].classList.remove('visually-hidden');
         }
       } else {
@@ -231,7 +231,7 @@
     };
 
     var escKeydownHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         downloadMoreButton.removeEventListener('click', downloadMoreButtonClickHandler);
       }
     };

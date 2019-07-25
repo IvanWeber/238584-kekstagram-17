@@ -20,7 +20,7 @@
   var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
     var editFormEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         editForm.classList.add('hidden');
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -43,12 +43,12 @@
     var hashTagsInput = editForm.querySelector('.text__hashtags');
     var descriptionInput = editForm.querySelector('.text__description');
     var hashTagsInputEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         evt.stopPropagation();
       }
     };
     var descriptionInputInputEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         evt.stopPropagation();
       }
     };
@@ -59,10 +59,10 @@
   var initiateOpenEditFormOnDownloadPic = function () {
     var pictureInputChangeHandler = function () {
       slider.classList.remove('hidden');
-      levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
-      filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
-      imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
+      levelPin.style.left = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      levelDepth.style.width = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      filterValueInput.value = window.PicDownloaded.FILTER_VALUE_INPUT_MAX;
+      imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
       editForm.classList.remove('hidden');
       initiateChangeFilterOnChangeFilterRadioButton();
       closeEditFormOnKeydownEscAndOnClickCloseButton();
@@ -74,14 +74,14 @@
   };
 
   var buildEffectStyle = function (effect, filterInput) {
-    return effect.FILTER + '(' + filterInput * effect.MAX / window.constants.STEPS_COUNT + effect.UNITS + ')';
+    return effect.FILTER + '(' + filterInput * effect.MAX / window.PicDownloaded.STEPS_COUNT + effect.UNITS + ')';
   };
 
   var initiateChangeFilterIntensityOnMouseUp = function () {
     var sliderPinMouseUpHandler = function () {
       filterValueInput.value = window.constants.FILTER_VALUE_INPUT_TEST;
       var effectKey = imgUploadPreview.classList[1];
-      imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS[effectKey], filterValueInput.value);
+      imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[effectKey], filterValueInput.value);
     };
     sliderPin.addEventListener('mouseup', sliderPinMouseUpHandler);
   };
@@ -89,20 +89,20 @@
   var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = picDownloaded.querySelector('.effects__list').cloneNode(true);
 
-    levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
-    levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+    levelPin.style.left = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+    levelDepth.style.width = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
 
     imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
     imgUploadPreview.classList.add('effect-heat');
 
     imgUploadPreview.classList.add('effect-heat');
     slider.classList.remove('hidden');
-    filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
-    imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS['effect-heat'], filterValueInput.value);
+    filterValueInput.value = window.PicDownloaded.FILTER_VALUE_INPUT_MAX;
+    imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
     var radioButtonChangeHandler = function (evt) {
 
-      levelPin.style.left = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.constants.LEVEL_PIN_MAX_LEFT + 'px';
+      levelPin.style.left = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      levelDepth.style.width = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
 
       imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
       imgUploadPreview.classList.add(evt.currentTarget.id);
@@ -112,8 +112,8 @@
         imgUploadPreview.style.filter = 'none';
       } else {
         slider.classList.remove('hidden');
-        filterValueInput.value = window.constants.FILTER_VALUE_INPUT_MAX;
-        imgUploadPreview.style.filter = buildEffectStyle(window.constants.EFFECTS[evt.currentTarget.id], filterValueInput.value);
+        filterValueInput.value = window.PicDownloaded.FILTER_VALUE_INPUT_MAX;
+        imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[evt.currentTarget.id], filterValueInput.value);
       }
     };
     for (var i = 1; i <= radioButtons.childElementCount; i++) {
@@ -124,7 +124,7 @@
 
   var initiateStopEventPropagationOnKeydownEscOnCommentary = function () {
     var commentaryElementKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         evt.stopPropagation();
       }
     };
@@ -133,7 +133,7 @@
 
   var TextareaChecks = [{
     checker: function (value) {
-      return value.length < window.validation.MESSAGE_MAX_LENGTH;
+      return value.length < window.Validation.MESSAGE_MAX_LENGTH;
     },
     message: 'Длина сообщения должна быть меньше 140 символов',
   }
@@ -142,7 +142,7 @@
   var HashtagsChecks = [
     {
       checker: function (value) {
-        return value.length < window.validation.MESSAGE_MAX_LENGTH;
+        return value.length < window.Validation.MESSAGE_MAX_LENGTH;
       },
       message: 'Длина сообщения должна быть меньше 140 символов',
     },
@@ -211,7 +211,7 @@
     {
       checker: function (value) {
         var valueArray = value.split(' ');
-        var isInvalid = valueArray.length > window.validation.MAX_NUMBER_OF_HASHTAGS;
+        var isInvalid = valueArray.length > window.Validation.MAX_NUMBER_OF_HASHTAGS;
         return isInvalid ? false : true;
       },
       message: 'Нельзя указать больше пяти хэш-тегов'
@@ -220,7 +220,7 @@
       checker: function (value) {
         var hashtagsArray = value.split(' ');
         for (var i = 0; i < hashtagsArray.length; i++) {
-          if (hashtagsArray[i].split('').length > window.validation.MAX_CHARS_OF_HASHTAG) {
+          if (hashtagsArray[i].split('').length > window.Validation.MAX_CHARS_OF_HASHTAG) {
             return false;
           }
         }
@@ -262,13 +262,13 @@
         x: evt.clientX - rect.x
       };
 
-      var shiftX = shift.x - window.constants.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
+      var shiftX = shift.x - window.PicDownloaded.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
 
       if (shiftX < 0) {
         shiftX = 0;
       }
-      if (shiftX > window.constants.LEVEL_PIN_MAX_LEFT) {
-        shiftX = window.constants.LEVEL_PIN_MAX_LEFT;
+      if (shiftX > window.PicDownloaded.LEVEL_PIN_MAX_LEFT) {
+        shiftX = window.PicDownloaded.LEVEL_PIN_MAX_LEFT;
       }
 
       levelPin.style.left = shiftX + 'px';
@@ -279,7 +279,7 @@
 
       intensityInput.value = Math.round(getValueOfLevelPin(levelPinSelector));
 
-      elementToBeProcessed.style.filter = buildEffectStyle(window.constants.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
+      elementToBeProcessed.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
     };
 
     var effectLevelLineMousedownHandler = function (evt) {
@@ -304,7 +304,7 @@
 
   var getValueOfLevelPin = function (levelPinSelector) {
     var levelPin = document.querySelector(levelPinSelector);
-    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.constants.FILTER_VALUE_INPUT_MAX / window.constants.LEVEL_PIN_MAX_LEFT;
+    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.PicDownloaded.FILTER_VALUE_INPUT_MAX / window.PicDownloaded.LEVEL_PIN_MAX_LEFT;
     return valueOfLevelPin;
   };
 
@@ -332,7 +332,7 @@
     };
 
     var successSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         main.removeChild(successSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -370,7 +370,7 @@
 
     var tryAgainButtonClickHandler = function () {
       main.removeChild(errorSection);
-      window.postLoad(window.constants.POST_REQUEST_URL, onSuccessPost, onErrorPost);
+      window.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
     };
 
     var uploadAnotherFileButtonClickHandler = function () {
@@ -381,7 +381,7 @@
     };
 
     var errorSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEY_CODE) {
+      if (evt.keyCode === window.KeyCode.ESC) {
         main.removeChild(errorSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
@@ -412,7 +412,7 @@
   var initiateAjaxOnFormSubmit = function () {
     var formSubmitHandler = function (evt) {
       evt.preventDefault();
-      window.postLoad(window.constants.POST_REQUEST_URL, onSuccessPost, onErrorPost);
+      window.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
     };
     form.addEventListener('submit', formSubmitHandler);
   };
@@ -425,20 +425,20 @@
   };
 
   var initiateChangeImgSizeOnClickPlusMinusButtons = function () {
-    var imageSize = window.imgSizes.MAX_SIZE;
+    var imageSize = window.ImgSize.MAX_SIZE;
     sizeInput.value = imageSize + '%';
-    image.style.transform = 'scale(' + imageSize * window.imgSizes.PERCENT_TO_DECIMAL_CALIBRATION + ')';
+    image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
     var minusButtonClickHandler = function () {
-      if (imageSize >= 1 && imageSize <= window.imgSizes.MAX_SIZE) {
-        imageSize = imageSize - window.imgSizes.MIN_DIFFERENCE_SIZE;
-        image.style.transform = 'scale(' + imageSize * window.imgSizes.PERCENT_TO_DECIMAL_CALIBRATION + ')';
+      if (imageSize >= 1 && imageSize <= window.ImgSize.MAX_SIZE) {
+        imageSize = imageSize - window.ImgSize.MIN_DIFFERENCE_SIZE;
+        image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }
     };
     var plusButtonClickHandler = function () {
-      if (imageSize >= 0 && imageSize <= window.imgSizes.MAX_SIZE - 1) {
-        imageSize = imageSize + window.imgSizes.MIN_DIFFERENCE_SIZE;
-        image.style.transform = 'scale(' + imageSize * window.imgSizes.PERCENT_TO_DECIMAL_CALIBRATION + ')';
+      if (imageSize >= 0 && imageSize <= window.ImgSize.MAX_SIZE - 1) {
+        imageSize = imageSize + window.ImgSize.MIN_DIFFERENCE_SIZE;
+        image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }
     };
