@@ -77,15 +77,6 @@
     return effect.FILTER + '(' + filterInput * effect.MAX / window.PicDownloaded.STEPS_COUNT + effect.UNITS + ')';
   };
 
-  var initiateChangeFilterIntensityOnMouseUp = function () {
-    var sliderPinMouseUpHandler = function () {
-      filterValueInput.value = window.constants.FILTER_VALUE_INPUT_TEST;
-      var effectKey = imgUploadPreview.classList[1];
-      imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[effectKey], filterValueInput.value);
-    };
-    sliderPin.addEventListener('mouseup', sliderPinMouseUpHandler);
-  };
-
   var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = picDownloaded.querySelector('.effects__list').cloneNode(true);
 
@@ -453,8 +444,6 @@
   initiateStopEventPropagationOnKeydownEscOnCommentary();
 
   initiateOpenEditFormOnDownloadPic();
-
-  initiateChangeFilterIntensityOnMouseUp();
 
   initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth', '.img-upload__preview', '.effect-level__value');
 })();
