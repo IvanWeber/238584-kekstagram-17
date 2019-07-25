@@ -8,7 +8,6 @@
   var filterValueInput = picDownloaded.querySelector('.effect-level__value');
   var imgUploadPreview = picDownloaded.querySelector('.img-upload__preview');
   var editForm = picDownloaded.querySelector('.img-upload__overlay');
-  var sliderPin = picDownloaded.querySelector('.effect-level__pin');
   var commentary = picDownloaded.querySelector('.text__description');
   var minusButton = picDownloaded.querySelector('.scale__control--smaller');
   var plusButton = picDownloaded.querySelector('.scale__control--bigger');
@@ -349,7 +348,6 @@
 
   var onErrorPost = function () {
 
-    var editForm = document.querySelector('.img-upload__overlay');
     editForm.classList.add('hidden');
 
     var template = document.querySelector('#error').cloneNode(true);
