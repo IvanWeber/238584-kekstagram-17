@@ -32,6 +32,7 @@
   window.General = {
     MAX_DOWNLOADED_COMMENTS: 5,
     NUMBER_OF_RANDOM_PICS: 15,
+    FILTER_TIMEOUT: 1000
   };
 
   window.PicDownloaded = {
@@ -39,7 +40,7 @@
     FILTER_VALUE_INPUT_MAX: 100,
     GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS: 20,
     LEVEL_PIN_MAX_LEFT: 452,
-    EFFECTS: Effects,
+    EFFECTS: Effects
   };
 
   window.UrlRequest = {

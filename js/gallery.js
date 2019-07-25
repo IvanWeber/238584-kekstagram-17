@@ -74,7 +74,7 @@
         var selectedPicsDomElements = getUserPictureDomElements(selectedPics);
         insertUserPictureDomElements(selectedPicsDomElements);
         initiateOpenBigPicOnClickThumbnail(data);
-      }, 1000);
+      }, window.General.FILTER_TIMEOUT);
     };
   };
 
