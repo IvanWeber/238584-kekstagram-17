@@ -236,17 +236,14 @@
     element.addEventListener('input', commentaryElementChangeHandler);
   };
 
-  var initiateLevelPinDrugAndDrop = function (levelPinSelector, levelOuterBarSelector, levelDepthSelector, elementToBeProcessedSelector, intensityInputSelector) {
-    var levelPin = document.querySelector(levelPinSelector);
-    var levelOuterLine = document.querySelector(levelOuterBarSelector);
-    var levelDepth = document.querySelector(levelDepthSelector);
+  var initiateLevelPinDrugAndDrop = function () {
 
-    var elementToBeProcessed = document.querySelector(elementToBeProcessedSelector);
+    var imageDiv = picDownloaded.querySelector('.img-upload__preview');
 
     var movePin = function (evt) {
       evt.preventDefault();
 
-      var rect = levelOuterLine.getBoundingClientRect();
+      var rect = slider.getBoundingClientRect();
 
       var shift = {
         x: evt.clientX - rect.x
@@ -265,11 +262,9 @@
 
       levelDepth.style.width = shiftX + 'px';
 
-      var intensityInput = document.querySelector(intensityInputSelector);
+      filterValueInput.value = Math.round(getValueOfLevelPin());
 
-      intensityInput.value = Math.round(getValueOfLevelPin(levelPinSelector));
-
-      elementToBeProcessed.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[elementToBeProcessed.classList[1]], intensityInput.value);
+      imageDiv.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[imageDiv.classList[1]], filterValueInput.value);
     };
 
     var effectLevelLineMousedownHandler = function (evt) {
@@ -289,11 +284,10 @@
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     };
-    levelOuterLine.addEventListener('mousedown', effectLevelLineMousedownHandler);
+    slider.addEventListener('mousedown', effectLevelLineMousedownHandler);
   };
 
-  var getValueOfLevelPin = function (levelPinSelector) {
-    var levelPin = document.querySelector(levelPinSelector);
+  var getValueOfLevelPin = function () {
     var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.PicDownloaded.FILTER_VALUE_INPUT_MAX / window.PicDownloaded.LEVEL_PIN_MAX_LEFT;
     return valueOfLevelPin;
   };
@@ -443,5 +437,5 @@
 
   initiateOpenEditFormOnDownloadPic();
 
-  initiateLevelPinDrugAndDrop('.effect-level__pin', '.img-upload__effect-level', '.effect-level__depth', '.img-upload__preview', '.effect-level__value');
+  initiateLevelPinDrugAndDrop();
 })();
