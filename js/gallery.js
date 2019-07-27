@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var body = document.querySelector('body');
   var imgFilters = body.querySelector('.img-filters');
   var filters = body.querySelectorAll('.img-filters__button');
@@ -26,7 +25,7 @@
     initiateOpenBigPicOnClickThumbnail(data);
   };
 
-  window.getLoad(window.UrlRequest.GET, onSuccess, onError);
+  window.ajax.getLoad(window.UrlRequest.GET, onSuccess, onError);
 
   var showImgFilters = function () {
     imgFilters.classList.remove('img-filters--inactive');

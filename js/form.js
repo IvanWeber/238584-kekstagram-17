@@ -353,7 +353,7 @@
 
     var tryAgainButtonClickHandler = function () {
       main.removeChild(errorSection);
-      window.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
+      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
     };
 
     var uploadAnotherFileButtonClickHandler = function () {
@@ -395,7 +395,7 @@
   var initiateAjaxOnFormSubmit = function () {
     var formSubmitHandler = function (evt) {
       evt.preventDefault();
-      window.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
+      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
     };
     form.addEventListener('submit', formSubmitHandler);
   };

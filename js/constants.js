@@ -65,7 +65,7 @@
     PERCENT_TO_DECIMAL_CALIBRATION: 0.01
   };
 
-  window.ajax = {
+  window.AjaxConstants = {
     SUCCESS_CODE: 200,
     TIMEOUT: 10000
   };
