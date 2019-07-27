@@ -31,25 +31,6 @@
     imgFilters.classList.remove('img-filters--inactive');
   };
 
-  var getRandomNElementsFromArray = function (numberOfElements, array) {
-    var arrayClone = array.slice();
-    var randomNElementsFromArray = [];
-    for (var i = 0; i < numberOfElements; i++) {
-      var randIndex = getRandomInt(0, arrayClone.length - 1);
-      randomNElementsFromArray[randomNElementsFromArray.length] = arrayClone[randIndex];
-      arrayClone.splice(randIndex, 1);
-    }
-    return randomNElementsFromArray;
-  };
-
-  var getSortedArrayByDescending = function (array) {
-    var arrayClone = array.slice();
-    arrayClone.sort(function (a, b) {
-      return b.comments.length - a.comments.length;
-    });
-    return arrayClone;
-  };
-
   var createFilterHandler = function (filterPopular, filterNew, filterDiscussed, data) {
     var lastTimeout = null;
     return function (evt) {
@@ -66,9 +47,9 @@
         if (evt.target.id === 'filter-popular') {
           selectedPics = data;
         } else if (evt.target.id === 'filter-new') {
-          selectedPics = getRandomNElementsFromArray(window.General.NUMBER_OF_RANDOM_PICS, data);
+          selectedPics = window.utility.getRandomNElementsFromArray(window.General.NUMBER_OF_RANDOM_PICS, data);
         } else if (evt.target.id === 'filter-discussed') {
-          selectedPics = getSortedArrayByDescending(data);
+          selectedPics = window.utility.getSortedArrayByDescending(data);
         }
         var selectedPicsDomElements = getUserPictureDomElements(selectedPics);
         insertUserPictureDomElements(selectedPicsDomElements);
@@ -82,11 +63,6 @@
     filters.forEach(function (filter) {
       filter.addEventListener('click', filterHandler);
     });
-  };
-
-  var getRandomInt = function (min, max) {
-    var randomInt = Math.round(min + Math.random() * (max - min));
-    return randomInt;
   };
 
   var getUserPictureDomElement = function (pictureObject) {
@@ -143,7 +119,7 @@
     }
     for (var i = 0; i < element.comments.length; i++) {
       var newSocialComment = socialComment.cloneNode(true);
-      newSocialComment.querySelector('.social__picture').src = 'img/avatar-' + getRandomInt(1, 6) + '.svg';
+      newSocialComment.querySelector('.social__picture').src = 'img/avatar-' + window.utility.getRandomInt(1, 6) + '.svg';
       newSocialComment.querySelector('.social__text').textContent = element.comments[i].message;
       socialComments.appendChild(newSocialComment);
     }
