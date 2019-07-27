@@ -79,9 +79,9 @@
 
   var setFilterButtonClickHandler = function (data) {
     var filterHandler = createFilterHandler(filters[0], filters[1], filters[2], data);
-    for (let value of filters) {
-      value.addEventListener('click', filterHandler);
-    }
+    filters.forEach(function (filter) {
+      filter.addEventListener('click', filterHandler);
+    });
   };
 
   var getRandomInt = function (min, max) {
