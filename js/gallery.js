@@ -9,7 +9,7 @@
   var bigPic = body.querySelector('.big-picture');
   var picCancel = bigPic.querySelector('.big-picture__cancel');
 
-  var onError = function (message) {
+  var onErrorGet = function (message) {
     var messageParagraph = document.querySelector('p');
     messageParagraph.textContent = message;
     messageParagraph.style.color = 'red';
@@ -18,14 +18,14 @@
     body.insertBefore(messageParagraph, body.firstChild);
   };
 
-  var onSuccess = function (data) {
+  var onSuccessGet = function (data) {
     insertUserPictureDomElements(getUserPictureDomElements(data));
     showImgFilters();
     setFilterButtonClickHandler(data);
     initiateOpenBigPicOnClickThumbnail(data);
   };
 
-  window.ajax.getLoad(window.UrlRequest.GET, onSuccess, onError);
+  window.ajax.getLoad(window.UrlRequest.GET, onSuccessGet, onErrorGet);
 
   var showImgFilters = function () {
     imgFilters.classList.remove('img-filters--inactive');

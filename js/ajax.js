@@ -2,25 +2,25 @@
 
 (function () {
   window.ajax = {
-    getLoad: function (url, onSuccess, onError) {
+    getLoad: function (url, onSuccessGet, onErrorGet) {
       var xhr = new XMLHttpRequest();
 
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
         if (xhr.status === window.AjaxConstants.SUCCESS_CODE) {
-          onSuccess(xhr.response);
+          onSuccessGet(xhr.response);
         } else {
-          onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+          onErrorGet('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
         }
       });
 
       xhr.addEventListener('error', function () {
-        onError('Произошла ошибка соединения');
+        onErrorGet('Произошла ошибка соединения');
       });
 
       xhr.addEventListener('timeout', function () {
-        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+        onErrorGet('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
       xhr.timeout = window.AjaxConstants.TIMEOUT; // 10s
