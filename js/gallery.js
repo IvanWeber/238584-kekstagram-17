@@ -10,10 +10,12 @@
   var picCancel = bigPic.querySelector('.big-picture__cancel');
 
   var onErrorGet = function (message) {
-    var messageParagraph = document.querySelector('p');
+    var messageParagraph = document.createElement('p');
     messageParagraph.textContent = message;
     messageParagraph.style.color = 'red';
     messageParagraph.style.fontSize = '32px';
+    messageParagraph.style.height = '40px';
+    messageParagraph.style.padding = '10px';
     messageParagraph.style.backgroundColor = 'white';
     body.insertBefore(messageParagraph, body.firstChild);
   };
