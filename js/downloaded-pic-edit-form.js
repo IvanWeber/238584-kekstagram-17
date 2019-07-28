@@ -16,6 +16,115 @@
   var form = picDownloaded.querySelector('.img-upload__form');
   var fileInput = picDownloaded.querySelector('.img-upload__input');
 
+
+  var onSuccessPost = function () {
+
+    editForm.classList.add('hidden');
+
+    var template = document.querySelector('#success').cloneNode(true);
+    var successSection = template.content.querySelector('.success').cloneNode(true);
+    var main = document.querySelector('main');
+    main.insertBefore(successSection, main.firstChild);
+    var successButton = main.querySelector('.success__button');
+
+    var removeEventListenersOnSuccessSection = function () {
+      successButton.removeEventListener('click', successButtonClickHandler);
+      document.removeEventListener('keydown', successSectionKeydownEscHandler);
+      document.removeEventListener('click', successSectionOutClickHandler);
+    };
+
+    var successButtonClickHandler = function () {
+      main.removeChild(successSection);
+      var uploadForm = document.querySelector('.img-upload__form');
+      uploadForm.reset();
+      removeEventListenersOnSuccessSection();
+    };
+
+    var successSectionKeydownEscHandler = function (evt) {
+      if (evt.keyCode === window.KeyCode.ESC) {
+        main.removeChild(successSection);
+        var uploadForm = document.querySelector('.img-upload__form');
+        uploadForm.reset();
+        removeEventListenersOnSuccessSection();
+      }
+    };
+
+    var successSectionOutClickHandler = function (evt) {
+      if (document.querySelector('.success__inner') !== null && !document.querySelector('.success__inner') !== undefined) {
+        if (!document.querySelector('.success__inner').contains(evt.target)) {
+          removeEventListenersOnSuccessSection();
+          main.removeChild(successSection);
+          var uploadForm = document.querySelector('.img-upload__form');
+          uploadForm.reset();
+        }
+      }
+    };
+
+    successButton.addEventListener('click', successButtonClickHandler);
+    document.addEventListener('keydown', successSectionKeydownEscHandler);
+    document.addEventListener('click', successSectionOutClickHandler);
+  };
+
+  var onErrorPost = function () {
+
+    editForm.classList.add('hidden');
+
+    var template = document.querySelector('#error').cloneNode(true);
+    var errorSection = template.content.querySelector('.error').cloneNode(true);
+    var main = document.querySelector('main');
+    main.insertBefore(errorSection, main.firstChild);
+    var tryAgainButton = main.querySelectorAll('.error__button')[0];
+    var uploadAnotherFileButton = main.querySelectorAll('.error__button')[1];
+
+    var tryAgainButtonClickHandler = function () {
+      main.removeChild(errorSection);
+      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
+    };
+
+    var uploadAnotherFileButtonClickHandler = function () {
+      main.removeChild(errorSection);
+      var uploadForm = document.querySelector('.img-upload__form');
+      uploadForm.reset();
+      document.querySelector('.img-upload__control').click();
+    };
+
+    var errorSectionKeydownEscHandler = function (evt) {
+      if (evt.keyCode === window.KeyCode.ESC) {
+        main.removeChild(errorSection);
+        var uploadForm = document.querySelector('.img-upload__form');
+        uploadForm.reset();
+        document.removeEventListener('keydown', errorSectionKeydownEscHandler);
+        document.removeEventListener('click', errorSectionOutClickHandler);
+      }
+    };
+
+    var errorSectionOutClickHandler = function (evt) {
+      if (document.querySelector('.error__inner') !== null && !document.querySelector('.error__inner') !== undefined) {
+        if (!document.querySelector('.error__inner').contains(evt.target)) {
+          document.removeEventListener('keydown', errorSectionKeydownEscHandler);
+          document.removeEventListener('click', errorSectionOutClickHandler);
+          main.removeChild(errorSection);
+          var uploadForm = document.querySelector('.img-upload__form');
+          uploadForm.reset();
+        }
+      }
+    };
+
+    tryAgainButton.addEventListener('click', tryAgainButtonClickHandler);
+    uploadAnotherFileButton.addEventListener('click', uploadAnotherFileButtonClickHandler);
+
+    document.addEventListener('keydown', errorSectionKeydownEscHandler);
+    document.addEventListener('click', errorSectionOutClickHandler);
+  };
+
+  var initiateAjaxOnFormSubmit = function () {
+    var formSubmitHandler = function (evt) {
+      evt.preventDefault();
+      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
+    };
+    form.addEventListener('submit', formSubmitHandler);
+  };
+
   var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
     var editFormEscKeydownHandler = function (evt) {
@@ -191,114 +300,6 @@
   var getValueOfLevelPin = function () {
     var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.PicDownloaded.FILTER_VALUE_INPUT_MAX / window.PicDownloaded.LEVEL_PIN_MAX_LEFT;
     return valueOfLevelPin;
-  };
-
-  var onSuccessPost = function () {
-
-    editForm.classList.add('hidden');
-
-    var template = document.querySelector('#success').cloneNode(true);
-    var successSection = template.content.querySelector('.success').cloneNode(true);
-    var main = document.querySelector('main');
-    main.insertBefore(successSection, main.firstChild);
-    var successButton = main.querySelector('.success__button');
-
-    var removeEventListenersOnSuccessSection = function () {
-      successButton.removeEventListener('click', successButtonClickHandler);
-      document.removeEventListener('keydown', successSectionKeydownEscHandler);
-      document.removeEventListener('click', successSectionOutClickHandler);
-    };
-
-    var successButtonClickHandler = function () {
-      main.removeChild(successSection);
-      var uploadForm = document.querySelector('.img-upload__form');
-      uploadForm.reset();
-      removeEventListenersOnSuccessSection();
-    };
-
-    var successSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
-        main.removeChild(successSection);
-        var uploadForm = document.querySelector('.img-upload__form');
-        uploadForm.reset();
-        removeEventListenersOnSuccessSection();
-      }
-    };
-
-    var successSectionOutClickHandler = function (evt) {
-      if (document.querySelector('.success__inner') !== null && !document.querySelector('.success__inner') !== undefined) {
-        if (!document.querySelector('.success__inner').contains(evt.target)) {
-          removeEventListenersOnSuccessSection();
-          main.removeChild(successSection);
-          var uploadForm = document.querySelector('.img-upload__form');
-          uploadForm.reset();
-        }
-      }
-    };
-
-    successButton.addEventListener('click', successButtonClickHandler);
-    document.addEventListener('keydown', successSectionKeydownEscHandler);
-    document.addEventListener('click', successSectionOutClickHandler);
-  };
-
-  var onErrorPost = function () {
-
-    editForm.classList.add('hidden');
-
-    var template = document.querySelector('#error').cloneNode(true);
-    var errorSection = template.content.querySelector('.error').cloneNode(true);
-    var main = document.querySelector('main');
-    main.insertBefore(errorSection, main.firstChild);
-    var tryAgainButton = main.querySelectorAll('.error__button')[0];
-    var uploadAnotherFileButton = main.querySelectorAll('.error__button')[1];
-
-    var tryAgainButtonClickHandler = function () {
-      main.removeChild(errorSection);
-      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
-    };
-
-    var uploadAnotherFileButtonClickHandler = function () {
-      main.removeChild(errorSection);
-      var uploadForm = document.querySelector('.img-upload__form');
-      uploadForm.reset();
-      document.querySelector('.img-upload__control').click();
-    };
-
-    var errorSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
-        main.removeChild(errorSection);
-        var uploadForm = document.querySelector('.img-upload__form');
-        uploadForm.reset();
-        document.removeEventListener('keydown', errorSectionKeydownEscHandler);
-        document.removeEventListener('click', errorSectionOutClickHandler);
-      }
-    };
-
-    var errorSectionOutClickHandler = function (evt) {
-      if (document.querySelector('.error__inner') !== null && !document.querySelector('.error__inner') !== undefined) {
-        if (!document.querySelector('.error__inner').contains(evt.target)) {
-          document.removeEventListener('keydown', errorSectionKeydownEscHandler);
-          document.removeEventListener('click', errorSectionOutClickHandler);
-          main.removeChild(errorSection);
-          var uploadForm = document.querySelector('.img-upload__form');
-          uploadForm.reset();
-        }
-      }
-    };
-
-    tryAgainButton.addEventListener('click', tryAgainButtonClickHandler);
-    uploadAnotherFileButton.addEventListener('click', uploadAnotherFileButtonClickHandler);
-
-    document.addEventListener('keydown', errorSectionKeydownEscHandler);
-    document.addEventListener('click', errorSectionOutClickHandler);
-  };
-
-  var initiateAjaxOnFormSubmit = function () {
-    var formSubmitHandler = function (evt) {
-      evt.preventDefault();
-      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
-    };
-    form.addEventListener('submit', formSubmitHandler);
   };
 
   var initiateInsertImgOnChangeFileInput = function () {

@@ -9,6 +9,14 @@
   var bigPic = body.querySelector('.big-picture');
   var picCancel = bigPic.querySelector('.big-picture__cancel');
 
+
+  var onSuccessGet = function (data) {
+    insertUserPictureDomElements(getUserPictureDomElements(data));
+    showImgFilters();
+    setFilterButtonClickHandler(data);
+    initiateOpenBigPicOnClickThumbnail(data);
+  };
+
   var onErrorGet = function (message) {
     var messageParagraph = document.createElement('p');
     messageParagraph.textContent = message;
@@ -18,13 +26,6 @@
     messageParagraph.style.padding = '10px';
     messageParagraph.style.backgroundColor = 'white';
     body.insertBefore(messageParagraph, body.firstChild);
-  };
-
-  var onSuccessGet = function (data) {
-    insertUserPictureDomElements(getUserPictureDomElements(data));
-    showImgFilters();
-    setFilterButtonClickHandler(data);
-    initiateOpenBigPicOnClickThumbnail(data);
   };
 
   window.ajax.getLoad(window.UrlRequest.GET, onSuccessGet, onErrorGet);
