@@ -125,26 +125,6 @@
     initiateDownloadMoreCommentsOnClickDownloadMoreButton();
   };
 
-  var initiateHideBigPicOnEsc = function () {
-    var bigPicEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
-        bigPic.classList.add('hidden');
-        initiateHideExtraCommentsUnderDownloadMoreButton();
-        resetDownloadMoreButtonHiding();
-      }
-    };
-    document.addEventListener('keydown', bigPicEscKeydownHandler);
-  };
-
-  var initiateHideBigPicOnClickCloseButton = function () {
-    var PicCancelClickHandler = function () {
-      bigPic.classList.add('hidden');
-      initiateHideExtraCommentsUnderDownloadMoreButton();
-      resetDownloadMoreButtonHiding();
-    };
-    picCancel.addEventListener('click', PicCancelClickHandler);
-  };
-
   var initiateOpenBigPicOnClickThumbnail = function (data) {
     var thumbNailsCollection = picsParent.querySelectorAll('.picture__img');
 
@@ -175,6 +155,26 @@
       thumbNail.parentElement.addEventListener('keydown', thumbnailEnterKeydownHandler);
     });
 
+  };
+
+  var initiateHideBigPicOnEsc = function () {
+    var bigPicEscKeydownHandler = function (evt) {
+      if (evt.keyCode === window.KeyCode.ESC) {
+        bigPic.classList.add('hidden');
+        initiateHideExtraCommentsUnderDownloadMoreButton();
+        resetDownloadMoreButtonHiding();
+      }
+    };
+    document.addEventListener('keydown', bigPicEscKeydownHandler);
+  };
+
+  var initiateHideBigPicOnClickCloseButton = function () {
+    var PicCancelClickHandler = function () {
+      bigPic.classList.add('hidden');
+      initiateHideExtraCommentsUnderDownloadMoreButton();
+      resetDownloadMoreButtonHiding();
+    };
+    picCancel.addEventListener('click', PicCancelClickHandler);
   };
 
   var initiateHideExtraCommentsUnderDownloadMoreButton = function () {
