@@ -25,6 +25,13 @@
         return b.comments.length - a.comments.length;
       });
       return arrayClone;
+    },
+
+    deleteSpecificItemsOfParent: function (parent, deleteElementsSelector) {
+      var elementsToBeDeleted = parent.querySelectorAll(deleteElementsSelector);
+      elementsToBeDeleted.forEach(function (element) {
+        parent.removeChild(element);
+      });
     }
 
   };

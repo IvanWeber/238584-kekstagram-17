@@ -37,7 +37,7 @@
   var createFilterHandler = function (filterPopular, filterNew, filterDiscussed, data) {
     var lastTimeout = null;
     return function (evt) {
-      deleteSpecificItemsOfParent(picsParent, '.picture');
+      window.utility.deleteSpecificItemsOfParent(picsParent, '.picture');
       filterPopular.classList.remove('img-filters__button--active');
       filterNew.classList.remove('img-filters__button--active');
       filterDiscussed.classList.remove('img-filters__button--active');
@@ -91,13 +91,6 @@
 
     documentFragmentVar.appendChild(pictureDomElement);
     picsParent.appendChild(documentFragmentVar);
-  };
-
-  var deleteSpecificItemsOfParent = function (parent, deleteElementsSelector) {
-    var elementsToBeDeleted = parent.querySelectorAll(deleteElementsSelector);
-    elementsToBeDeleted.forEach(function (element) {
-      parent.removeChild(element);
-    });
   };
 
   var insertUserPictureDomElements = function (pictureDomElements) {
