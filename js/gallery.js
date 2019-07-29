@@ -153,6 +153,7 @@
 
   var initiateOpenBigPicOnClickThumbnail = function (data) {
     var thumbNailsCollection = picsParent.querySelectorAll('.picture__img');
+
     var thumbnailClickHandler = function (evt) {
       for (var i = 0; i < data.length; i++) {
         if (data[i].url === evt.currentTarget.getAttribute('src')) {
@@ -161,6 +162,7 @@
       }
       insertDataForBigPic(elementToBeInserted);
     };
+
     var thumbnailEnterKeydownHandler = function (evt) {
       if (evt.keyCode === window.KeyCode.ENTER) {
         for (var i = 0; i < data.length; i++) {
@@ -171,10 +173,12 @@
         insertDataForBigPic(elementToBeInserted);
       }
     };
-    for (var i = 0; i < thumbNailsCollection.length; i++) {
-      thumbNailsCollection[i].addEventListener('click', thumbnailClickHandler);
-      thumbNailsCollection[i].parentElement.addEventListener('keydown', thumbnailEnterKeydownHandler);
-    }
+
+    thumbNailsCollection.forEach(function (thumbNail) {
+      thumbNail.addEventListener('click', thumbnailClickHandler);
+      thumbNail.parentElement.addEventListener('keydown', thumbnailEnterKeydownHandler);
+    });
+
   };
 
   var initiateHideExtraCommentsUnderDownloadMoreButton = function () {
