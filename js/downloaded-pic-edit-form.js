@@ -125,7 +125,7 @@
     form.addEventListener('submit', formSubmitHandler);
   };
 
-  var closeEditFormOnKeydownEscAndOnClickCloseButton = function () {
+  var initiateCloseEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
     var editFormEscKeydownHandler = function (evt) {
       if (evt.keyCode === window.KeyCode.ESC) {
@@ -173,7 +173,7 @@
       imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
       editForm.classList.remove('hidden');
       initiateChangeFilterOnChangeFilterRadioButton();
-      closeEditFormOnKeydownEscAndOnClickCloseButton();
+      initiateCloseEditFormOnKeydownEscAndOnClickCloseButton();
       initiateChangeImgSizeOnClickPlusMinusButtons();
       initiateCheckOnChangeElementOfForm('.text__description', window.checks.textareaChecks);
       initiateCheckOnChangeElementOfForm('.text__hashtags', window.checks.hashtagsChecks);
