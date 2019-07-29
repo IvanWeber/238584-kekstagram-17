@@ -15,6 +15,8 @@
     showImgFilters();
     initiateFilterButtonClickHandler(data);
     initiateOpenBigPicOnClickThumbnail(data);
+    initiateHideBigPicOnEsc();
+    initiateHideBigPicOnClickCloseButton();
   };
 
   var onErrorGet = function (message) {
@@ -228,7 +230,4 @@
   var resetDownloadMoreButtonHiding = function () {
     bigPic.querySelector('.comments-loader').classList.remove('visually-hidden');
   };
-
-  initiateHideBigPicOnEsc();
-  initiateHideBigPicOnClickCloseButton();
 })();
