@@ -2,6 +2,7 @@
 
 (function () {
   window.ajax = {
+
     getLoad: function (url, onSuccessGet, onErrorGet) {
       var xhr = new XMLHttpRequest();
 
@@ -52,5 +53,6 @@
       xhr.open('POST', url);
       xhr.send(body);
     }
+
   };
 })();
