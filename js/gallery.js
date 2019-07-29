@@ -76,11 +76,13 @@
     return picture;
   };
 
-  var getUserPictureDomElements = function (pictureObjects) {
+  var getUserPictureDomElements = function (picObjects) {
     var pictures = [];
-    for (var i = 0; i < pictureObjects.length; i++) {
-      pictures[i] = getUserPictureDomElement(pictureObjects[i]);
-    }
+
+    picObjects.forEach(function (picObject, i) {
+      pictures[i] = getUserPictureDomElement(picObject);
+    });
+
     return pictures;
   };
 
