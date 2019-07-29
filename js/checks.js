@@ -3,7 +3,7 @@
 (function () {
   window.checks = {
 
-    TextareaChecks: [{
+    textareaChecks: [{
       checker: function (value) {
         return value.length < window.Validation.MESSAGE_MAX_LENGTH;
       },
@@ -11,7 +11,7 @@
     }
     ],
 
-    HashtagsChecks: [
+    hashtagsChecks: [
       {
         checker: function (value) {
           return value.length < window.Validation.MESSAGE_MAX_LENGTH;

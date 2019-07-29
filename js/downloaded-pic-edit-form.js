@@ -175,8 +175,8 @@
       initiateChangeFilterOnChangeFilterRadioButton();
       closeEditFormOnKeydownEscAndOnClickCloseButton();
       initiateChangeImgSizeOnClickPlusMinusButtons();
-      initiateCheckOnChangeElementOfForm('.text__description', window.checks.TextareaChecks);
-      initiateCheckOnChangeElementOfForm('.text__hashtags', window.checks.HashtagsChecks);
+      initiateCheckOnChangeElementOfForm('.text__description', window.checks.textareaChecks);
+      initiateCheckOnChangeElementOfForm('.text__hashtags', window.checks.hashtagsChecks);
     };
     input.addEventListener('change', pictureInputChangeHandler);
   };
