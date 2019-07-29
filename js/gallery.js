@@ -13,7 +13,7 @@
   var onSuccessGet = function (data) {
     insertUserPictureDomElements(getUserPictureDomElements(data));
     showImgFilters();
-    setFilterButtonClickHandler(data);
+    initiateFilterButtonClickHandler(data);
     initiateOpenBigPicOnClickThumbnail(data);
   };
 
@@ -61,7 +61,7 @@
     };
   };
 
-  var setFilterButtonClickHandler = function (data) {
+  var initiateFilterButtonClickHandler = function (data) {
     var filterHandler = createFilterHandler(filters[0], filters[1], filters[2], data);
     filters.forEach(function (filter) {
       filter.addEventListener('click', filterHandler);
