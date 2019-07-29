@@ -99,12 +99,11 @@
     }
   };
 
-  var deleteHiddenFromBigPicture = function () {
+  var showBigPic = function () {
     bigPic.classList.remove('hidden');
   };
 
   var insertDataForBigPic = function (element) {
-    deleteHiddenFromBigPicture();
     bigPic.querySelector('.big-picture__img img').src = element.url;
     bigPic.querySelector('.likes-count').textContent = element.likes;
     bigPic.querySelector('.comments-count').textContent = element.comments.length;
@@ -155,6 +154,7 @@
           var elementToBeInserted = data[i];
         }
       }
+      showBigPic();
       insertDataForBigPic(elementToBeInserted);
     };
 
@@ -165,6 +165,7 @@
             var elementToBeInserted = data[i];
           }
         }
+        showBigPic();
         insertDataForBigPic(elementToBeInserted);
       }
     };
