@@ -134,7 +134,7 @@
     document.addEventListener('keydown', editFormEscKeydownHandler);
 
     // OnClickCloseButton
-    var closeButton = document.querySelector('.img-upload__cancel');
+    var closeButton = editForm.querySelector('.img-upload__cancel');
     var closeButtonClickHandler = function () {
       editForm.classList.add('hidden');
       uploadForm.reset();
