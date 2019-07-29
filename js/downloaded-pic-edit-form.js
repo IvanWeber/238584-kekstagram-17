@@ -231,7 +231,7 @@
   };
 
   var initiateCheckOnChangeElementOfForm = function (elementSelector, checks) {
-    var element = document.querySelector(elementSelector);
+    var element = picDownloaded.querySelector(elementSelector);
     element.setCustomValidity('');
     var commentaryElementChangeHandler = function () {
       element.setCustomValidity('');
