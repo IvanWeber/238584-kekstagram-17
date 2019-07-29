@@ -92,10 +92,10 @@
   };
 
   var deleteSpecificItemsOfParent = function (parent, deleteElementsSelector) {
-    var elementsToBeDeleted = document.querySelectorAll(deleteElementsSelector);
-    for (var i = 0; i < elementsToBeDeleted.length; i++) {
-      parent.removeChild(elementsToBeDeleted[i]);
-    }
+    var elementsToBeDeleted = parent.querySelectorAll(deleteElementsSelector);
+    elementsToBeDeleted.forEach(function (element) {
+      parent.removeChild(element);
+    });
   };
 
   var insertUserPictureDomElements = function (pictureDomElements) {
