@@ -88,21 +88,24 @@
       document.querySelector('.img-upload__control').click();
     };
 
+    var removeEventListenersOnErrorSection = function () {
+      document.removeEventListener('keydown', errorSectionKeydownEscHandler);
+      document.removeEventListener('click', errorSectionOutClickHandler);
+    };
+
     var errorSectionKeydownEscHandler = function (evt) {
       if (evt.keyCode === window.KeyCode.ESC) {
         main.removeChild(errorSection);
         var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
-        document.removeEventListener('keydown', errorSectionKeydownEscHandler);
-        document.removeEventListener('click', errorSectionOutClickHandler);
+        removeEventListenersOnErrorSection();
       }
     };
 
     var errorSectionOutClickHandler = function (evt) {
       if (document.querySelector('.error__inner') !== null && !document.querySelector('.error__inner') !== undefined) {
         if (!document.querySelector('.error__inner').contains(evt.target)) {
-          document.removeEventListener('keydown', errorSectionKeydownEscHandler);
-          document.removeEventListener('click', errorSectionOutClickHandler);
+          removeEventListenersOnErrorSection();
           main.removeChild(errorSection);
           var uploadForm = document.querySelector('.img-upload__form');
           uploadForm.reset();
