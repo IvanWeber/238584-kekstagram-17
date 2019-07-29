@@ -13,7 +13,7 @@
   var plusButton = picDownloaded.querySelector('.scale__control--bigger');
   var sizeInput = picDownloaded.querySelector('.scale__control--value');
   var image = picDownloaded.querySelector('.img-upload__preview img');
-  var form = picDownloaded.querySelector('.img-upload__form');
+  var uploadForm = picDownloaded.querySelector('.img-upload__form');
   var fileInput = picDownloaded.querySelector('.img-upload__input');
 
 
@@ -35,7 +35,6 @@
 
     var successButtonClickHandler = function () {
       main.removeChild(successSection);
-      var uploadForm = document.querySelector('.img-upload__form');
       uploadForm.reset();
       removeEventListenersOnSuccessSection();
     };
@@ -43,7 +42,6 @@
     var successSectionKeydownEscHandler = function (evt) {
       if (evt.keyCode === window.KeyCode.ESC) {
         main.removeChild(successSection);
-        var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
         removeEventListenersOnSuccessSection();
       }
@@ -54,7 +52,6 @@
         if (!document.querySelector('.success__inner').contains(evt.target)) {
           removeEventListenersOnSuccessSection();
           main.removeChild(successSection);
-          var uploadForm = document.querySelector('.img-upload__form');
           uploadForm.reset();
         }
       }
@@ -83,7 +80,6 @@
 
     var uploadAnotherFileButtonClickHandler = function () {
       main.removeChild(errorSection);
-      var uploadForm = document.querySelector('.img-upload__form');
       uploadForm.reset();
       document.querySelector('.img-upload__control').click();
     };
@@ -96,7 +92,6 @@
     var errorSectionKeydownEscHandler = function (evt) {
       if (evt.keyCode === window.KeyCode.ESC) {
         main.removeChild(errorSection);
-        var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
         removeEventListenersOnErrorSection();
       }
@@ -107,7 +102,6 @@
         if (!document.querySelector('.error__inner').contains(evt.target)) {
           removeEventListenersOnErrorSection();
           main.removeChild(errorSection);
-          var uploadForm = document.querySelector('.img-upload__form');
           uploadForm.reset();
         }
       }
@@ -125,7 +119,7 @@
       evt.preventDefault();
       window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
     };
-    form.addEventListener('submit', formSubmitHandler);
+    uploadForm.addEventListener('submit', formSubmitHandler);
   };
 
   var initiateCloseEditFormOnKeydownEscAndOnClickCloseButton = function () {
@@ -133,7 +127,6 @@
     var editFormEscKeydownHandler = function (evt) {
       if (evt.keyCode === window.KeyCode.ESC) {
         editForm.classList.add('hidden');
-        var uploadForm = document.querySelector('.img-upload__form');
         uploadForm.reset();
         document.removeEventListener('keydown', editFormEscKeydownHandler);
       }
@@ -144,7 +137,6 @@
     var closeButton = document.querySelector('.img-upload__cancel');
     var closeButtonClickHandler = function () {
       editForm.classList.add('hidden');
-      var uploadForm = picDownloaded.querySelector('.img-upload__form');
       uploadForm.reset();
       document.removeEventListener('keydown', editFormEscKeydownHandler);
     };
