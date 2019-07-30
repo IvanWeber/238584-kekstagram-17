@@ -230,12 +230,13 @@
     element.setCustomValidity('');
     var commentaryElementChangeHandler = function () {
       element.setCustomValidity('');
-      for (var i = 0; i < checks.length; i++) {
-        if (!checks[i].checker(element.value)) {
-          element.setCustomValidity(checks[i].message);
+
+      checks.forEach(function (check) {
+        if (!check.checker(element.value)) {
+          element.setCustomValidity(check.message);
           document.styleSheets[0].insertRule(elementSelector + ':invalid { border-color: red; }', 0);
         }
-      }
+      });
     };
     element.removeEventListener('input', commentaryElementChangeHandler);
     element.addEventListener('input', commentaryElementChangeHandler);
