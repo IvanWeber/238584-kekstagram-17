@@ -116,12 +116,13 @@
     while (socialComments.firstChild) {
       socialComments.removeChild(socialComments.firstChild);
     }
-    for (var i = 0; i < element.comments.length; i++) {
+
+    element.comments.forEach(function (comment) {
       var newSocialComment = socialComment.cloneNode(true);
       newSocialComment.querySelector('.social__picture').src = 'img/avatar-' + window.utility.getRandomInt(1, 6) + '.svg';
-      newSocialComment.querySelector('.social__text').textContent = element.comments[i].message;
+      newSocialComment.querySelector('.social__text').textContent = comment.message;
       socialComments.appendChild(newSocialComment);
-    }
+    });
 
     initiateHideExtraCommentsUnderDownloadMoreButton();
     initiateDownloadMoreCommentsOnClickDownloadMoreButton();
