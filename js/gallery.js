@@ -96,9 +96,9 @@
   };
 
   var insertUserPictureDomElements = function (pictureDomElements) {
-    for (var i = 0; i < pictureDomElements.length; i++) {
-      insertUserPictureDomElement(pictureDomElements[i]);
-    }
+    pictureDomElements.forEach(function (pictureDomElement) {
+      insertUserPictureDomElement(pictureDomElement);
+    });
   };
 
   var showBigPic = function () {
