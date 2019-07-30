@@ -132,24 +132,24 @@
     var thumbNailsCollection = picsParent.querySelectorAll('.picture__img');
 
     var thumbnailClickHandler = function (evt) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].url === evt.currentTarget.getAttribute('src')) {
-          var elementToBeInserted = data[i];
+      data.forEach(function (dataEl) {
+        if (dataEl.url === evt.currentTarget.getAttribute('src')) {
+          var elementToBeInserted = dataEl;
+          showBigPic();
+          insertDataForBigPic(elementToBeInserted);
         }
-      }
-      showBigPic();
-      insertDataForBigPic(elementToBeInserted);
+      });
     };
 
     var thumbnailEnterKeydownHandler = function (evt) {
       if (evt.keyCode === window.KeyCode.ENTER) {
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].url === evt.currentTarget.querySelector('.picture__img').getAttribute('src')) {
-            var elementToBeInserted = data[i];
+        data.forEach(function (dataEl) {
+          if (dataEl.url === evt.currentTarget.querySelector('.picture__img').getAttribute('src')) {
+            var elementToBeInserted = dataEl;
+            showBigPic();
+            insertDataForBigPic(elementToBeInserted);
           }
-        }
-        showBigPic();
-        insertDataForBigPic(elementToBeInserted);
+        });
       }
     };
 
