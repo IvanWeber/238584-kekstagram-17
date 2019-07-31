@@ -310,15 +310,15 @@
     sizeInput.value = imageSize + '%';
     image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
     var minusButtonClickHandler = function () {
-      if (imageSize >= 1 && imageSize <= window.ImgSize.MAX_SIZE) {
-        imageSize = imageSize - window.ImgSize.MIN_DIFFERENCE_SIZE;
+      if (imageSize >= window.ImgSize.MIN_SIZE + window.ImgSize.SIZE_DIFFERENCE && imageSize <= window.ImgSize.MAX_SIZE) {
+        imageSize = imageSize - window.ImgSize.SIZE_DIFFERENCE;
         image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }
     };
     var plusButtonClickHandler = function () {
-      if (imageSize >= 0 && imageSize <= window.ImgSize.MAX_SIZE - 1) {
-        imageSize = imageSize + window.ImgSize.MIN_DIFFERENCE_SIZE;
+      if (imageSize >= window.ImgSize.MIN_SIZE && imageSize <= window.ImgSize.MAX_SIZE - window.ImgSize.SIZE_DIFFERENCE) {
+        imageSize = imageSize + window.ImgSize.SIZE_DIFFERENCE;
         image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }

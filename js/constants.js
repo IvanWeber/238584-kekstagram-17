@@ -61,7 +61,8 @@
 
   window.ImgSize = {
     MAX_SIZE: 100,
-    MIN_DIFFERENCE_SIZE: 25,
+    MIN_SIZE: 25,
+    SIZE_DIFFERENCE: 25,
     PERCENT_TO_DECIMAL_CALIBRATION: 0.01
   };
 
