@@ -8,7 +8,6 @@
   var filterValueInput = picDownloaded.querySelector('.effect-level__value');
   var imgUploadPreview = picDownloaded.querySelector('.img-upload__preview');
   var editForm = picDownloaded.querySelector('.img-upload__overlay');
-  var commentary = picDownloaded.querySelector('.text__description');
   var minusButton = picDownloaded.querySelector('.scale__control--smaller');
   var plusButton = picDownloaded.querySelector('.scale__control--bigger');
   var sizeInput = picDownloaded.querySelector('.scale__control--value');
@@ -170,8 +169,8 @@
       initiateChangeFilterOnChangeFilterRadioButton();
       initiateCloseEditFormOnKeydownEscAndOnClickCloseButton();
       initiateChangeImgSizeOnClickPlusMinusButtons();
-      initiateCheckOnChangeElementOfForm('.text__description', window.checks.textareaChecks);
-      initiateCheckOnChangeElementOfForm('.text__hashtags', window.checks.hashtagsChecks);
+      window.editFormTextFields.initiateCheckOnChangeElementOfForm('.text__description', window.checks.textareaChecks);
+      window.editFormTextFields.initiateCheckOnChangeElementOfForm('.text__hashtags', window.checks.hashtagsChecks);
     };
     input.addEventListener('change', pictureInputChangeHandler);
   };
@@ -214,32 +213,6 @@
       var radioButton = picDownloaded.querySelector('.effects__item:nth-child(' + i + ')').querySelector('.effects__radio');
       radioButton.addEventListener('change', radioButtonChangeHandler);
     }
-  };
-
-  var initiateStopEventPropagationOnKeydownEscOnCommentary = function () {
-    var commentaryElementKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.constants.KeyCode.ESC) {
-        evt.stopPropagation();
-      }
-    };
-    commentary.addEventListener('keydown', commentaryElementKeydownEscHandler);
-  };
-
-  var initiateCheckOnChangeElementOfForm = function (elementSelector, checks) {
-    var element = picDownloaded.querySelector(elementSelector);
-    element.setCustomValidity('');
-    var commentaryElementChangeHandler = function () {
-      element.setCustomValidity('');
-
-      checks.forEach(function (check) {
-        if (!check.checker(element.value)) {
-          element.setCustomValidity(check.message);
-          document.styleSheets[0].insertRule(elementSelector + ':invalid { border-color: red; }', 0);
-        }
-      });
-    };
-    element.removeEventListener('input', commentaryElementChangeHandler);
-    element.addEventListener('input', commentaryElementChangeHandler);
   };
 
   var initiateLevelPinDrugAndDrop = function () {
@@ -331,7 +304,7 @@
 
   initiateAjaxOnFormSubmit();
 
-  initiateStopEventPropagationOnKeydownEscOnCommentary();
+  window.editFormTextFields.initiateStopEventPropagationOnKeydownEscOnCommentary();
 
   initiateOpenEditFormOnDownloadPic();
 
