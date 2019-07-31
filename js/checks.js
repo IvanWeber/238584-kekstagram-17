@@ -29,7 +29,9 @@
         checker: function (value) {
           var valueArray = value.split('');
           for (var i = 0; i < valueArray.length; i++) {
-            if (valueArray[i] === ' ' && valueArray[i + 1] !== '#') {
+            var isCurrentSpace = valueArray[i] === ' ';
+            var isNextHashtag = valueArray[i + 1] !== '#';
+            if (isCurrentSpace && isNextHashtag) {
               return false;
             }
           }
@@ -41,7 +43,10 @@
         checker: function (value) {
           var valueArray = value.split('');
           for (var i = 0; i < valueArray.length; i++) {
-            if (valueArray[i] === '#' && valueArray[i + 1] === ' ' || valueArray[i] === '#' && valueArray[i + 1] === undefined) {
+            var isCurrentHashtag = valueArray[i] === '#';
+            var isNextSpace = valueArray[i + 1] === ' ';
+            var isNextUndef = valueArray[i + 1] === undefined;
+            if (isCurrentHashtag && isNextSpace || isCurrentHashtag && isNextUndef) {
               return false;
             }
           }
@@ -53,7 +58,10 @@
         checker: function (value) {
           var valueArray = value.split('');
           for (var i = 0; i < valueArray.length; i++) {
-            if (valueArray[i - 1] !== undefined && valueArray[i - 1] !== ' ' && valueArray[i] === '#') {
+            var isPrevUndef = valueArray[i - 1] !== undefined;
+            var isPrevSpace = valueArray[i - 1] !== ' ';
+            var isCurrentHashtag = valueArray[i] === '#';
+            if (isPrevUndef && isPrevSpace && isCurrentHashtag) {
               return false;
             }
           }
