@@ -179,26 +179,29 @@
     return effect.FILTER + '(' + filterInput * effect.MAX / window.constants.PicDownloaded.STEPS_COUNT + effect.UNITS + ')';
   };
 
+  var resetPinLevelValue = function () {
+    levelPin.style.left = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+    levelDepth.style.width = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+  };
+
+  var addEffectForImg = function (effectSelector) {
+    imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
+    imgUploadPreview.classList.add(effectSelector);
+  };
+
   var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = picDownloaded.querySelector('.effects__list').cloneNode(true);
 
-    levelPin.style.left = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-    levelDepth.style.width = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+    resetPinLevelValue();
+    addEffectForImg('effect-heat');
 
-    imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
-    imgUploadPreview.classList.add('effect-heat');
-
-    imgUploadPreview.classList.add('effect-heat');
     slider.classList.remove('hidden');
     filterValueInput.value = window.constants.PicDownloaded.FILTER_VALUE_INPUT_MAX;
     imgUploadPreview.style.filter = buildEffectStyle(window.constants.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
     var radioButtonChangeHandler = function (evt) {
 
-      levelPin.style.left = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-
-      imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
-      imgUploadPreview.classList.add(evt.currentTarget.id);
+      resetPinLevelValue();
+      addEffectForImg(evt.currentTarget.id);
 
       if (evt.currentTarget.id === 'effect-none') {
         slider.classList.add('hidden');
