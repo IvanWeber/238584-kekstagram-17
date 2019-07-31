@@ -40,7 +40,7 @@
     };
 
     var successSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
+      if (evt.keyCode === window.constants.KeyCode.ESC) {
         main.removeChild(successSection);
         uploadForm.reset();
         removeEventListenersOnSuccessSection();
@@ -75,7 +75,7 @@
 
     var tryAgainButtonClickHandler = function () {
       main.removeChild(errorSection);
-      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
+      window.ajax.postLoad(window.constants.UrlRequest.POST, onSuccessPost, onErrorPost);
     };
 
     var uploadAnotherFileButtonClickHandler = function () {
@@ -90,7 +90,7 @@
     };
 
     var errorSectionKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
+      if (evt.keyCode === window.constants.KeyCode.ESC) {
         main.removeChild(errorSection);
         uploadForm.reset();
         removeEventListenersOnErrorSection();
@@ -117,7 +117,7 @@
   var initiateAjaxOnFormSubmit = function () {
     var formSubmitHandler = function (evt) {
       evt.preventDefault();
-      window.ajax.postLoad(window.UrlRequest.POST, onSuccessPost, onErrorPost);
+      window.ajax.postLoad(window.constants.UrlRequest.POST, onSuccessPost, onErrorPost);
     };
     uploadForm.addEventListener('submit', formSubmitHandler);
   };
@@ -125,7 +125,7 @@
   var initiateCloseEditFormOnKeydownEscAndOnClickCloseButton = function () {
   // OnKeydownEsc
     var editFormEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
+      if (evt.keyCode === window.constants.KeyCode.ESC) {
         editForm.classList.add('hidden');
         uploadForm.reset();
         document.removeEventListener('keydown', editFormEscKeydownHandler);
@@ -146,12 +146,12 @@
     var hashTagsInput = editForm.querySelector('.text__hashtags');
     var descriptionInput = editForm.querySelector('.text__description');
     var hashTagsInputEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
+      if (evt.keyCode === window.constants.KeyCode.ESC) {
         evt.stopPropagation();
       }
     };
     var descriptionInputInputEscKeydownHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
+      if (evt.keyCode === window.constants.KeyCode.ESC) {
         evt.stopPropagation();
       }
     };
@@ -162,10 +162,10 @@
   var initiateOpenEditFormOnDownloadPic = function () {
     var pictureInputChangeHandler = function () {
       slider.classList.remove('hidden');
-      levelPin.style.left = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-      filterValueInput.value = window.PicDownloaded.FILTER_VALUE_INPUT_MAX;
-      imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
+      levelPin.style.left = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      levelDepth.style.width = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      filterValueInput.value = window.constants.PicDownloaded.FILTER_VALUE_INPUT_MAX;
+      imgUploadPreview.style.filter = buildEffectStyle(window.constants.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
       editForm.classList.remove('hidden');
       initiateChangeFilterOnChangeFilterRadioButton();
       initiateCloseEditFormOnKeydownEscAndOnClickCloseButton();
@@ -177,26 +177,26 @@
   };
 
   var buildEffectStyle = function (effect, filterInput) {
-    return effect.FILTER + '(' + filterInput * effect.MAX / window.PicDownloaded.STEPS_COUNT + effect.UNITS + ')';
+    return effect.FILTER + '(' + filterInput * effect.MAX / window.constants.PicDownloaded.STEPS_COUNT + effect.UNITS + ')';
   };
 
   var initiateChangeFilterOnChangeFilterRadioButton = function () {
     var radioButtons = picDownloaded.querySelector('.effects__list').cloneNode(true);
 
-    levelPin.style.left = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-    levelDepth.style.width = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+    levelPin.style.left = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+    levelDepth.style.width = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
 
     imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
     imgUploadPreview.classList.add('effect-heat');
 
     imgUploadPreview.classList.add('effect-heat');
     slider.classList.remove('hidden');
-    filterValueInput.value = window.PicDownloaded.FILTER_VALUE_INPUT_MAX;
-    imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
+    filterValueInput.value = window.constants.PicDownloaded.FILTER_VALUE_INPUT_MAX;
+    imgUploadPreview.style.filter = buildEffectStyle(window.constants.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
     var radioButtonChangeHandler = function (evt) {
 
-      levelPin.style.left = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      levelPin.style.left = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      levelDepth.style.width = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
 
       imgUploadPreview.classList.remove(imgUploadPreview.classList[1]);
       imgUploadPreview.classList.add(evt.currentTarget.id);
@@ -206,8 +206,8 @@
         imgUploadPreview.style.filter = 'none';
       } else {
         slider.classList.remove('hidden');
-        filterValueInput.value = window.PicDownloaded.FILTER_VALUE_INPUT_MAX;
-        imgUploadPreview.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[evt.currentTarget.id], filterValueInput.value);
+        filterValueInput.value = window.constants.PicDownloaded.FILTER_VALUE_INPUT_MAX;
+        imgUploadPreview.style.filter = buildEffectStyle(window.constants.PicDownloaded.EFFECTS[evt.currentTarget.id], filterValueInput.value);
       }
     };
     for (var i = 1; i <= radioButtons.childElementCount; i++) {
@@ -218,7 +218,7 @@
 
   var initiateStopEventPropagationOnKeydownEscOnCommentary = function () {
     var commentaryElementKeydownEscHandler = function (evt) {
-      if (evt.keyCode === window.KeyCode.ESC) {
+      if (evt.keyCode === window.constants.KeyCode.ESC) {
         evt.stopPropagation();
       }
     };
@@ -255,13 +255,13 @@
         x: evt.clientX - rect.x
       };
 
-      var shiftX = shift.x - window.PicDownloaded.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
+      var shiftX = shift.x - window.constants.PicDownloaded.GAP_BETWEEN_INSIDE_AND_OUTSIDE_BARS;
 
       if (shiftX < 0) {
         shiftX = 0;
       }
-      if (shiftX > window.PicDownloaded.LEVEL_PIN_MAX_LEFT) {
-        shiftX = window.PicDownloaded.LEVEL_PIN_MAX_LEFT;
+      if (shiftX > window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT) {
+        shiftX = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT;
       }
 
       levelPin.style.left = shiftX + 'px';
@@ -270,7 +270,7 @@
 
       filterValueInput.value = Math.round(getValueOfLevelPin());
 
-      imageDiv.style.filter = buildEffectStyle(window.PicDownloaded.EFFECTS[imageDiv.classList[1]], filterValueInput.value);
+      imageDiv.style.filter = buildEffectStyle(window.constants.PicDownloaded.EFFECTS[imageDiv.classList[1]], filterValueInput.value);
     };
 
     var effectLevelLineMousedownHandler = function (evt) {
@@ -294,7 +294,7 @@
   };
 
   var getValueOfLevelPin = function () {
-    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.PicDownloaded.FILTER_VALUE_INPUT_MAX / window.PicDownloaded.LEVEL_PIN_MAX_LEFT;
+    var valueOfLevelPin = levelPin.style.left.substring(0, levelPin.style.left.length - 2) * window.constants.PicDownloaded.FILTER_VALUE_INPUT_MAX / window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT;
     return valueOfLevelPin;
   };
 
@@ -306,20 +306,20 @@
   };
 
   var initiateChangeImgSizeOnClickPlusMinusButtons = function () {
-    var imageSize = window.ImgSize.MAX_SIZE;
+    var imageSize = window.constants.ImgSize.MAX_SIZE;
     sizeInput.value = imageSize + '%';
-    image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
+    image.style.transform = 'scale(' + imageSize * window.constants.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
     var minusButtonClickHandler = function () {
-      if (imageSize >= window.ImgSize.MIN_SIZE + window.ImgSize.SIZE_DIFFERENCE && imageSize <= window.ImgSize.MAX_SIZE) {
-        imageSize = imageSize - window.ImgSize.SIZE_DIFFERENCE;
-        image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
+      if (imageSize >= window.constants.ImgSize.MIN_SIZE + window.constants.ImgSize.SIZE_DIFFERENCE && imageSize <= window.constants.ImgSize.MAX_SIZE) {
+        imageSize = imageSize - window.constants.ImgSize.SIZE_DIFFERENCE;
+        image.style.transform = 'scale(' + imageSize * window.constants.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }
     };
     var plusButtonClickHandler = function () {
-      if (imageSize >= window.ImgSize.MIN_SIZE && imageSize <= window.ImgSize.MAX_SIZE - window.ImgSize.SIZE_DIFFERENCE) {
-        imageSize = imageSize + window.ImgSize.SIZE_DIFFERENCE;
-        image.style.transform = 'scale(' + imageSize * window.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
+      if (imageSize >= window.constants.ImgSize.MIN_SIZE && imageSize <= window.constants.ImgSize.MAX_SIZE - window.constants.ImgSize.SIZE_DIFFERENCE) {
+        imageSize = imageSize + window.constants.ImgSize.SIZE_DIFFERENCE;
+        image.style.transform = 'scale(' + imageSize * window.constants.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
         sizeInput.value = imageSize + '%';
       }
     };

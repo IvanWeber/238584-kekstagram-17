@@ -5,7 +5,7 @@
 
     textareaChecks: [{
       checker: function (value) {
-        return value.length < window.Validation.MESSAGE_MAX_LENGTH;
+        return value.length < window.constants.Validation.MESSAGE_MAX_LENGTH;
       },
       message: 'Длина сообщения должна быть меньше 140 символов',
     }
@@ -14,7 +14,7 @@
     hashtagsChecks: [
       {
         checker: function (value) {
-          return value.length < window.Validation.MESSAGE_MAX_LENGTH;
+          return value.length < window.constants.Validation.MESSAGE_MAX_LENGTH;
         },
         message: 'Длина сообщения должна быть меньше 140 символов',
       },
@@ -83,7 +83,7 @@
       {
         checker: function (value) {
           var valueArray = value.split(' ');
-          var isInvalid = valueArray.length > window.Validation.MAX_NUMBER_OF_HASHTAGS;
+          var isInvalid = valueArray.length > window.constants.Validation.MAX_NUMBER_OF_HASHTAGS;
           return isInvalid ? false : true;
         },
         message: 'Нельзя указать больше пяти хэш-тегов'
@@ -92,7 +92,7 @@
         checker: function (value) {
           var hashtagsArray = value.split(' ');
           for (var i = 0; i < hashtagsArray.length; i++) {
-            if (hashtagsArray[i].split('').length > window.Validation.MAX_CHARS_OF_HASHTAG) {
+            if (hashtagsArray[i].split('').length > window.constants.Validation.MAX_CHARS_OF_HASHTAG) {
               return false;
             }
           }

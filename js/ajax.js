@@ -9,7 +9,7 @@
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        if (xhr.status === window.AjaxConstants.SUCCESS_CODE) {
+        if (xhr.status === window.constants.AjaxConstants.SUCCESS_CODE) {
           onSuccessGet(xhr.response);
         } else {
           onErrorGet('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -24,7 +24,7 @@
         onErrorGet('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
-      xhr.timeout = window.AjaxConstants.TIMEOUT; // 10s
+      xhr.timeout = window.constants.AjaxConstants.TIMEOUT; // 10s
 
       xhr.open('GET', url);
       xhr.send();
@@ -39,7 +39,7 @@
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        if (xhr.status === window.AjaxConstants.SUCCESS_CODE) {
+        if (xhr.status === window.constants.AjaxConstants.SUCCESS_CODE) {
           onSuccessPost(xhr.response);
         } else {
           onErrorPost('При отправке данных произошла ошибка.', 'Статус ответа: ' + xhr.status);
