@@ -1,5 +1,7 @@
 'use strict';
+
 (function () {
+
   var picDownloaded = document.querySelector('.img-upload');
   var input = picDownloaded.querySelector('.img-upload__input');
   var slider = picDownloaded.querySelector('.img-upload__effect-level');
@@ -312,4 +314,5 @@
   initiateOpenEditFormOnDownloadPic();
 
   initiateLevelPinDrugAndDrop();
+
 })();

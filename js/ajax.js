@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.ajax = {
 
     getLoad: function (url, onSuccessGet, onErrorGet) {
@@ -55,4 +56,5 @@
     }
 
   };
+
 })();

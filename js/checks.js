@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.checks = {
 
     textareaChecks: [{
@@ -111,4 +112,5 @@
     ]
 
   };
+
 })();

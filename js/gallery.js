@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var body = document.querySelector('body');
   var imgFilters = body.querySelector('.img-filters');
   var filters = body.querySelectorAll('.img-filters__button');
@@ -231,4 +232,5 @@
   var resetDownloadMoreButtonHiding = function () {
     bigPic.querySelector('.comments-loader').classList.remove('visually-hidden');
   };
+
 })();

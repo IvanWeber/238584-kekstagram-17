@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.utility = {
 
     getRandomInt: function (min, max) {
@@ -35,4 +36,5 @@
     }
 
   };
+
 })();
