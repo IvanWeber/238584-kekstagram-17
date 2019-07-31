@@ -283,6 +283,11 @@
     fileInput.addEventListener('change', fileInputChangeHandler);
   };
 
+  var setImgSize = function (imageSize) {
+    image.style.transform = 'scale(' + imageSize * window.constants.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
+    sizeInput.value = imageSize + '%';
+  };
+
   var initiateChangeImgSizeOnClickPlusMinusButtons = function () {
     var imageSize = window.constants.ImgSize.MAX_SIZE;
     sizeInput.value = imageSize + '%';
@@ -290,15 +295,13 @@
     var minusButtonClickHandler = function () {
       if (imageSize >= window.constants.ImgSize.MIN_SIZE + window.constants.ImgSize.SIZE_DIFFERENCE && imageSize <= window.constants.ImgSize.MAX_SIZE) {
         imageSize = imageSize - window.constants.ImgSize.SIZE_DIFFERENCE;
-        image.style.transform = 'scale(' + imageSize * window.constants.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
-        sizeInput.value = imageSize + '%';
+        setImgSize(imageSize);
       }
     };
     var plusButtonClickHandler = function () {
       if (imageSize >= window.constants.ImgSize.MIN_SIZE && imageSize <= window.constants.ImgSize.MAX_SIZE - window.constants.ImgSize.SIZE_DIFFERENCE) {
         imageSize = imageSize + window.constants.ImgSize.SIZE_DIFFERENCE;
-        image.style.transform = 'scale(' + imageSize * window.constants.ImgSize.PERCENT_TO_DECIMAL_CALIBRATION + ')';
-        sizeInput.value = imageSize + '%';
+        setImgSize(imageSize);
       }
     };
     minusButton.addEventListener('click', minusButtonClickHandler);
