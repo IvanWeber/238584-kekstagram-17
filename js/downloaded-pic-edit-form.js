@@ -124,12 +124,15 @@
   };
 
   var initiateCloseEditFormOnKeydownEscAndOnClickCloseButton = function () {
-  // OnKeydownEsc
+    var closeEditForm = function () {
+      editForm.classList.add('hidden');
+      uploadForm.reset();
+      document.removeEventListener('keydown', editFormEscKeydownHandler);
+    };
+    // OnKeydownEsc
     var editFormEscKeydownHandler = function (evt) {
       if (evt.keyCode === window.constants.KeyCode.ESC) {
-        editForm.classList.add('hidden');
-        uploadForm.reset();
-        document.removeEventListener('keydown', editFormEscKeydownHandler);
+        closeEditForm();
       }
     };
     document.addEventListener('keydown', editFormEscKeydownHandler);
@@ -137,9 +140,7 @@
     // OnClickCloseButton
     var closeButton = editForm.querySelector('.img-upload__cancel');
     var closeButtonClickHandler = function () {
-      editForm.classList.add('hidden');
-      uploadForm.reset();
-      document.removeEventListener('keydown', editFormEscKeydownHandler);
+      closeEditForm();
     };
     closeButton.addEventListener('click', closeButtonClickHandler);
 
@@ -163,8 +164,7 @@
   var initiateOpenEditFormOnDownloadPic = function () {
     var pictureInputChangeHandler = function () {
       slider.classList.remove('hidden');
-      levelPin.style.left = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
-      levelDepth.style.width = window.constants.PicDownloaded.LEVEL_PIN_MAX_LEFT + 'px';
+      resetPinLevelValue();
       filterValueInput.value = window.constants.PicDownloaded.FILTER_VALUE_INPUT_MAX;
       imgUploadPreview.style.filter = buildEffectStyle(window.constants.PicDownloaded.EFFECTS['effect-heat'], filterValueInput.value);
       editForm.classList.remove('hidden');
