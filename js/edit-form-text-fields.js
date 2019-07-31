@@ -26,7 +26,6 @@
         checks.forEach(function (check) {
           if (!check.checker(element.value)) {
             element.setCustomValidity(check.message);
-            document.styleSheets[0].insertRule(elementSelector + ':invalid { border-color: red; }', 0);
           }
         });
       };

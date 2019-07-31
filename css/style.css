@@ -1447,3 +1447,11 @@ main {
     grid-row: 1 / span 3;
   }
 }
+
+.text__description:invalid {
+  border-color: red;
+}
+
+.text__hashtags:invalid {
+  border-color: red;
+}
