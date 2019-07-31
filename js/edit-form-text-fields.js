@@ -5,6 +5,7 @@
   var picDownloaded = document.querySelector('.img-upload');
   var commentary = picDownloaded.querySelector('.text__description');
 
+
   window.editFormTextFields = {
 
     initiateStopEventPropagationOnKeydownEscOnCommentary: function () {
